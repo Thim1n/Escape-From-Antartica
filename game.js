@@ -2,83 +2,86 @@ window.onload = function () {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
-    // ✅ Fonction pour ajuster la taille du canvas et du sol
-    function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const platforms = createPlatforms(canvas);
+    const player = new Player(20, canvas.height - 20 - 50);
+
+    window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+    });
 
-        // ✅ Met à jour la plateforme du sol
-        platforms[0] = new Platform(0, canvas.height - 20, canvas.width, 20);
-    }
-
-    // ✅ Création du joueur, ennemis et pièces
-    let player = new Player(50, 500);
-    let enemy = new Enemy(700, 500);
-    let coins = [new Coin(200, 400), new Coin(400, 300)];
-
-    // ✅ Création des plateformes
-    let platforms = createPlatforms(canvas);
-
-    // ✅ Ajuster la taille au chargement et lors du redimensionnement
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const keysPressed = {}; // Objet pour stocker les touches enfoncées
+    const keysPressed = {};
 
     window.addEventListener("keydown", (event) => {
-        keysPressed[event.code] = true; // Enregistrer la touche pressée
-
-        console.log("Touche pressée :", event.code);
-
-        if (event.code === "Space") {
+        keysPressed[event.code] = true;
+        if (event.code === "Space" || event.code === "ArrowUp") {
             player.jump();
         }
-        updateMovement(); // Met à jour le mouvement selon les touches enfoncées
     });
 
     window.addEventListener("keyup", (event) => {
-        delete keysPressed[event.code]; // Supprimer la touche relâchée
-
-        updateMovement(); // Vérifier quelle touche est encore enfoncée
+        delete keysPressed[event.code];
     });
 
-    // ✅ Fonction qui met à jour le mouvement du joueur
-    function updateMovement() {
-        if (keysPressed["KeyA"] || keysPressed["KeyQ"]) { // AZERTY & QWERTY
+    function updatePlayerMovement() {
+        if (keysPressed["ArrowLeft"] || keysPressed["KeyA"]) {
             player.moveLeft();
-        } else if (keysPressed["KeyD"]) {
+        } else if (keysPressed["ArrowRight"] || keysPressed["KeyD"]) {
             player.moveRight();
         } else {
             player.stop();
         }
     }
+    let coins = createCoins(canvas);
+    const enemy = new Enemy(600, canvas.height - 70);
+
 
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        updatePlayerMovement();
 
+
+    
         platforms.forEach(platform => platform.draw(ctx));
         coins.forEach(coin => coin.draw(ctx));
+        
+
+
         enemy.draw(ctx);
+        enemy.checkCollision(player);
+
         player.update(platforms);
         player.draw(ctx);
+    
+        checkCoinCollisions();
+    
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText(`Pièces : ${player.coins}`, 10, 30);
 
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText(`mort : ${player.deathCount}`, 10, 50);    
         requestAnimationFrame(gameLoop);
+    }
+
+    function checkCoinCollisions() {
+        coins = coins.filter(coin => {
+            if (
+                player.x < coin.x + coin.radius &&
+                player.x + player.width > coin.x - coin.radius &&
+                player.y < coin.y + coin.radius &&
+                player.y + player.height > coin.y - coin.radius
+            ) {
+                player.collectCoin();
+                return false;
+            }
+            return true;
+        });
     }
 
     gameLoop();
 };
-
-// ✅ Fonction pour créer les plateformes
-function createPlatforms(canvas) {
-    return [
-        new Platform(0, canvas.height - 20, canvas.width, 20), // ✅ Sol pleine largeur
-        new Platform(200, canvas.height - 100, 150, 10),
-        new Platform(400, canvas.height - 200, 150, 10),
-        new Platform(600, canvas.height - 300, 150, 10),
-        new Platform(850, canvas.height - 400, 150, 10),
-        new Platform(1100, canvas.height - 500, 150, 10),
-        new Platform(1300, canvas.height - 600, 150, 10),
-        new Platform(1600, canvas.height - 300, 150, 10),
-        new Platform(1900, canvas.height - 100, 150, 10),
-    ];
-}

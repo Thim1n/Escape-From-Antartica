@@ -12,3 +12,13 @@ class Coin {
         ctx.fill();
     }
 }
+
+function createCoins(canvas) {
+    return [
+        new Coin(200, canvas.height - 150),
+        new Coin(400, canvas.height - 250),
+        new Coin(600, canvas.height - 350),
+        new Coin(850, canvas.height - 450),
+        new Coin(1100, canvas.height - 550),
+    ];
+}

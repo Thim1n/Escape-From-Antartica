@@ -12,14 +12,22 @@ class Platform {
     }
 }
 
-// ✅ Déclaration des plateformes EN DEHORS de la classe
 function createPlatforms(canvas) {
-    return [
-        new Platform(0, canvas.height - 20, canvas.width, 20), // ✅ Sol pleine largeur
-        new Platform(200, canvas.height - 100, 150, 10),
-        new Platform(400, canvas.height - 200, 150, 10),
-        new Platform(600, canvas.height - 300, 150, 10),
-        new Platform(850, canvas.height - 400, 150, 10),
-        new Platform(1100, canvas.height - 500, 150, 10),
-    ];
+    let platforms = [];
+    // Plateforme de sol : occupe toute la largeur du canvas
+    platforms.push(new Platform(0, canvas.height - 20, canvas.width, 20));
+
+    // Plateformes intermédiaires pour créer un parcours
+    platforms.push(new Platform(150, canvas.height - 120, 100, 10));
+    platforms.push(new Platform(300, canvas.height - 220, 100, 10));
+    platforms.push(new Platform(450, canvas.height - 300, 100, 10));
+    platforms.push(new Platform(450, canvas.height - 400, 100, 10));
+    platforms.push(new Platform(450, canvas.height - 500, 100, 10));
+    platforms.push(new Platform(600, canvas.height - 600, 100, 10));
+    platforms.push(new Platform(750, canvas.height - 600, 100, 10));
+
+    // Plateforme objectif : en fin de niveau, vers la droite
+    platforms.push(new Platform(canvas.width - 150, canvas.height - 80, 100, 10));
+
+    return platforms;
 }
