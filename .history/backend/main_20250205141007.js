@@ -164,54 +164,35 @@ app.post("/adduser", async (req, res) => {
 
 // Route pour ajouter un jeu
 app.post("/addgame", async (req, res) => {
-  console.log("Nouvelle partie reçue");
-
-  // Récupérer les données envoyées dans le corps de la requête
-  const { score, userId, time } = req.body;
-
-  // Vérifier si les données nécessaires sont présentes
-  if (!score || !userId || !time) {
-    return res
-      .status(400)
-      .json({ error: "Données manquantes (score, userId, time)" });
-  }
-
-  try {
-    // Créer un nouveau jeu avec les données envoyées
-    const newGame = await Game.create({
-      score,
-      userId,
-      time,
-    });
-
-    // Retourner la réponse avec les données du jeu créé
-    res.status(201).json({
-      message: "Partie ajoutée avec succès",
-    });
-    console.log("Partie ajoutée avec succès");
-  } catch (error) {
-    console.error("Erreur lors de l'ajout du jeu", error);
-    res.status(500).json({ error: "Erreur lors de l'ajout du jeu" });
-  }
-});
-
-app.get("/getplayerid", async (req, res) => {
-  const { name } = req.body;
-
-  try {
-    const user = await User.findOne({ where: { name } });
-
-    if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    console.log("Nouvelle partie reçue");
+  
+    // Récupérer les données envoyées dans le corps de la requête
+    const { score, userId, time } = req.body;
+  
+    // Vérifier si les données nécessaires sont présentes
+    if (!score || !userId || !time) {
+      return res.status(400).json({ error: "Données manquantes (score, userId, time)" });
     }
-
-    res.json({ id: user.id });
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'ID de l'utilisateur", error);
-    res.status(500).json({ error: "Erreur lors de la récupération de l'ID de l'utilisateur" });
-  }
-});
-
+  
+    try {
+      // Créer un nouveau jeu avec les données envoyées
+      const newGame = await Game.create({
+        score,
+        userId,
+        time,
+      });
+  
+      // Retourner la réponse avec les données du jeu créé
+      res.status(201).json({
+        message: "Partie ajoutée avec succès",
+        console.log("Partie ajoutée avec succès")
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du jeu", error);
+      res.status(500).json({ error: "Erreur lors de l'ajout du jeu" });
+    }
+  });
+  
 // Démarrer le serveur sur le port 3000
 app.listen(3000, () => {
   console.log("Serveur démarré sur http://localhost:3000");

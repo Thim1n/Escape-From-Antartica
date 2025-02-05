@@ -20,7 +20,7 @@ class VictoryZone {
             player.y < this.y + this.height &&
             player.y + player.height > this.y) {
             this.isTriggered = true;
-
+            fetch("http://localhost:3000/")
             return true;
         }
         return false;

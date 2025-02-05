@@ -20,7 +20,6 @@ class VictoryZone {
             player.y < this.y + this.height &&
             player.y + player.height > this.y) {
             this.isTriggered = true;
-
             return true;
         }
         return false;

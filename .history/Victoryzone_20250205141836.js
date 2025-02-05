@@ -21,6 +21,7 @@ class VictoryZone {
             player.y + player.height > this.y) {
             this.isTriggered = true;
 
+            game.js.victory
             return true;
         }
         return false;

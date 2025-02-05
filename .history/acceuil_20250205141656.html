@@ -21,5 +21,17 @@ euil.html
         <button type="button" class="leaderboard-btn">Leaderboards</button>
       </form>
     </div>
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        localStorage.setItem('playerName', username);
+        window.location.href = 'game.html';
+      }
+
+      function goToLeaderboard() {
+        window.location.href = 'leaderboard.html';
+      }
+    </script>
   </body>
 </html>

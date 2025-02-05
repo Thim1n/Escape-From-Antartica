@@ -195,22 +195,7 @@ app.post("/addgame", async (req, res) => {
   }
 });
 
-app.get("/getplayerid", async (req, res) => {
-  const { name } = req.body;
-
-  try {
-    const user = await User.findOne({ where: { name } });
-
-    if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
-
-    res.json({ id: user.id });
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'ID de l'utilisateur", error);
-    res.status(500).json({ error: "Erreur lors de la récupération de l'ID de l'utilisateur" });
-  }
-});
+app.get("/getplayerid" )
 
 // Démarrer le serveur sur le port 3000
 app.listen(3000, () => {
