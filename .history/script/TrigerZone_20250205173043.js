@@ -1,4 +1,4 @@
-// Fichier Trigerzone.js
+// Première classe - TriggerSpike
 class TriggerSpike extends SpikeEnemy {
     constructor(x, y, width = 30, height = 30) {
         super(x, y, width, height);

@@ -1,4 +1,3 @@
-//Fichier player.js
 class Player {
   constructor(x, y) {
     this.x = x;

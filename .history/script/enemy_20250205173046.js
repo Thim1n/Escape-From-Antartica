@@ -1,4 +1,3 @@
-//Fichier ennemy.js
 class Enemy {
     constructor(x, y, width = 40, height = 50) {
         this.x = x;

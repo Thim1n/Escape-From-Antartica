@@ -1,4 +1,4 @@
-//Fichier game.js
+Fichier game.js
 window.onload = function () {
   const backgroundMusic = document.getElementById("backgroundMusic");
 

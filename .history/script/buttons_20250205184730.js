@@ -1,4 +1,4 @@
-// Fichier button.js
+
 class Button {
     constructor(x, y, width, height, text) {
         this.x = x;

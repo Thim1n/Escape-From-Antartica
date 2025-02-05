@@ -1,4 +1,3 @@
-//Fichier platform.js
 class Platform {
     constructor(x, y, width, height, type = "default") {
         this.x = x;

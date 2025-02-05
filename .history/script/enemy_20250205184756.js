@@ -1,4 +1,4 @@
-//Fichier ennemy.js
+Fichier 
 class Enemy {
     constructor(x, y, width = 40, height = 50) {
         this.x = x;

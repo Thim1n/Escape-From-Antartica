@@ -1,4 +1,3 @@
-// Fichier VictoryZone.js
 class VictoryZone {
     constructor(x, y, width = 50, height = 50) {
         this.x = 8000;

@@ -1,4 +1,4 @@
-// Fichier coin.js
+
 class Coin {
     constructor(x, y) {
         this.x = x;
