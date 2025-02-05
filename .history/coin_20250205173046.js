@@ -22,28 +22,3 @@ function createCoins(canvas) {
         new Coin(1050, canvas.height - 725),
     ];
 }
-
-
-class Clée extends Coin {
-    constructor(x, y) {
-        super(x, y);
-        this.color = "green"; 
-    }
-
-    draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-    }
-}
-
-
-function createClées(canvas) {
-    return [
-        new Clée(300, canvas.height - 50),
-
-    ];
-}
-

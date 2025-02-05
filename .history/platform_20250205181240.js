@@ -214,9 +214,3 @@ function createPlatforms(canvas) {
         new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
     ];
 }
-
-function createDoors(canvas) {
-    return [
-        new Door(1450, canvas.height - 100),
-    ];
-}

@@ -145,51 +145,7 @@ class DisappearingPlatform extends Platform {
     }
 }
 
-class Door extends Platform {
-    constructor(x, y, width = 40, height = 80) {
-        super(x, y, width, height);
-        this.isOpen = false;
-        this.color = "brown";
-        this.isCheckpoint = false; // Nouvelle propriété pour savoir si cette porte est le checkpoint actuel
-    }
 
-    draw(ctx) {
-        // Dessiner la porte
-        ctx.fillStyle = this.isOpen ? "green" : this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        
-        // Indiquer visuellement si c'est un checkpoint
-        if (this.isCheckpoint) {
-            ctx.fillStyle = "yellow";
-            ctx.beginPath();
-            ctx.arc(this.x + this.width / 2, this.y - 10, 5, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    open(player) {
-        if (player && player.clées > 0 && !this.isOpen) {
-            this.isOpen = true;
-            player.clées--;
-            this.setAsCheckpoint(player);
-        }
-    }
-
-    setAsCheckpoint(player) {
-        // Désactiver tous les autres checkpoints
-        if (window.doors) {
-            window.doors.forEach(door => {
-                door.isCheckpoint = false;
-            });
-        }
-        
-        // Définir cette porte comme nouveau checkpoint
-        this.isCheckpoint = true;
-        
-        // Mettre à jour le point de spawn du joueur
-        player.setSpawnPoint(this.x + this.width + 10, this.y + this.height - player.height);
-    }
-}
 
 function createPlatforms(canvas) {
     return [
@@ -212,11 +168,5 @@ function createPlatforms(canvas) {
         new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
         new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
         new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
-    ];
-}
-
-function createDoors(canvas) {
-    return [
-        new Door(1450, canvas.height - 100),
     ];
 }
