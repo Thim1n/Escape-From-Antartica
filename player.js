@@ -11,6 +11,7 @@ class Player {
     this.isJumping = false;
     this.speed = 5;
     this.coins = 0;
+    this.clées = 0;
     this.deathCount = 0;
     this.startX = x;
     this.startY = y;
@@ -142,6 +143,10 @@ class Player {
   collectCoin() {
     this.coins++;
   }
+
+  collectclée() {
+    this.clées++;
+}
 
   die(enemies, triggerZones) {
     this.deathCount++;
