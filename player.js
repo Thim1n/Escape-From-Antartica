@@ -1,6 +1,6 @@
 class Player {
     constructor(x, y) {
-        this.x = x;
+        this.x = 1500    ;
         this.y = y;
         this.width = 40;
         this.height = 50;
@@ -19,63 +19,95 @@ class Player {
     update(platforms) {
         // Appliquer la gravité
         this.velocityY += this.gravity;
-        this.y += this.velocityY;
-
+        
+        // Sauvegarde de l'ancienne position pour les collisions
+        const oldX = this.x;
+        const oldY = this.y;
+        
+        // Mise à jour temporaire de la position
+        let newY = this.y + this.velocityY;
         let newX = this.x + this.velocityX;
-        let canMoveHorizontally = true;
-    
+        
+        let isOnGround = false;
+        
+        // Vérification des collisions pour chaque plateforme
         for (let platform of platforms) {
-            // Collision latérale, en ignorant les 10 pixels du bas du personnage
+            // Vérifier si la plateforme est visible si c'est une plateforme qui disparaît
+            if (platform instanceof DisappearingPlatform && !platform.isVisible) {
+                continue;
+            }
+    
+            // Vérification de la collision horizontale
             if (
-                newX < platform.x + platform.width &&
                 newX + this.width > platform.x &&
-                this.y < platform.y + platform.height &&
-                this.y + this.height - 1 > platform.y // Ignorer les 10 pixels du bas
+                newX < platform.x + platform.width &&
+                this.y + this.height > platform.y &&
+                this.y < platform.y + platform.height
             ) {
-                canMoveHorizontally = false;
-                if (this.velocityX < 0) {
-                    newX = platform.x + platform.width;
-                } else if (this.velocityX > 0) {
+                // Collision à gauche ou à droite
+                if (this.velocityX > 0) {
                     newX = platform.x - this.width;
+                } else if (this.velocityX < 0) {
+                    newX = platform.x + platform.width;
+                }
+                this.velocityX = 0;
+            }
+    
+            // Vérification de la collision verticale
+            if (
+                newX + this.width > platform.x &&
+                newX < platform.x + platform.width
+            ) {
+                // Collision par le haut de la plateforme (le joueur tombe sur la plateforme)
+                if (oldY + this.height <= platform.y && newY + this.height > platform.y) {
+                    newY = platform.y - this.height;
+                    this.velocityY = 0;
+                    isOnGround = true;
+                    this.isJumping = false;
+    
+                    // Gérer la collision avec une plateforme qui disparaît
+                    if (platform instanceof DisappearingPlatform) {
+                        platform.handleCollision(this);
+                        if (!platform.isVisible) {
+                            newY = oldY + this.velocityY;
+                            isOnGround = false;
+                            this.isJumping = true;
+                        }
+                    }
+                }
+                // Collision par le bas de la plateforme (le joueur saute et heurte le dessous)
+                else if (oldY >= platform.y + platform.height && newY < platform.y + platform.height) {
+                    newY = platform.y + platform.height;
+                    this.velocityY = 0;
+                }
+                // Dans la boucle de vérification des collisions verticales
+                if (platform instanceof DisappearingPlatform && isOnGround) {
+                    platform.handleCollision(this);
+                    if (!platform.isVisible) {
+                        newY = oldY + this.velocityY;
+                        isOnGround = false;
+                        this.isJumping = true;
+                        continue;
+                    }
                 }
             }
-
-            // Collision verticale par le haut (le joueur atterrit sur une plateforme)
-            if (
-                this.y + this.height > platform.y && 
-                this.y + this.height - this.velocityY <= platform.y && 
-                this.x + this.width > platform.x && 
-                this.x < platform.x + platform.width
-            ) {
-                this.y = platform.y - this.height;
-                this.velocityY = 0;
-                this.isJumping = false;
-            }
-
-            // Collision verticale par le bas (empêcher de traverser)
-            if (
-                this.y < platform.y + platform.height && 
-                this.y - this.velocityY >= platform.y + platform.height &&
-                this.x + this.width > platform.x && 
-                this.x < platform.x + platform.width
-            ) {
-                this.y = platform.y + platform.height;
-                this.velocityY = Math.abs(this.velocityY);
-            }
+            
         }
-
-        if (canMoveHorizontally) {
-            this.x = newX;
-        } else {
-            this.velocityX = 0;
-        }
-
-        // Empêcher de tomber sous le sol
+        
+        // Appliquer les nouvelles positions
+        this.x = newX;
+        this.y = newY;
+    
+        // Limites du canvas
+        /*
         if (this.y + this.height >= window.innerHeight) {
             this.y = window.innerHeight - this.height;
             this.velocityY = 0;
             this.isJumping = false;
+            isOnGround = true;
         }
+        if (this.x < 0) this.x = 0;
+        if (this.x + this.width > window.innerWidth) this.x = window.innerWidth - this.width;*/
     }
 
     jump() {
@@ -106,11 +138,23 @@ class Player {
         this.coins++;
     }
 
-    die() {
+    die(enemies, triggerZones) {
         this.deathCount++;
         this.x = this.startX;
         this.y = this.startY;
         this.velocityX = 0;
         this.velocityY = 0;
+        
+        if (triggerZones) {
+            triggerZones.forEach(zone => {
+                zone.reset();
+                if (zone.enemy instanceof TriggerEnemy) {
+                    const index = enemies.indexOf(zone.enemy);
+                    if (index > -1) {
+                        enemies.splice(index, 1);
+                    }
+                }
+            });
+        }
     }
 }
