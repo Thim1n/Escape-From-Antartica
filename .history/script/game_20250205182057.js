@@ -113,6 +113,23 @@ window.onload = function () {
           });
       }
 
+      function checkPowerUpCollision() {
+        powerUp = powerUp.filter(powerUp => {
+            const adjustedKcléeX = powerUp.x - cameraX;
+            const adjustedPlayerX = player.x;
+            if (
+                adjustedPlayerX < powerUp.x + powerUp.radius &&
+                adjustedPlayerX + player.width > powerUp.x - powerUp.radius &&
+                player.y < powerUp.y + powerUp.radius &&
+                player.y + player.height > powerUp.y - powerUp.radius
+            ) {
+                player.augmenterSpeed();
+                return false;   
+            }
+            return true;
+        });
+    }
+
       function checkEnemyCollisions() {
           enemies.forEach(enemy => {
               const adjustedEnemyX = enemy.x - cameraX;
