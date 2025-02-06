@@ -188,19 +188,24 @@ class AnimationManager {
   }
 
   updateAnimation() {
-    if (this.isIdle) {
-      this.playerElement.style.backgroundPosition = "0 0";
-    } else if (this.isWalking) {
-      let frameX = this.currentFrame * -50;
-      this.playerElement.style.backgroundPosition = `${frameX}px 0`;
-      this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
-    } else if (this.isJumping) {
-      this.playerElement.style.backgroundPosition = `-${
-        this.currentFrame * 50
-      }px -50px`;
-      this.currentFrame = (this.currentFrame + 1) % 3;
+    if (this.playerElement) { // Vérifie si l'élément existe
+      if (this.isIdle) {
+        this.playerElement.style.backgroundPosition = "0 0";
+      } else if (this.isWalking) {
+        let frameX = this.currentFrame * -50;
+        this.playerElement.style.backgroundPosition = `${frameX}px 0`;
+        this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+      } else if (this.isJumping) {
+        this.playerElement.style.backgroundPosition = `-${
+          this.currentFrame * 50
+        }px -50px`;
+        this.currentFrame = (this.currentFrame + 1) % 3;
+      }
+    } else {
+      console.error("❌ Élément 'player' introuvable.");
     }
   }
+  
 
   startWalking() {
     this.isWalking = true;
