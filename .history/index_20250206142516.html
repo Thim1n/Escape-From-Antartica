@@ -1,0 +1,47 @@
+<!--Fichie index.html-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antarctic Adventure</title>
+    <link rel="stylesheet" href="styles/loginpage.css" />
+  </head>
+  <body>
+    <div class="background"></div>
+    <div class="login-container">
+      <h2>Escape from Antarctica</h2>
+      <form onsubmit="handleSubmit(event)">
+        <input
+          type="text"
+          class="username-input"
+          id="username"
+          placeholder="Enter your name"
+          required
+        />
+        <button type="submit" class="play-btn">Play Now</button>
+        <button
+          type="button"
+          class="leaderboard-btn"
+          onclick="goToLeaderboard()"
+        >
+          Leaderboards
+        </button>
+      </form>
+    </div>
+
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        localStorage.setItem("playerName", username);
+        const res = await fetch("http://localhost:")
+        window.location.href = "pages/game.html";
+      }
+
+      function goToLeaderboard() {
+        window.location.href = "pages/leaderboard.html";
+      }
+    </script>
+  </body>
+</html>
