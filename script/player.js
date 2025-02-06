@@ -1,7 +1,6 @@
-//Fichier player.js
 class Player {
   constructor(x, y) {
-    this.x = x;
+    this.x = x;  // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -13,19 +12,12 @@ class Player {
     this.speed = 5;
     this.coins = 0;
     this.deathCount = 0;
-    this.startX = x;
-    this.startY = y;
     this.clées = 0;
-
-    // Points de spawn
-    this.startX = x;
-    this.startY = y;
     this.spawnX = x;
     this.spawnY = y;
   }
 
   update(platforms, doors) {
-    // Ajouter doors comme paramètre
     this.velocityY += this.gravity;
 
     const oldX = this.x;
@@ -76,7 +68,6 @@ class Player {
     // Vérifier les collisions avec les portes fermées
     for (let door of doors) {
       if (!door.isOpen) {
-        // Seulement vérifier les portes fermées
         if (this.checkCollision(newX, this.y, door)) {
           if (this.velocityX > 0) {
             newX = door.x - this.width;
@@ -104,7 +95,6 @@ class Player {
     this.y = newY;
   }
 
-  // Ajouter une méthode helper pour vérifier les collisions
   checkCollision(x, y, platform) {
     return (
       x + this.width > platform.x &&
@@ -142,11 +132,11 @@ class Player {
     this.coins++;
   }
 
-  collectclée() {
+  collectClé() {
     this.clées++;
   }
 
-  die(enemies, triggerZones, canvas) {
+  die(enemies, triggerZones) {
     this.deathCount++;
     this.x = this.spawnX;
     this.y = this.spawnY;
@@ -158,10 +148,7 @@ class Player {
     if (triggerZones) {
       triggerZones.forEach((zone) => {
         zone.reset();
-        if (
-          zone.enemy instanceof TriggerEnemy ||
-          zone.enemy instanceof SpikeEnemy
-        ) {
+        if (zone.enemy instanceof TriggerEnemy || zone.enemy instanceof SpikeEnemy) {
           const index = enemies.indexOf(zone.enemy);
           if (index > -1) {
             enemies.splice(index, 1);
@@ -177,56 +164,12 @@ class Player {
   }
 }
 
-class AnimationManager {
-  constructor(playerElement, totalFrames) {
-    this.playerElement = playerElement;
-    this.totalFrames = totalFrames;
-    this.currentFrame = 0;
-    this.isJumping = false;
-    this.isWalking = false;
-    this.isIdle = true;
-  }
+// Création de l'instance de player
+const player = new Player(20, 500);  // Position initiale du joueur
 
-  updateAnimation() {
-    if (this.isIdle) {
-      this.playerElement.style.backgroundPosition = "0 0";
-    } else if (this.isWalking) {
-      let frameX = this.currentFrame * -50;
-      this.playerElement.style.backgroundPosition = `${frameX}px 0`;
-      this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
-    } else if (this.isJumping) {
-      this.playerElement.style.backgroundPosition = `-${
-        this.currentFrame * 50
-      }px -50px`;
-      this.currentFrame = (this.currentFrame + 1) % 3;
-    }
-  }
-
-  startWalking() {
-    this.isWalking = true;
-    this.isIdle = false;
-    this.isJumping = false;
-  }
-
-  startJumping() {
-    this.isJumping = true;
-    this.isWalking = false;
-    this.isIdle = false;
-    this.currentFrame = 0;
-  }
-
-  stopWalking() {
-    this.isWalking = false;
-    this.isIdle = true;
-  }
-}
-
-// Initialisation
-let playerElement = document.getElementById("player");
-let animationManager = new AnimationManager(playerElement, 4);
-
+// Fonction de mise à jour du jeu
 function gameLoop() {
-  animationManager.updateAnimation();
+  player.update(platforms, doors);
   requestAnimationFrame(gameLoop);
 }
 
@@ -235,15 +178,18 @@ gameLoop();
 // Gestion des événements de clavier
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowRight") {
-    animationManager.startWalking();
+    player.moveRight();
+  }
+  if (event.key === "ArrowLeft") {
+    player.moveLeft();
   }
   if (event.key === " ") {
-    animationManager.startJumping();
+    player.jump();
   }
 });
 
 document.addEventListener("keyup", (event) => {
-  if (event.key === "ArrowRight") {
-    animationManager.stopWalking();
+  if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+    player.stop();
   }
 });
