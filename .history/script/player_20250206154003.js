@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = x; // Position initiale du joueur
+    this.x = x;  // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -148,10 +148,7 @@ class Player {
     if (triggerZones) {
       triggerZones.forEach((zone) => {
         zone.reset();
-        if (
-          zone.enemy instanceof TriggerEnemy ||
-          zone.enemy instanceof SpikeEnemy
-        ) {
+        if (zone.enemy instanceof TriggerEnemy || zone.enemy instanceof SpikeEnemy) {
           const index = enemies.indexOf(zone.enemy);
           if (index > -1) {
             enemies.splice(index, 1);
@@ -178,8 +175,7 @@ class AnimationManager {
   }
 
   updateAnimation() {
-    if (this.playerElement) {
-      // Vérifie si l'élément existe
+    if (this.playerElement) { // Vérifie si l'élément existe
       if (this.isIdle) {
         this.playerElement.style.backgroundPosition = "0 0";
       } else if (this.isWalking) {
@@ -196,6 +192,7 @@ class AnimationManager {
       console.error("❌ Élément 'player' introuvable.");
     }
   }
+  
 
   startWalking() {
     this.isWalking = true;
@@ -221,7 +218,7 @@ let playerElement = document.getElementById("player");
 let animationManager = new AnimationManager(playerElement, 4);
 
 // Création de l'instance de player
-const player = new Player(20, 500); // Position initiale du joueur
+const player = new Player(20, 500);  // Position initiale du joueur
 
 // Fonction de mise à jour du jeu
 function gameLoop() {
