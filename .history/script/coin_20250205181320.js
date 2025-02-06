@@ -39,10 +39,26 @@ class Clée extends Coin {
     }
 }
 
+class PowerUp extends Coin {
+    constructor(x, y) {
+        super(x, y);
+        this.color = "pink"; 
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+    }
+}
+
 
 function createClées(canvas) {
     return [
         new Clée(300, canvas.height - 50),
+        new PowerUp(3900, canvas.height - 50),
 
     ];
 }
