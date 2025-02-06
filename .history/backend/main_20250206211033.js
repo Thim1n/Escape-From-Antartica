@@ -125,16 +125,14 @@ app.get("/games", async (req, res) => {
 app.get("/leaderboard", async (req, res) => {
   try {
     const leaderboard = await sequelize.query(
-      `SELECT u.name, g.time, g.score
-FROM game g
-JOIN user u ON g.userID = u.id
-WHERE g.time = (
-    SELECT MIN(g2.time) 
-    FROM game g2 
-    WHERE g2.userID = g.userID
-)
-GROUP BY u.name, g.time, g.score
-ORDER BY g.time ASC;`,
+      `SELECT u.name, g.time, g.score 
+       FROM game g
+       JOIN user u ON g.userID = u.id
+       WHERE g.time = (SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = g.userID)
+       GROUP BY u.name
+       ORDER BY g.time ASC;
+       
+       `,
       {
         type: Sequelize.QueryTypes.SELECT,
       }

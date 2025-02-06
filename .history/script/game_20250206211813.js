@@ -215,7 +215,7 @@ window.onload = function () {
         },
         body: JSON.stringify({
             time: playerTime,
-            name: playerName,
+            playerName: playerName,
         }),
       });
     } catch (error) {

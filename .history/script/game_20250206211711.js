@@ -1,4 +1,3 @@
-
 window.onload = function () {
   let isGameSaved = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
@@ -213,10 +212,7 @@ window.onload = function () {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            time: playerTime,
-            name: playerName,
-        }),
+        body: JSON.stringify({ playerName, playerTime }),
       });
     } catch (error) {
       console.error("Error saving game", error);

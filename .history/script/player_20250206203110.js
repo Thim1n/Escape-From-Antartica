@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = 4700; // Position initiale du joueur
+    this.x = x; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -9,7 +9,7 @@ class Player {
     this.velocityY = 0;
     this.gravity = 0.4;
     this.isJumping = false;
-    this.speed = 5;
+    this.speed = 2;
     this.coins = 0;
     this.deathCount = 0;
     this.clées = 0;
@@ -165,7 +165,38 @@ class Player {
     this.spawnX = x;
     this.spawnY = y;
   }
+};
 
+/*class AnimationManager {
+  constructor(playerElement, totalFrames) {
+    this.playerElement = playerElement;
+    this.totalFrames = totalFrames;
+    this.currentFrame = 0;
+    this.isJumping = false;
+    this.isWalking = false;
+    this.isIdle = true;
+  }
+
+  updateAnimation() {
+    if (this.playerElement) {
+      // Vérifie si l'élément existe
+      if (this.isIdle) {
+        this.playerElement.style.backgroundPosition = "0 0";
+      } else if (this.isWalking) {
+        let frameX = this.currentFrame * -50;
+        this.playerElement.style.backgroundPosition = `${frameX}px 0`;
+        this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+      } else if (this.isJumping) {
+        this.playerElement.style.backgroundPosition = `-${
+          this.currentFrame * 50
+        }px -50px`;
+        this.currentFrame = (this.currentFrame + 1) % 3;
+      }
+    } else {
+      console.error("❌ Élément 'player' introuvable.");
+    }
+  }
+*/
   startWalking() {
     this.isWalking = true;
     this.isIdle = false;
@@ -187,6 +218,7 @@ class Player {
 
 // Initialisation
 let playerElement = document.getElementById("player");
+let animationManager = new AnimationManager(playerElement, 4);
 
 // Création de l'instance de player
 const player = new Player(20, 500); // Position initiale du joueur

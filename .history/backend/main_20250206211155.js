@@ -134,7 +134,10 @@ WHERE g.time = (
     WHERE g2.userID = g.userID
 )
 GROUP BY u.name, g.time, g.score
-ORDER BY g.time ASC;`,
+ORDER BY g.time ASC;
+
+
+       `,
       {
         type: Sequelize.QueryTypes.SELECT,
       }

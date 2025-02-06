@@ -1,3 +1,4 @@
+const { time } = require("console");
 
 window.onload = function () {
   let isGameSaved = false;
@@ -214,8 +215,7 @@ window.onload = function () {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            time: playerTime,
-            name: playerName,
+            time
         }),
       });
     } catch (error) {

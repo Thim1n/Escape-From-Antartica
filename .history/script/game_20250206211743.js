@@ -1,3 +1,4 @@
+const { time } = require("console");
 
 window.onload = function () {
   let isGameSaved = false;
@@ -215,7 +216,7 @@ window.onload = function () {
         },
         body: JSON.stringify({
             time: playerTime,
-            name: playerName,
+            
         }),
       });
     } catch (error) {

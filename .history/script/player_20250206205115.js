@@ -1,13 +1,13 @@
 class Player {
   constructor(x, y) {
-    this.x = 4700; // Position initiale du joueur
+    this.x = x; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
     this.color = "blue";
     this.velocityX = 0;
     this.velocityY = 0;
-    this.gravity = 0.4;
+    this.gravity = 0.6 4;
     this.isJumping = false;
     this.speed = 5;
     this.coins = 0;

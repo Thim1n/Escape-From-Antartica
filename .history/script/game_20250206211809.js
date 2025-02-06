@@ -1,4 +1,4 @@
-
+d
 window.onload = function () {
   let isGameSaved = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
@@ -215,7 +215,7 @@ window.onload = function () {
         },
         body: JSON.stringify({
             time: playerTime,
-            name: playerName,
+            playerName: playerName,
         }),
       });
     } catch (error) {
