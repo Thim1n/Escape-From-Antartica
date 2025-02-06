@@ -164,6 +164,59 @@ class Player {
   }
 }
 
+class AnimationManager {
+  constructor(playerElement, totalFrames) {
+    this.playerElement = playerElement;
+    this.totalFrames = totalFrames;
+    this.currentFrame = 0;
+    this.isJumping = false;
+    this.isWalking = false;
+    this.isIdle = true;
+  }
+
+  updateAnimation() {
+    if (this.playerElement) { // Vérifie si l'élément existe
+      if (this.isIdle) {
+        this.playerElement.style.backgroundPosition = "0 0";
+      } else if (this.isWalking) {
+        let frameX = this.currentFrame * -50;
+        this.playerElement.style.backgroundPosition = `${frameX}px 0`;
+        this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+      } else if (this.isJumping) {
+        this.playerElement.style.backgroundPosition = `-${
+          this.currentFrame * 50
+        }px -50px`;
+        this.currentFrame = (this.currentFrame + 1) % 3;
+      }
+    } else {
+      console.error("❌ Élément 'player' introuvable.");
+    }
+  }
+  
+
+  startWalking() {
+    this.isWalking = true;
+    this.isIdle = false;
+    this.isJumping = false;
+  }
+
+  startJumping() {
+    this.isJumping = true;
+    this.isWalking = false;
+    this.isIdle = false;
+    this.currentFrame = 0;
+  }
+
+  stopWalking() {
+    this.isWalking = false;
+    this.isIdle = true;
+  }
+}
+
+// Initialisation
+let playerElement = document.getElementById("player");
+let animationManager = new AnimationManager(playerElement, 4);
+
 // Création de l'instance de player
 const player = new Player(20, 500);  // Position initiale du joueur
 

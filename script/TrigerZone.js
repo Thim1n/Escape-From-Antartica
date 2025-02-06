@@ -53,6 +53,7 @@ class TriggerZone {
 }
 
 // Fonction de création des zones
+// Fonction de création des zones
 function createTriggerZones(canvas) {
     if (!canvas) return []; // Guard clause if canvas is undefined
     
@@ -90,9 +91,9 @@ function createTriggerZones(canvas) {
                 3
             )
         ),
-        
-        // Troisième zone de déclenchement
-        new TriggerZone(
+
+        // Troisième zone de déclenchement avec TriggerSpike
+        /*new TriggerZone(
             2330, 
             canvas.height - 100, 
             400, 
@@ -138,6 +139,6 @@ function createTriggerZones(canvas) {
             400, 
             100,
             new TriggerSpike(2610, canvas.height - 100)  // Utilisation de TriggerSpike ici
-        ),
+        ),*/
     ];
 }
