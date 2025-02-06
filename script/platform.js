@@ -209,15 +209,22 @@ function createPlatforms(canvas) {
         new Platform(1420, canvas.height - 850, 200, 750, "ice_cliff"),
         new Platform(1420, canvas.height - 100, 200, 10, "ice_block"),
         new DisappearingPlatform(250, canvas.height - 420, 100, 10),
+        new Platform(3430, canvas.height - 90, 40, 50, "ice_cliff"),
         new Platform(1750, canvas.height - 70, 300, 50, "ice_cliff"),
         new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
         new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
-        new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
+        new Platform(2750, canvas.height - 70, 750, 50, "ice_cliff"),
+        new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
+        new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
+        new Platform(1620, canvas.height - 180, 40, 10, "ice_block"),
+        new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
+        new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
     ];
 }
 
 function createDoors(canvas) {
     return [
         new Door(1450, canvas.height - 100),
+        new Door(3500, canvas.height - 480, 50),
     ];
 }
