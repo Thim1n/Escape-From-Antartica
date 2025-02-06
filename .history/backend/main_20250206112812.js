@@ -62,7 +62,10 @@ const Game = sequelize.define(
       allowNull: false,
     },
   },
-  { tableName: "game", timestamps: false }
+  { tableName: "game",
+    timestamps: false,
+   },
+  
 );
 
 // Définir l'association entre User et Game
@@ -118,23 +121,45 @@ app.get("/games", async (req, res) => {
       .json({ error: "Erreur lors de la récupération des parties" });
   }
 });
+// Route "/leaderboard" pour afficher le classement trié par temps
 app.get("/leaderboard", async (req, res) => {
   try {
-    const leaderboard = await sequelize.query(
-      `SELECT u.name, g.time, g.score 
-       FROM game g
-       JOIN user u ON g.userID = u.id
-       WHERE g.time = (SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = g.userID)
-       ORDER BY g.time ASC;`,
-      {
-        type: Sequelize.QueryTypes.SELECT,
-      }
-    );
+    // Récupérer le leaderboard trié par temps et un score par utilisateur
+    const leaderboard = await Game.findAll({
+      attributes: [
+        "userId",
+        [sequelize.fn("MIN", sequelize.col("time")), "minTime"], // Temps minimum pour chaque utilisateur
+        [sequelize.fn("MAX", sequelize.col("score")), "maxScore"], // Score maximum pour chaque utilisateur
+      ],
+      include: [
+        {
+          model: User,
+          attributes: []], // Inclure le nom de l'utilisateur
+        },
+      ],
+      group: ["name"], // Grouper par utilisateur
+      order: [[sequelize.fn("MIN", sequelize.col("time")), "ASC"]], // Trier par le temps le plus bas
+    });
 
-    res.json(leaderboard);
+    // Vérifier si des données sont présentes
+    if (leaderboard.length === 0) {
+      return res.status(404).json({ message: "Aucun leaderboard disponible" });
+    }
+
+    // Formater les résultats
+    const result = leaderboard.map((item) => ({
+      name: item.User.name,
+      score: item.dataValues.maxScore,
+      time: item.dataValues.minTime,
+    }));
+
+    // Retourner la réponse
+    res.json(result);
   } catch (error) {
-    console.error("Erreur lors de la récupération du classement :", error);
-    res.status(500).json({ message: "Erreur serveur" });
+    console.error("Erreur dans la récupération du leaderboard", error);
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération du leaderboard" });
   }
 });
 

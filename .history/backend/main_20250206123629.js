@@ -120,17 +120,23 @@ app.get("/games", async (req, res) => {
 });
 app.get("/leaderboard", async (req, res) => {
   try {
-    const leaderboard = await sequelize.query(
-      `SELECT u.name, g.time, g.score 
-       FROM game g
-       JOIN user u ON g.userID = u.id
-       WHERE g.time = (SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = g.userID)
-       ORDER BY g.time ASC;`,
-      {
-        type: Sequelize.QueryTypes.SELECT,
-      }
-    );
-
+    const results = await Game.findAll({
+      attributes: ["time", "score"],
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+      ],
+      where: {
+        time: {
+          [Op.eq]: Sequelize.literal(
+            "(SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = game.userID)"
+          ),
+        },
+      },
+      order: [["time", "ASC"]],
+    });
     res.json(leaderboard);
   } catch (error) {
     console.error("Erreur lors de la récupération du classement :", error);

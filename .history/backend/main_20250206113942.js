@@ -62,7 +62,10 @@ const Game = sequelize.define(
       allowNull: false,
     },
   },
-  { tableName: "game", timestamps: false }
+  { tableName: "game",
+    timestamps: false,
+   },
+  
 );
 
 // Définir l'association entre User et Game
@@ -118,25 +121,13 @@ app.get("/games", async (req, res) => {
       .json({ error: "Erreur lors de la récupération des parties" });
   }
 });
+// Route "/leaderboard" pour afficher le classement trié par temps
 app.get("/leaderboard", async (req, res) => {
   try {
-    const leaderboard = await sequelize.query(
-      `SELECT u.name, g.time, g.score 
-       FROM game g
-       JOIN user u ON g.userID = u.id
-       WHERE g.time = (SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = g.userID)
-       ORDER BY g.time ASC;`,
-      {
-        type: Sequelize.QueryTypes.SELECT,
-      }
-    );
-
-    res.json(leaderboard);
-  } catch (error) {
-    console.error("Erreur lors de la récupération du classement :", error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-});
+    // Récupérer le leaderboard trié par temps et un score par utilisateur
+    const leaderboard = await Game.findAll()}
+    catch (error) {
+      console.error("Erreur lors de la récupération du classement :", error);
 
 //Route pour ajouter un utilisateur
 app.post("/adduser", async (req, res) => {

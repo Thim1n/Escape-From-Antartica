@@ -1,5 +1,6 @@
-/* Leaderboard.css */
-body {
+async function fetchLeaderboardData() {
+  try {
+    const response = await fetch("body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(200, 220, 255, 0.9)), 
                 url('../assets/imgs/login-background.webp');
@@ -83,4 +84,32 @@ tbody tr:nth-child(2) {
 
 tbody tr:nth-child(3) {
     background: rgba(205, 127, 50, 0.1);
+}");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching leaderboard data:", error);
+    return [];
+  }
 }
+
+function renderLeaderboardData(data) {
+  const tableBody = document.querySelector("#leaderboard-table tbody");
+  tableBody.innerHTML = ""; // Clear existing content
+  console.log("Voici les données fetch : ");
+  console.log(data);
+  data.forEach((item, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.name}</td>
+            <td>${item.score}</td>
+        `;
+    tableBody.appendChild(row);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const leaderboardData = await fetchLeaderboardData();
+  renderLeaderboardData(leaderboardData);
+});

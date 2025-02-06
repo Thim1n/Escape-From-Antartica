@@ -1,6 +1,5 @@
 // Importation du module express
 const express = require("express");
-const cors = require("cors");
 const { Sequelize, DataTypes } = require("sequelize");
 
 // Création d'une instance d'Express
@@ -8,7 +7,6 @@ const app = express();
 
 // Middleware pour gérer les requêtes en JSON
 app.use(express.json());
-app.use(cors());
 
 // Connexion à la base de données
 const sequelize = new Sequelize("gamedatabase", "root", "root", {
@@ -62,9 +60,9 @@ const Game = sequelize.define(
       allowNull: false,
     },
   },
-  { tableName: "game", timestamps: false }
+  { tableName: "game" }
 );
-
+s
 // Définir l'association entre User et Game
 User.hasMany(Game, { foreignKey: "userId" }); // Un utilisateur peut avoir plusieurs jeux
 Game.belongsTo(User, { foreignKey: "userId" }); // Chaque jeu appartient à un utilisateur
@@ -103,38 +101,63 @@ app.get("/users", async (req, res) => {
 
 app.get("/games", async (req, res) => {
   try {
-    const games = await Game.findAll({ raw: true }); // Récupère les données brutes
-    console.log("Jeux récupérés :", games);
+    // Récupérer tous les utilisateurs
+    const games = await Game.findAll();
 
-    if (!games || games.length === 0) {
-      return res.status(404).json({ message: "Aucune partie trouvée" });
+    // Vérifier si des utilisateurs existent
+    if (games.length === 0) {
+      return res.status(404).json({ message: "Aucune partie trouvé" });
     }
 
+    // Retourner la liste des utilisateurs
     res.json(games);
   } catch (error) {
-    console.error("Erreur lors de la récupération des parties :", error);
+    console.error("Erreur lors de la récupération des utilisateurs", error);
     res
       .status(500)
-      .json({ error: "Erreur lors de la récupération des parties" });
+      .json({ error: "Erreur lors de la récupération des utilisateurs" });
   }
 });
+
+// Route "/leaderboard" pour afficher le classement trié par temps
 app.get("/leaderboard", async (req, res) => {
   try {
-    const leaderboard = await sequelize.query(
-      `SELECT u.name, g.time, g.score 
-       FROM game g
-       JOIN user u ON g.userID = u.id
-       WHERE g.time = (SELECT MIN(g2.time) FROM game g2 WHERE g2.userID = g.userID)
-       ORDER BY g.time ASC;`,
-      {
-        type: Sequelize.QueryTypes.SELECT,
-      }
-    );
+    // Récupérer le leaderboard trié par temps et un score par utilisateur
+    const leaderboard = await Game.findAll({
+      attributes: [
+        "userId",
+        [sequelize.fn("MIN", sequelize.col("time")), "minTime"], // Temps minimum pour chaque utilisateur
+        [sequelize.fn("MAX", sequelize.col("score")), "maxScore"], // Score maximum pour chaque utilisateur
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ["name"], // Inclure le nom de l'utilisateur
+        },
+      ],
+      group: ["userId"], // Grouper par utilisateur
+      order: [[sequelize.fn("MIN", sequelize.col("time")), "ASC"]], // Trier par le temps le plus bas
+    });
 
-    res.json(leaderboard);
+    // Vérifier si des données sont présentes
+    if (leaderboard.length === 0) {
+      return res.status(404).json({ message: "Aucun leaderboard disponible" });
+    }
+
+    // Formater les résultats
+    const result = leaderboard.map((item) => ({
+      name: item.User.name,
+      score: item.dataValues.maxScore,
+      time: item.dataValues.minTime,
+    }));
+
+    // Retourner la réponse
+    res.json(result);
   } catch (error) {
-    console.error("Erreur lors de la récupération du classement :", error);
-    res.status(500).json({ message: "Erreur serveur" });
+    console.error("Erreur dans la récupération du leaderboard", error);
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération du leaderboard" });
   }
 });
 
@@ -213,9 +236,11 @@ app.get("/getplayerid", async (req, res) => {
       "Erreur lors de la récupération de l'ID de l'utilisateur",
       error
     );
-    res.status(500).json({
-      error: "Erreur lors de la récupération de l'ID de l'utilisateur",
-    });
+    res
+      .status(500)
+      .json({
+        error: "Erreur lors de la récupération de l'ID de l'utilisateur",
+      });
   }
 });
 
