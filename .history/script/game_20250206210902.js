@@ -1,6 +1,4 @@
-
 window.onload = function () {
-  let isGameSaved = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
   if (!backgroundMusic) {
     console.error("Background music not found");
@@ -196,30 +194,22 @@ window.onload = function () {
         canvas.width / 2 - 100,
         canvas.height / 2 + 40
       );
-      if (!isGameSaved) {
-        saveGameAPI();
-        isGameSaved = true;
-      }
-    }
-  }
 
-  function saveGameAPI() {
-    const playerName = localStorage.getItem("playerName");
-    const playerTime = gameTime;
-
-    try {
-      fetch("http://localhost:3000/savegame", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            time: playerTime,
+      const playerName = localStorage.getItem("playerName");
+      try {
+        await fetch("http://localhost:3000/savegame", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            time: gameTime,
             name: playerName,
-        }),
-      });
-    } catch (error) {
-      console.error("Error saving game", error);
+          }),
+        });
+      } catch (error) {
+        console.error("Erreur lors de la sauvegarde:", error);
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = 4700; // Position initiale du joueur
+    this.x = x; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -187,6 +187,7 @@ class Player {
 
 // Initialisation
 let playerElement = document.getElementById("player");
+let animationManager = new AnimationManager(playerElement, 4);
 
 // Création de l'instance de player
 const player = new Player(20, 500); // Position initiale du joueur

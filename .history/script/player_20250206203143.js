@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = 4700; // Position initiale du joueur
+    this.x = x; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -9,7 +9,7 @@ class Player {
     this.velocityY = 0;
     this.gravity = 0.4;
     this.isJumping = false;
-    this.speed = 5;
+    this.speed = 2;
     this.coins = 0;
     this.deathCount = 0;
     this.clées = 0;
@@ -165,6 +165,7 @@ class Player {
     this.spawnX = x;
     this.spawnY = y;
   }
+}
 
   startWalking() {
     this.isWalking = true;
@@ -187,6 +188,7 @@ class Player {
 
 // Initialisation
 let playerElement = document.getElementById("player");
+let animationManager = new AnimationManager(playerElement, 4);
 
 // Création de l'instance de player
 const player = new Player(20, 500); // Position initiale du joueur

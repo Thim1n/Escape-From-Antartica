@@ -1,6 +1,4 @@
-
 window.onload = function () {
-  let isGameSaved = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
   if (!backgroundMusic) {
     console.error("Background music not found");
@@ -161,13 +159,12 @@ window.onload = function () {
     cameraY = Math.max(0, Math.min(cameraY, canvas.height - player.height));
   }
 
-  async function drawGame() {
+  function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
     ctx.translate(-cameraX, -cameraY);
 
-    // Draw game elements
     platforms.forEach((platform) => platform.draw(ctx));
     coins.forEach((coin) => coin.draw(ctx));
     clée.forEach((clée) => clée.draw(ctx));
@@ -178,7 +175,7 @@ window.onload = function () {
 
     ctx.restore();
 
-    // Draw UI elements
+    // UI elements
     ctx.fillStyle = "black";
     ctx.font = "20px Arial";
     ctx.fillText(`Temps: ${formatTime(gameTime)}`, 10, 30);
@@ -196,30 +193,7 @@ window.onload = function () {
         canvas.width / 2 - 100,
         canvas.height / 2 + 40
       );
-      if (!isGameSaved) {
-        saveGameAPI();
-        isGameSaved = true;
-      }
-    }
-  }
-
-  function saveGameAPI() {
-    const playerName = localStorage.getItem("playerName");
-    const playerTime = gameTime;
-
-    try {
-      fetch("http://localhost:3000/savegame", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            time: playerTime,
-            name: playerName,
-        }),
-      });
-    } catch (error) {
-      console.error("Error saving game", error);
+      let res = await fetch("")
     }
   }
 

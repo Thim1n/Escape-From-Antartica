@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = 4700; // Position initiale du joueur
+    this.x = 4; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
