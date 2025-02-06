@@ -1,4 +1,3 @@
-//Fichier ennemy.js
 class Enemy {
   constructor(x, y, width = 40, height = 50) {
     this.x = x;
@@ -44,12 +43,12 @@ class MovingEnemy extends Enemy {
     this.speed = speed;
     this.directionX = 1;
     this.directionY = 1;
-    // Pré-calcul des limites avec la largeur
     this.maxXWithWidth = this.maxX - this.width;
     this.maxYWithHeight = this.maxY - this.height;
   }
 
-  movE() {
+  // Méthode 'move' pour le déplacement de l'ennemi
+  move() {
     if (this.minX !== this.maxX) {
       this.x += this.speed * this.directionX;
       if (this.x <= this.minX || this.x >= this.maxXWithWidth) {
@@ -89,7 +88,7 @@ class TriggerEnemy extends MovingEnemy {
   }
 
   removeEnemy() {
-    if (!this.isAlive) return; // Évite les appels multiples
+    if (!this.isAlive) return;
     this.isAlive = false;
     const index = enemies.indexOf(this);
     if (index > -1) {
