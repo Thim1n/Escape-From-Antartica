@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Jackob's Adventure</title>
+    <link rel="stylesheet" href="../styles/game.css" />
+  </head>
+  <body>
+    <audio id="backgroundMusic" loop>
+      <source src="../assets/sound_effect/Son.mp3" type="audio/mp3" />
+      Votre navigateur ne supporte pas l'audio.
+    </audio>
+
+    <canvas id="gameCanvas"></canvas>
+    <script>
+      // Empêcher le zoom avec Ctrl + molette/touches +/-
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.ctrlKey &&
+          (event.key === "+" || event.key === "-" || event.key === "=")
+        ) {
+          event.preventDefault();
+        }
+      });
+
+      // Empêcher le zoom avec la molette
+      document.addEventListener(
+        "wheel",
+        function (event) {
+          if (event.ctrlKey) {
+            event.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+
+      // Empêcher le pinch-zoom sur mobile
+      document.addEventListener(
+        "touchmove",
+        function (event) {
+          if (event.scale !== 1) {
+            event.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+    </script>
+    <script src="../script/platform.js"></script>
+    <script src="../script/coin.js"></script>
+    <script src="../script/enemy.js"></script>
+    <script src="player.js"></script>
+    <script src="TrigerZone.js"></script>
+    <script src="Victoryzone.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
