@@ -1,7 +1,7 @@
 // Fichier VictoryZone.js
 class VictoryZone {
     constructor(x, y, width = 50, height = 50) {
-        this.x = 4999;
+        this.x = 8000;
         this.y = y;
         this.width = width;
         this.height = height;
@@ -21,7 +21,7 @@ class VictoryZone {
             player.y < this.y + this.height &&
             player.y + player.height > this.y) {
             this.isTriggered = true;
-
+            re
             return true;
         }
         return false;

@@ -31,17 +31,11 @@
     </div>
 
     <script>
-      async function handleSubmit(event) {
+      function handleSubmit(event) {
         event.preventDefault();
         const username = document.getElementById("username").value;
         localStorage.setItem("playerName", username);
-        const res = await fetch("http://localhost:3000/adduser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name: username }),
-        });
+        const res 
         window.location.href = "pages/game.html";
       }
 

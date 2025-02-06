@@ -1,6 +1,6 @@
 //Fichier game.js
 window.onload = function () {
-  let GAMESAVED = false;
+  const GAMESAVED = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
 
   if (backgroundMusic) {

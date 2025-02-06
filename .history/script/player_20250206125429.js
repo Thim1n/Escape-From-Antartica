@@ -1,7 +1,7 @@
 //Fichier player.js
 class Player {
   constructor(x, y) {
-    this.x = 4600;
+    this.x = ;
     this.y = y;
     this.width = 40;
     this.height = 50;

@@ -25,20 +25,17 @@ sequelize
   );
 
 // Définition des modèles User et Game
-const User = sequelize.define(
-  "User",
-  {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
+const User = sequelize.define("User", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-  { tableName: "user", timestamps: false, freezeTableName: true }
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+},
 );
 
 const Game = sequelize.define(
@@ -154,14 +151,6 @@ app.post("/adduser", async (req, res) => {
   }
 
   try {
-    // Vérifier si l'utilisateur existe déjà
-    const existingUser = await User.findOne({ where: { name } });
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ error: "Le nom de l'utilisateur est déjà enregistré" });
-    }
-
     // Créer un nouvel utilisateur
     const newUser = await User.create({ name });
 
@@ -205,13 +194,10 @@ app.post("/savegame", async (req, res) => {
       console.log("Utilisateur existant trouvé :", user);
     }
     const USERID = user.id;
-    // Convertir le temps de millisecondes en secondes
-    const timeInSeconds = time / 1000;
-    
     // Créer une nouvelle entrée dans la table "game" avec l'ID de l'utilisateur
     const newGame = await Game.create({
       userId: USERID,
-      time: timeInSeconds,
+      time: time,
       score: 0,
     });
 
