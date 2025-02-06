@@ -200,6 +200,10 @@ class AnimationManager {
       this.currentFrame = (this.currentFrame + 1) % 3;
     }
   }
+  
+  augmenterSpeed() {
+    this.speed=10;
+  }
 
   startWalking() {
     this.isWalking = true;

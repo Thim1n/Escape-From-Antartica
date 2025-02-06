@@ -214,7 +214,19 @@ function createEnemies(canvas) {
         // Groupe au sol
         { startX: 820, y: height - 30, count: 17, spacing: 30 },
         // Dernier groupe
-        { startX: 2340, y: height - 100, count: 4, spacing: 30 }
+        { startX: 2340, y: height - 100, count: 4, spacing: 30 },
+
+        { startX: 3720, y: height - 100, count: 1, spacing: 30 },
+        { startX: 3820, y: height - 200, count: 1, spacing: 30 },
+        { startX: 3920, y: height - 300, count: 1, spacing: 30 },
+        { startX: 4020, y: height - 400, count: 1, spacing: 30 },
+        { startX: 4070, y: height - 570, count: 1, spacing: 30 },
+
+        { startX: 4200, y: height - 30, count: 19, spacing: 30 }
+
+
+
+
     ];
 
     // Création efficace des spikes

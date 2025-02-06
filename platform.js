@@ -212,6 +212,17 @@ function createPlatforms(canvas) {
         new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
         new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
         new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
+
+
+
+        new Platform(3700, canvas.height - 70, 50, 50, "ice_block"),
+        new Platform(3800, canvas.height - 170, 50, 50, "ice_block"),
+        new Platform(3900, canvas.height - 270, 50, 50, "ice_block"),
+        new Platform(4000, canvas.height - 370, 50, 50, "ice_block"),
+        new Platform(4100, canvas.height - 470, 50, 50, "ice_block"),
+        new Platform(4100, canvas.height - 570, 50, 50, "ice_block"),
+        new Platform(4300, canvas.height - 550, 50, 50, "ice_block"),
+
     ];
 }
 
