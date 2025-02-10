@@ -182,6 +182,7 @@ window.onload = function () {
     clée.forEach((clée) => clée.draw(ctx));
     enemies.forEach((enemy) => enemy.draw(ctx));
     doors.forEach((door) => door.draw(ctx));
+    triggerZones.forEach((zone) => zone.draw(ctx));
     victoryZone.draw(ctx);
     player.draw(ctx);
 

@@ -280,10 +280,10 @@ function createEnemies(canvas) {
   );
   enemies.push( new Enemy( -50, height  ,10000 , 0) );
 
-  enemies.push(new HalfRoundEnemy(1800, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2000, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2200, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2320, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(1800, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2000, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2200, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2320, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
   enemies.push(
     new RoundEnemy(2500, 475, 80, "../assets/sprite/scie.png", 13.5, 1700, 3400, 0, height, 'horizontal')
   );
@@ -293,7 +293,12 @@ function createEnemies(canvas) {
   enemies.push(
   new RoundEnemy(3000, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
   );
-
+  enemies.push(
+    new RoundEnemy(3200, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    );
+    enemies.push(
+    new RoundEnemy(3400, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    );
   const spikeGroups = [
     { startX: 320, y: height - 250, count: 2, spacing: 30 },
     { startX: 820, y: height - 30, count: 17, spacing: 30 },

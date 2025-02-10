@@ -46,6 +46,19 @@ class TriggerZone {
         }
         return false;
     }
+    draw(ctx) {
+        ctx.strokeStyle = this.isTriggered ? "rgba(255, 0, 0, 0.5)" : "rgba(0, 255, 0, 0.5)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]); // Ligne pointillée
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.setLineDash([]); // Réinitialiser le style de ligne
+
+        // Si l'ennemi existe et est en vie, le dessiner aussi
+        if (this.enemy && this.enemy.isAlive) {
+            this.enemy.draw(ctx);
+        }
+    }
+
 
     reset() {
         this.isTriggered = false;
