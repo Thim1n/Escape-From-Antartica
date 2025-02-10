@@ -154,8 +154,9 @@ class Door extends Platform {
 
     draw(ctx) {
         // Dessiner la porte
-        ctx.fillStyle = this.isOpen ? "green" : this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        const imageToDraw = this.isOpen ? this.openImage : this.closedImage;
+        ctx.drawImage(imageToDraw, this.x, this.y, this.width, this.height);
+        
         
         // Indiquer visuellement si c'est un checkpoint
         if (this.isCheckpoint) {
@@ -186,7 +187,7 @@ class Door extends Platform {
         this.isCheckpoint = true;
         
         // Mettre à jour le point de spawn du joueur
-        player.setSpawnPoint(this.x + this.width + 10, this.y + this.height - player.height);
+        player.setSpawnPoint(this.x + this.width + 10, this.y + this.height - player.height - 10);
     }
 }
 
@@ -228,6 +229,6 @@ function createPlatforms(canvas) {
 
 function createDoors(canvas) {
     return [
-        new Door(1450, canvas.height - 100),
+        new Door(1450, canvas.height - 95,60,80 ),
     ];
 }

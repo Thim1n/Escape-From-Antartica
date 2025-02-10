@@ -20,7 +20,7 @@ function createCoins(canvas) {
 }
 
 
-class Cle extends Coin {
+class Clée extends Coin {
     constructor(x, y) {
       super(x, y);
       // Charger l'image qui servira de sprite pour la clé
