@@ -209,3 +209,4 @@ class Player {
     this.isWalking = false;
   }
 }
+/**/

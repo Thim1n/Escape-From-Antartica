@@ -1,7 +1,7 @@
 // Fichier VictoryZone.js
 class VictoryZone {
     constructor(x, y, width = 50, height = 50) {
-        this.x = 4999;
+        this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;

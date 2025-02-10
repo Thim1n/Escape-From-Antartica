@@ -4,7 +4,6 @@ class Enemy {
     this.y = y;
     this.width = width;
     this.height = height;
-    // Pré-calcul des limites
     this.right = x + width;
     this.bottom = y + height;
   }
@@ -12,13 +11,11 @@ class Enemy {
   update() {}
 
   draw(ctx) {
-    // Pas besoin de save/restore pour une opération simple
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   checkCollision(player) {
-    // Pré-calcul des limites du joueur
     const playerRight = player.x + player.width;
     const playerBottom = player.y + player.height;
 
@@ -47,7 +44,10 @@ class MovingEnemy extends Enemy {
     this.maxYWithHeight = this.maxY - this.height;
   }
 
-  // Méthode 'move' pour le déplacement de l'ennemi
+  update() {
+    this.move();
+  }
+
   move() {
     if (this.minX !== this.maxX) {
       this.x += this.speed * this.directionX;
@@ -68,7 +68,6 @@ class MovingEnemy extends Enemy {
       }
     }
 
-    // Mise à jour des limites de collision
     this.right = this.x + this.width;
     this.bottom = this.y + this.height;
   }
@@ -110,7 +109,6 @@ class SpikeEnemy extends Enemy {
   constructor(x, y, width = 30, height = 30) {
     super(x, y, width, height);
     this.color = "#8B0000";
-    // Pré-calcul des points du triangle
     this.points = {
       topX: this.x + width / 2,
       topY: this.y,
@@ -138,59 +136,50 @@ class SpikeEnemy extends Enemy {
 }
 
 class RoundEnemy extends Enemy {
-  constructor(x, y, radius = 20, imageSrc, speed = 2, minX = 0, maxX = 500) {
-    super(x, y, radius * 2, radius * 2); // On passe la largeur et la hauteur du cercle (diamètre)
-    this.radius = radius; // Rayon du cercle
-    this.image = new Image(); // Créer un objet Image
-    this.image.src = imageSrc; // Source de l'image à charger
-    this.speed = speed; // Vitesse de l'ennemi
-    this.directionX = 1; // Direction initiale sur l'axe X
-    this.minX = minX; // Position minimale pour le mouvement (limite gauche)
-    this.maxX = maxX; // Position maximale pour le mouvement (limite droite)
-    this.rotation = 0; // Angle de rotation de l'image
+  constructor(x, y, radius = 20, imageSrc, speed = 2, minX = 0, maxX = 500, minY = 0, maxY = 500, movementType = 'horizontal') {
+    super(x, y, radius * 2, radius * 2);
+    this.radius = radius;
+    this.image = new Image();
+    this.image.src = imageSrc;
+    this.speed = speed;
+    this.directionX = 1;
+    this.directionY = 1;
+    this.minX = minX;
+    this.maxX = maxX;
+    this.minY = minY;
+    this.maxY = maxY;
+    this.movementType = movementType;
+    this.rotationSpeed = 0.05; // Ajout d'une vitesse de rotation
+    this.rotation = 0;
   }
 
   update() {
-    // Déplacement de l'ennemi uniquement sur l'axe X
-    this.x += this.speed * this.directionX;
-
-    // Rotation de l'image à chaque déplacement horizontal
-    this.rotation += 0.05; // Ajustez la vitesse de rotation ici
-
-    // Inverser la direction lorsqu'il atteint les bords
-    if (this.x <= this.minX || this.x >= this.maxX - this.width) {
-      this.directionX *= -1; // Changer de direction
+    if (this.movementType === 'horizontal') {
+      this.x += this.speed * this.directionX;
+      if (this.x <= this.minX || this.x >= this.maxX - this.width) {
+        this.directionX *= -1;
+      }
+    } else if (this.movementType === 'vertical') {
+      this.y += this.speed * this.directionY;
+      if (this.y <= this.minY || this.y >= this.maxY - this.height) {
+        this.directionY *= -1;
+      }
     }
 
-    // Mise à jour des limites de collision
+    this.rotation += this.rotationSpeed; // Mise à jour de la rotation
+
     this.right = this.x + this.width;
     this.bottom = this.y + this.height;
   }
 
   draw(ctx) {
-    // Sauvegarde de l'état du contexte avant de le transformer
     ctx.save();
-
-    // Déplacement de l'origine de la rotation vers le centre de l'image
     ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
-
-    // Appliquer la rotation (en radians)
     ctx.rotate(this.rotation);
-
-    // Dessiner l'image avec l'origine décalée
-    ctx.drawImage(
-      this.image,
-      -this.width / 2,
-      -this.height / 2,
-      this.width,
-      this.height
-    );
-
-    // Restauration du contexte après transformation
+    ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
     ctx.restore();
   }
 
-  // Vérification des collisions avec le joueur
   checkCollision(player) {
     const distX = Math.abs(
       player.x + player.width / 2 - (this.x + this.radius)
@@ -208,13 +197,65 @@ class RoundEnemy extends Enemy {
   }
 }
 
+class HalfRoundEnemy extends Enemy {
+  constructor(x, y, radius = 20, imageSrc, speed = 2, minX = 0, maxX = 500) {
+    super(x, y, radius * 2, radius);
+    this.radius = radius;
+    this.image = new Image();
+    this.image.src = imageSrc;
+    this.speed = speed;
+    this.directionX = 1;
+    this.minX = minX;
+    this.maxX = maxX;
+    this.rotationSpeed = 0.05;
+    this.rotation = 0;
+  }
+
+  update() {
+    this.x += this.speed * this.directionX;
+    this.rotation += this.rotationSpeed;
+
+    if (this.x <= this.minX || this.x >= this.maxX - this.width) {
+      this.directionX *= -1;
+    }
+
+    this.right = this.x + this.width;
+    this.bottom = this.y + this.height;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.x + this.width / 2, this.y + this.radius);
+    ctx.rotate(this.rotation);
+
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, Math.PI, true);
+    ctx.clip();
+    ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
+    ctx.restore();
+  }
+
+  checkCollision(player) {
+    const centerX = this.x + this.radius;
+    const centerY = this.y + this.radius;
+    const closestX = Math.max(player.x, Math.min(centerX, player.x + player.width));
+    const closestY = Math.max(player.y, Math.min(centerY, player.y + player.height));
+    const distanceX = centerX - closestX;
+    const distanceY = centerY - closestY;
+    const distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+    if (distanceSquared <= this.radius * this.radius && closestY <= centerY) {
+      player.die();
+    }
+  }
+}
+
 function createEnemies(canvas) {
   if (!canvas) return [];
 
   const enemies = [];
   const height = canvas.height;
 
-  // Ajout de l'ennemi mobile
   enemies.push(
     new MovingEnemy(
       710,
@@ -226,23 +267,28 @@ function createEnemies(canvas) {
       2.5
     )
   );
+  enemies.push( new Enemy( -50, height  ,10000 , 0) );
 
-  // Ajout de l'ennemi rond avec mouvement gauche-droite
+  enemies.push(new HalfRoundEnemy(1800, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2000, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2200, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2320, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
   enemies.push(
-    new RoundEnemy(2500, 475, 80, "../assets/sprite/scie.png", 14, 1700, 3400)
-  ); // Déplacement entre x = 2000 et x = 2700
+    new RoundEnemy(2500, 475, 80, "../assets/sprite/scie.png", 13.5, 1700, 3400, 0, height, 'horizontal')
+  );
+  enemies.push(
+  new RoundEnemy(2800, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+  );
+  enemies.push(
+  new RoundEnemy(3000, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+  );
 
-  // Configuration des groupes de spikes
   const spikeGroups = [
-    // Premier groupe
     { startX: 320, y: height - 250, count: 2, spacing: 30 },
-    // Groupe au sol
     { startX: 820, y: height - 30, count: 17, spacing: 30 },
-    // Dernier groupe
     { startX: 2340, y: height - 100, count: 4, spacing: 30 },
   ];
 
-  // Création efficace des spikes
   spikeGroups.forEach((group) => {
     for (let i = 0; i < group.count; i++) {
       enemies.push(new SpikeEnemy(group.startX + i * group.spacing, group.y));

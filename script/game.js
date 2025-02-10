@@ -29,7 +29,7 @@ window.onload = function () {
   let enemies = createEnemies(canvas);
   let triggerZones = createTriggerZones(canvas);
   let doors = createDoors(canvas);
-  const victoryZone = new VictoryZone(1850, canvas.height - 100);
+  const victoryZone = new VictoryZone(150, canvas.height - 100);
 
   // Event listeners
   window.addEventListener("resize", () => {

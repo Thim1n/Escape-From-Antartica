@@ -16,36 +16,36 @@ class Coin {
 
 function createCoins(canvas) {
     return [
-        new Coin(200, canvas.height - 150),
-        new Coin(400, canvas.height - 250),
-        new Coin(600, canvas.height - 350),
-        new Coin(650, canvas.height - 650),
-        new Coin(1050, canvas.height - 725),
     ];
 }
 
 
 class Clée extends Coin {
     constructor(x, y) {
-        super(x, y);
-        this.color = "green"; 
+      super(x, y);
+      // Charger l'image qui servira de sprite pour la clé
+      this.image = new Image();
+      // Chemin relatif à partir de votre fichier HTML (utilisez "/" et non "\")
+      this.image.src = "../assets/sprite/Clée.png";
+      // Définissez la largeur et la hauteur selon vos besoins
+      this.width = 80;
+      this.height = 80  ;
     }
-
+  
+    // Méthode draw qui affiche l'image sur le canvas
     draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-
+      // Vous pouvez ajouter une vérification pour s'assurer que l'image est chargée
+      if (this.image.complete) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      }
     }
-}
-
-
-function createClées(canvas) {
+  }
+  
+  function createClées(canvas) {
     return [
         new Clée(300, canvas.height - 50),
-        new Clée(3450, canvas.height - 100),
 
     ];
-}
+  }
+  
 
