@@ -51,7 +51,8 @@ class Platform {
     drawSnowGround(ctx) {
         ctx.fillStyle = "rgb(240, 240, 255)";
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        
+        /*
+        // Texture de neige
         ctx.fillStyle = "rgba(250, 250, 255, 0.7)";
         for (let i = 0; i < this.width / 10; i++) {
             let x = this.x + Math.random() * this.width;
@@ -60,7 +61,7 @@ class Platform {
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.fill();
-        }
+        }*/
     }
 
     drawIceCliff(ctx) {
@@ -132,14 +133,31 @@ class Door extends Platform {
     constructor(x, y, width = 40, height = 80) {
         super(x, y, width, height);
         this.isOpen = false;
-        this.color = "brown";
-        this.isCheckpoint = false; // Nouvelle propriété pour savoir si cette porte est le checkpoint actuel
+        this.isCheckpoint = false;
+        
+        // Modifier les chemins des images
+        this.closedImage = new Image();
+        this.closedImage.src = "../assets/sprite/porte_femer.png"; // Enlever un point
+        
+        this.openImage = new Image();
+        this.openImage.src = "../assets/sprite/porte_ouvert.png"; // Enlever un point
+
+        // Ajouter des gestionnaires d'erreur pour déboguer
+        this.closedImage.onerror = () => {
+            console.error("Erreur de chargement de l'image porte fermée:", this.closedImage.src);
+        };
+        
+        this.openImage.onerror = () => {
+            console.error("Erreur de chargement de l'image porte ouverte:", this.openImage.src);
+        };
     }
 
     draw(ctx) {
+        // Dessiner la porte
         ctx.fillStyle = this.isOpen ? "green" : this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-
+        
+        // Indiquer visuellement si c'est un checkpoint
         if (this.isCheckpoint) {
             ctx.fillStyle = "yellow";
             ctx.beginPath();
@@ -148,6 +166,7 @@ class Door extends Platform {
         }
     }
 
+    // Les autres méthodes restent inchangées
     open(player) {
         if (player && player.clées > 0 && !this.isOpen) {
             this.isOpen = true;
@@ -162,14 +181,20 @@ class Door extends Platform {
                 door.isCheckpoint = false;
             });
         }
-
+        
+        // Définir cette porte comme nouveau checkpoint
         this.isCheckpoint = true;
+        
+        // Mettre à jour le point de spawn du joueur
         player.setSpawnPoint(this.x + this.width + 10, this.y + this.height - player.height);
     }
 }
 
+
 function createPlatforms(canvas) {
     return [
+        //mur a gauche pourempecher le joueur de sortir
+        new Platform(-1, canvas.height -500, 1, 1000, "ice_block"),
         new Platform(0, canvas.height - 20, 816 , 20, "snow_ground"),
         new Platform(1350, canvas.height - 20, 5000 , 20, "snow_ground"),
         new Platform(150, canvas.height - 120, 100, 10, "ice_block", true),
@@ -204,6 +229,5 @@ function createPlatforms(canvas) {
 function createDoors(canvas) {
     return [
         new Door(1450, canvas.height - 100),
-        new Door(3500, canvas.height - 480, 50),
     ];
 }

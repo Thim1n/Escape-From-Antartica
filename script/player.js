@@ -165,6 +165,32 @@ class Player {
     this.spawnX = x;
     this.spawnY = y;
   }
+}
+
+class AnimationManager {
+  constructor(playerElement, totalFrames) {
+    this.playerElement = playerElement;
+    this.totalFrames = totalFrames;
+    this.currentFrame = 0;
+    this.isJumping = false;
+    this.isWalking = false;
+    this.isIdle = true;
+  }
+
+  updateAnimation() {
+    if (this.isIdle) {
+      this.playerElement.style.backgroundPosition = "0 0";
+    } else if (this.isWalking) {
+      let frameX = this.currentFrame * -50;
+      this.playerElement.style.backgroundPosition = `${frameX}px 0`;
+      this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+    } else if (this.isJumping) {
+      this.playerElement.style.backgroundPosition = `-${
+        this.currentFrame * 50
+      }px -50px`;
+      this.currentFrame = (this.currentFrame + 1) % 3;
+    }
+  }
 
   startWalking() {
     this.isWalking = true;
@@ -184,7 +210,7 @@ class Player {
     this.isIdle = true;
   }
 }
-
+/*
 // Initialisation
 let playerElement = document.getElementById("player");
 
@@ -217,3 +243,4 @@ document.addEventListener("keyup", (event) => {
     player.stop();
   }
 });
+*/

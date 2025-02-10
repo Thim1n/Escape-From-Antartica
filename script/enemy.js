@@ -226,6 +226,8 @@ function createEnemies(canvas) {
       2.5
     )
   );
+  //enemie en dessus des plaforme pour que tu meurs si tu tombe dans le vide
+  enemies.push( new Enemy( -50, height  ,10000 , 0) );
 
   // Ajout de l'ennemi rond avec mouvement gauche-droite
   enemies.push(
