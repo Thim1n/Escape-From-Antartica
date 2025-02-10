@@ -502,7 +502,7 @@ function createEnemies(canvas) {
     )
   );
 
-  /*enemies.push(
+  enemies.push(
     new RoundEnemy(
       4700, // x de base
       300, // marge de y
@@ -515,7 +515,7 @@ function createEnemies(canvas) {
       600,
       "horizontal"
     )
-  );*/
+  );
 
   //Fin niveau Matéo
   enemies.push(

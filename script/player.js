@@ -63,79 +63,125 @@ class Player {
 
     ctx.restore();
   }
+
   update(platforms, doors) {
+    // Appliquer la gravité
     this.velocityY += this.gravity;
+  
+    // Sauvegarder les anciennes positions
     const oldX = this.x;
     const oldY = this.y;
-    let newY = this.y + this.velocityY;
+  
+    // Calculer les nouvelles positions potentielles
     let newX = this.x + this.velocityX;
-    let isOnGround = false;
-
+    let newY = this.y + this.velocityY;
+  
+    let isOnGround = false; // Indique si le joueur est sur une plateforme ou au sol
+  
+    // Gérer les collisions avec les plateformes
     for (let platform of platforms) {
+      // Ignorer les plateformes disparues
       if (platform instanceof DisappearingPlatform && !platform.isVisible) {
         continue;
       }
-
-      if (platform instanceof Bouncer) {
+  
+      // Gestion des pentes
+      if (platform instanceof Pente) {
         if (platform.handleCollision(this)) {
-          newY = platform.y - this.height;
-          continue;
+          isOnGround = true; // Le joueur est sur une pente
+          newX = this.x + this.velocityX; // Ajuster la position horizontale pour éviter les téléportations
+          newY = this.y; // La méthode handleCollision ajuste déjà la position verticale
+          break; // Sortir de la boucle car la collision est gérée
         }
       }
-
-      if (this.checkCollision(newX, this.y, platform)) {
-        newX =
-          this.velocityX > 0
-            ? platform.x - this.width
-            : platform.x + platform.width;
-        this.velocityX = 0;
+  
+      // Gestion des plateformes rebondissantes (Bouncer)
+      if (platform instanceof Bouncer) {
+        if (platform.handleCollision(this)) {
+          newY = platform.y - this.height; // Positionner le joueur au-dessus du bouncer
+          continue; // Collision gérée, passer à l'itération suivante
+        }
       }
-
+  
+      // Gestion des collisions classiques avec une plateforme
       if (this.checkCollision(newX, newY, platform)) {
         if (oldY + this.height <= platform.y) {
+          // Collision par le haut (le joueur atterrit sur la plateforme)
           newY = platform.y - this.height;
           this.velocityY = 0;
-          isOnGround = true;
+          isOnGround = true; // Le joueur est sur le sol ou une plateforme
           this.isJumping = false;
-
+  
+          // Gestion spécifique pour les plateformes disparaissantes
           if (platform instanceof DisappearingPlatform) {
-            platform.handleCollision(this);
+            platform.handleCollision(this); // Déclenche l'effet de disparition
             if (!platform.isVisible) {
-              newY = oldY + this.velocityY;
+              newY = oldY + this.velocityY; // Si elle disparaît, le joueur tombe
               isOnGround = false;
               this.isJumping = true;
             }
           }
         } else if (oldY >= platform.y + platform.height) {
+          // Collision par le bas (le joueur frappe la plateforme en sautant)
           newY = platform.y + platform.height;
-          this.velocityY = 0;
+          this.velocityY = 0; // Arrêter le mouvement vertical
+        } else {
+          // Collision horizontale avec une plateforme classique
+          newX =
+            this.velocityX > 0
+              ? platform.x - this.width // Collision par la droite
+              : platform.x + platform.width; // Collision par la gauche
+          this.velocityX = 0; // Arrêter le mouvement horizontal
         }
       }
     }
-
+  
+    // Gérer les collisions avec les portes
     for (let door of doors) {
       if (!door.isOpen) {
-        if (this.checkCollision(newX, this.y, door)) {
-          newX = this.velocityX > 0 ? door.x - this.width : door.x + door.width;
-          this.velocityX = 0;
-        }
         if (this.checkCollision(newX, newY, door)) {
           if (oldY + this.height <= door.y) {
+            // Collision par le haut (le joueur atterrit sur la porte)
             newY = door.y - this.height;
             this.velocityY = 0;
-            isOnGround = true;
+            isOnGround = true; // Le joueur est sur le sol ou une porte fermée
             this.isJumping = false;
           } else if (oldY >= door.y + door.height) {
+            // Collision par le bas (le joueur frappe la porte en sautant)
             newY = door.y + door.height;
-            this.velocityY = 0;
+            this.velocityY = 0; // Arrêter le mouvement vertical
+          } else {
+            // Collision horizontale avec une porte fermée
+            newX =
+              this.velocityX > 0 ? door.x - this.width : door.x + door.width;
+            this.velocityX = 0; // Arrêter le mouvement horizontal
           }
         }
       }
     }
-
+  
+    // Mettre à jour les positions finales du joueur après toutes les collisions traitées
     this.x = newX;
     this.y = newY;
+  
+    // Si aucune plateforme ou pente ne supporte le joueur, il tombe librement.
+    if (!isOnGround) {
+      this.isJumping = true;
+    }
+  
+    // Gérer l'état de marche du joueur uniquement s'il n'est pas sur une pente glissante.
+    const isOnSlope =
+      platforms.some((p) => p instanceof Pente && p.handleCollision(this));
+      
+     if (!isOnSlope && !this.isJumping) {
+       if (this.velocityX !== 0) {
+         this.startWalking();
+       } else {
+         this.stopWalking();
+       }
+     }
   }
+  
 
   checkCollision(x, y, obj) {
     return (

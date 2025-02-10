@@ -135,39 +135,143 @@ class DisappearingPlatform extends Platform {
 }
 
 class Pente extends Platform {
-    constructor(x, y, endX, endY) {
-        const width = endX - x;
-        const height = endY - y;
-        super(x, y, width, height);
-        this.endX = endX;
-        this.endY = endY;
-        this.slope = (endY - y) / (endX - x);
-    }
+  constructor(x, y, endX, endY) {
+    const width = endX - x;
+    const height = Math.abs(endY - y);
+    super(x, y, width, height);
 
-    handleCollision(player) {
-        // Vérifie si le joueur est dans la zone de la pente sur l'axe X
-        if (player.x + player.width > this.x && player.x < this.endX) {
-            // Calcul de la hauteur de la pente à la position X du joueur
-            const relativeX = player.x - this.x;
-            const expectedY = this.y + relativeX * this.slope;
-            
-            // Distance verticale entre le bas du joueur et la pente
-            const distanceToSlope = (player.y + player.height) - expectedY;
-            
-            // Si le joueur est très proche de la pente (dans la marge de tolérance)
-            if (Math.abs(distanceToSlope) < 20 && player.velocityY >= 0) {
-                // Place le joueur sur la pente
-                player.y = expectedY - player.height;
-                player.velocityY = 0;
-                player.velocityX = 5; // Vitesse de glisse
-                player.isJumping = false;
-                return true;
-            }
-        }
-        return false;
+    this.startX = x;
+    this.startY = y;
+    this.endX = endX;
+    this.endY = endY;
+    this.slope = (endY - y) / (endX - x);
+    this.thickness = 20;
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.moveTo(this.startX, this.startY);
+    ctx.lineTo(this.endX, this.endY);
+    ctx.lineTo(this.endX, this.endY + this.thickness);
+    ctx.lineTo(this.startX, this.startY + this.thickness);
+    ctx.closePath();
+
+    ctx.fillStyle = "rgba(200, 220, 255, 0.9)";
+    ctx.fill();
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+  }
+
+  getSlopeYAt(x) {
+    const progress = (x - this.startX) / (this.endX - this.startX);
+    return this.startY + (this.endY - this.startY) * progress;
+  }
+
+  handleCollision(player) {
+    const playerBottom = player.y + player.height;
+    const playerCenter = player.x + player.width / 2;
+
+    if (playerCenter >= this.startX && playerCenter <= this.endX) {
+      const slopeY = this.getSlopeYAt(playerCenter);
+
+      if (playerBottom >= slopeY && playerBottom <= slopeY + this.thickness) {
+        player.y = slopeY - player.height;
+        player.velocityY = 0;
+        player.isJumping = false;
+
+        // Ajuster la vitesse horizontale en fonction de la pente
+        player.velocityX = this.slope > 0 ? 3 : -3;
+
+        return true;
+      }
     }
+    return false;
+  }
 }
 
+/*class Pente extends Platform {
+  constructor(x, y, endX, endY) {
+    const width = endX - x;
+    const height = endY - y;
+    super(x, y, width, height);
+    this.endX = endX;
+    this.endY = endY;
+    this.slope = (endY - y) / (endX - x);
+
+    // Points pour la texture de neige
+    this.snowflakes = [];
+    for (let i = 0; i < width / 30; i++) {
+      this.snowflakes.push({
+        x: x + Math.random() * width,
+        y: y + Math.random() * height,
+      });
+    }
+  }
+
+  draw(ctx) {
+    // Dessiner le fond de la pente
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.endX, this.endY);
+    ctx.lineTo(this.endX, this.endY + 20);
+    ctx.lineTo(this.x, this.y + 20);
+    ctx.closePath();
+
+    // Gradient pour l'effet de glace
+    const gradient = ctx.createLinearGradient(
+      this.x,
+      this.y,
+      this.endX,
+      this.endY
+    );
+    gradient.addColorStop(0, "rgba(200, 220, 255, 0.9)");
+    gradient.addColorStop(1, "rgba(150, 190, 255, 0.9)");
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Contour de la pente
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Dessiner les flocons de neige
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+    this.snowflakes.forEach((flake) => {
+      ctx.beginPath();
+      ctx.arc(flake.x, flake.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  handleCollision(player) {
+    if (player.x + player.width > this.x && player.x < this.endX) {
+      // Calcul du point Y attendu sur la pente
+      const relativeX = player.x + player.width / 2 - this.x;
+      const expectedY = this.y + relativeX * this.slope;
+
+      // Point Y actuel du joueur
+      const playerBottom = player.y + player.height;
+
+      // Vérification de la collision
+      if (
+        playerBottom >= expectedY - 5 &&
+        playerBottom <= expectedY + 5 &&
+        player.velocityY >= 0
+      ) {
+        // Placement du joueur sur la pente
+        player.y = expectedY - player.height;
+
+        // Application de la glisse
+        const normalizedSlope = Math.min(Math.abs(this.slope), 1);
+        player.velocityX = 3 + normalizedSlope * 2;
+        player.velocityY = 0;
+        player.isJumping = false;
+        return true;
+      }
+    }
+    return false;
+  }
+}*/
 class Bouncer extends Platform {
   constructor(x, y, width, height) {
     super(x, y, width, height);
