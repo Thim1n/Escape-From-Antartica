@@ -98,9 +98,9 @@ class MovingEnemy extends Enemy {
     ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
     ctx.restore();
 
-    ctx.strokeStyle = "blue";
+    /*ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.strokeRect(this.x, this.y, this.width, this.height);*/
   }
 
   update() {
@@ -260,9 +260,9 @@ class RoundEnemy extends Enemy {
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = "blue";
+    /*ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
-    ctx.stroke();
+    ctx.stroke();*/
   }
 
   checkCollision(player) {
@@ -325,9 +325,9 @@ class HalfRoundEnemy extends Enemy {
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI, true);
-    ctx.strokeStyle = "blue";
+    /*ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
-    ctx.stroke();
+    ctx.stroke();*/
   }
 
   checkCollision(player) {
