@@ -259,24 +259,33 @@ class RoundEnemy extends Enemy {
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI * 2);
+    ctx.arc(
+      this.x + this.radius,
+      this.y + this.radius,
+      this.radius,
+      0,
+      Math.PI * 2
+    );
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.stroke();
   }
 
   checkCollision(player) {
-        const distX = Math.abs(
-            player.x + player.width / 2 - (this.x + this.radius)
-        );
-        const distY = Math.abs(
-            player.y + player.height / 2 - (this.y + this.radius)
-        );
+    const distX = Math.abs(
+      player.x + player.width / 2 - (this.x + this.radius)
+    );
+    const distY = Math.abs(
+      player.y + player.height / 2 - (this.y + this.radius)
+    );
 
-        if (distX <= player.width / 2 + this.radius && distY <= player.height / 2 + this.radius) {
-            player.die();
-        }
+    if (
+      distX <= player.width / 2 + this.radius &&
+      distY <= player.height / 2 + this.radius
+    ) {
+      player.die();
     }
+  }
 }
 
 class HalfRoundEnemy extends Enemy {
@@ -324,7 +333,14 @@ class HalfRoundEnemy extends Enemy {
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI, true);
+    ctx.arc(
+      this.x + this.radius,
+      this.y + this.radius,
+      this.radius,
+      0,
+      Math.PI,
+      true
+    );
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.stroke();
@@ -456,12 +472,80 @@ function createEnemies(canvas) {
       "vertical"
     )
   );
+  // Niveau 3 Matéo
   enemies.push(
-    new RoundEnemy(3200, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
-    );
-    enemies.push(
-    new RoundEnemy(3400, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
-    );
+    new RoundEnemy(
+      3975, // x de base
+      500, // marge de y
+      40,
+      "../assets/sprite/scie.png",
+      4,
+      3975,
+      3975,
+      300, // marhe de y aussi ???
+      600,
+      "vertical"
+    )
+  );
+  enemies.push(
+    new RoundEnemy(
+      4500, // x de base
+      500, // marge de y
+      40,
+      "../assets/sprite/scie.png",
+      4,
+      4500,
+      4500,
+      300, // marhe de y aussi ???
+      600,
+      "vertical"
+    )
+  );
+
+  /*enemies.push(
+    new RoundEnemy(
+      4700, // x de base
+      300, // marge de y
+      40,
+      "../assets/sprite/scie.png",
+      4,
+      4700,
+      5000,
+      300, // marhe de y aussi ???
+      600,
+      "horizontal"
+    )
+  );*/
+
+  //Fin niveau Matéo
+  enemies.push(
+    new RoundEnemy(
+      3200,
+      100,
+      40,
+      "../assets/sprite/scie.png",
+      6,
+      2800,
+      2800,
+      90,
+      320,
+      "vertical"
+    )
+  );
+  enemies.push(
+    new RoundEnemy(
+      3400,
+      100,
+      40,
+      "../assets/sprite/scie.png",
+      6,
+      2800,
+      2800,
+      90,
+      320,
+      "vertical"
+    )
+  );
   const spikeGroups = [
     { startX: 320, y: height - 250, count: 2, spacing: 30 },
     { startX: 820, y: height - 30, count: 17, spacing: 30 },

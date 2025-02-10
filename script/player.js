@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = x;
+    this.x = 3000;
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -74,6 +74,13 @@ class Player {
     for (let platform of platforms) {
       if (platform instanceof DisappearingPlatform && !platform.isVisible) {
         continue;
+      }
+
+      if (platform instanceof Bouncer) {
+        if (platform.handleCollision(this)) {
+          newY = platform.y - this.height;
+          continue;
+        }
       }
 
       if (this.checkCollision(newX, this.y, platform)) {
