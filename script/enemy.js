@@ -6,9 +6,8 @@ class Enemy {
     this.height = height;
     this.right = x + width;
     this.bottom = y + height;
+    this.facingRight = true;
   }
-
-  update() {}
 
   draw(ctx) {
     ctx.fillStyle = "red";
@@ -42,10 +41,72 @@ class MovingEnemy extends Enemy {
     this.directionY = 1;
     this.maxXWithWidth = this.maxX - this.width;
     this.maxYWithHeight = this.maxY - this.height;
+    this.delay = speed * 5;
+
+    // Animation properties
+    this.walkFrame = 0;
+    this.facingRight = true;
+
+    this.images = {
+      walking1: new Image(),
+      walking2: new Image(),
+    };
+
+    this.images.walking1.src = "../assets/sprite/enemyWalk1.png";
+    this.images.walking2.src = "../assets/sprite/enemyWalk2.png";
+
+    this.currentImage = this.images.walking1;
+
+    // Start animation
+    this.animateWalk();
+  }
+
+  animateWalk() {
+    // Alterne entre 0 et 1
+    this.walkFrame = (this.walkFrame + 1) % 2;
+
+    // Met à jour l'image actuelle en fonction du frame
+    if (this.walkFrame === 0) {
+      this.currentImage = this.images.walking1;
+    } else {
+      this.currentImage = this.images.walking2;
+    }
+
+    // Met à jour la direction en fonction du mouvement
+    this.facingRight = this.directionX > 0;
+
+    // Programme la prochaine animation
+    setTimeout(() => {
+      if (this instanceof MovingEnemy) {
+        this.animateWalk();
+      }
+    }, this.delay); // Réduit le délai pour une animation plus fluide
+  }
+
+  draw(ctx) {
+    ctx.save();
+
+    if (this.facingRight) {
+      // Appliquer la translation d'abord
+      ctx.translate(this.x + this.width, this.y);
+      // Puis le retournement
+      ctx.scale(-1, 1);
+    } else {
+      ctx.translate(this.x, this.y);
+    }
+
+    ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
+    ctx.restore();
+
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 
   update() {
     this.move();
+    this.right = this.x + this.width;
+    this.bottom = this.y + this.height;
   }
 
   move() {
@@ -136,7 +197,18 @@ class SpikeEnemy extends Enemy {
 }
 
 class RoundEnemy extends Enemy {
-  constructor(x, y, radius = 20, imageSrc, speed = 2, minX = 0, maxX = 500, minY = 0, maxY = 500, movementType = 'horizontal') {
+  constructor(
+    x,
+    y,
+    radius = 20,
+    imageSrc,
+    speed = 2,
+    minX = 0,
+    maxX = 500,
+    minY = 0,
+    maxY = 500,
+    movementType = "horizontal"
+  ) {
     super(x, y, radius * 2, radius * 2);
     this.radius = radius;
     this.image = new Image();
@@ -154,12 +226,12 @@ class RoundEnemy extends Enemy {
   }
 
   update() {
-    if (this.movementType === 'horizontal') {
+    if (this.movementType === "horizontal") {
       this.x += this.speed * this.directionX;
       if (this.x <= this.minX || this.x >= this.maxX - this.width) {
         this.directionX *= -1;
       }
-    } else if (this.movementType === 'vertical') {
+    } else if (this.movementType === "vertical") {
       this.y += this.speed * this.directionY;
       if (this.y <= this.minY || this.y >= this.maxY - this.height) {
         this.directionY *= -1;
@@ -176,7 +248,13 @@ class RoundEnemy extends Enemy {
     ctx.save();
     ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
     ctx.rotate(this.rotation);
-    ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
+    ctx.drawImage(
+      this.image,
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height
+    );
     ctx.restore();
   }
 
@@ -231,15 +309,27 @@ class HalfRoundEnemy extends Enemy {
     ctx.beginPath();
     ctx.arc(0, 0, this.radius, 0, Math.PI, true);
     ctx.clip();
-    ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
+    ctx.drawImage(
+      this.image,
+      -this.radius,
+      -this.radius,
+      this.radius * 2,
+      this.radius * 2
+    );
     ctx.restore();
   }
 
   checkCollision(player) {
     const centerX = this.x + this.radius;
     const centerY = this.y + this.radius;
-    const closestX = Math.max(player.x, Math.min(centerX, player.x + player.width));
-    const closestY = Math.max(player.y, Math.min(centerY, player.y + player.height));
+    const closestX = Math.max(
+      player.x,
+      Math.min(centerX, player.x + player.width)
+    );
+    const closestY = Math.max(
+      player.y,
+      Math.min(centerY, player.y + player.height)
+    );
     const distanceX = centerX - closestX;
     const distanceY = centerY - closestY;
     const distanceSquared = distanceX * distanceX + distanceY * distanceY;
@@ -267,20 +357,93 @@ function createEnemies(canvas) {
       2.5
     )
   );
-  enemies.push( new Enemy( -50, height  ,10000 , 0) );
+  enemies.push(new Enemy(-50, height, 10000, 0));
 
-  enemies.push(new HalfRoundEnemy(1800, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2000, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2200, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2320, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
   enemies.push(
-    new RoundEnemy(2500, 475, 80, "../assets/sprite/scie.png", 13.5, 1700, 3400, 0, height, 'horizontal')
+    new HalfRoundEnemy(
+      1800,
+      280,
+      60,
+      "../assets/sprite/scie.png",
+      4,
+      1700,
+      3000
+    )
   );
   enemies.push(
-  new RoundEnemy(2800, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    new HalfRoundEnemy(
+      2000,
+      280,
+      60,
+      "../assets/sprite/scie.png",
+      4,
+      1700,
+      3000
+    )
   );
   enemies.push(
-  new RoundEnemy(3000, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    new HalfRoundEnemy(
+      2200,
+      280,
+      60,
+      "../assets/sprite/scie.png",
+      4,
+      1700,
+      3000
+    )
+  );
+  enemies.push(
+    new HalfRoundEnemy(
+      2320,
+      280,
+      60,
+      "../assets/sprite/scie.png",
+      4,
+      1700,
+      3000
+    )
+  );
+  enemies.push(
+    new RoundEnemy(
+      2500,
+      475,
+      80,
+      "../assets/sprite/scie.png",
+      13.5,
+      1700,
+      3400,
+      0,
+      height,
+      "horizontal"
+    )
+  );
+  enemies.push(
+    new RoundEnemy(
+      2800,
+      100,
+      40,
+      "../assets/sprite/scie.png",
+      6,
+      2800,
+      2800,
+      90,
+      320,
+      "vertical"
+    )
+  );
+  enemies.push(
+    new RoundEnemy(
+      3000,
+      100,
+      40,
+      "../assets/sprite/scie.png",
+      6,
+      2800,
+      2800,
+      90,
+      320,
+      "vertical"
+    )
   );
 
   const spikeGroups = [
