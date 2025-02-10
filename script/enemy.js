@@ -149,8 +149,8 @@ class RoundEnemy extends Enemy {
     this.minY = minY;
     this.maxY = maxY;
     this.movementType = movementType;
-    this.rotationSpeed = 0.05; // Ajout d'une vitesse de rotation
     this.rotation = 0;
+    this.rotationSpeed = 0.05;
   }
 
   update() {
@@ -166,7 +166,7 @@ class RoundEnemy extends Enemy {
       }
     }
 
-    this.rotation += this.rotationSpeed; // Mise à jour de la rotation
+    this.rotation += this.rotationSpeed;
 
     this.right = this.x + this.width;
     this.bottom = this.y + this.height;
@@ -178,23 +178,27 @@ class RoundEnemy extends Enemy {
     ctx.rotate(this.rotation);
     ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
     ctx.restore();
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
 
   checkCollision(player) {
-    const distX = Math.abs(
-      player.x + player.width / 2 - (this.x + this.radius)
-    );
-    const distY = Math.abs(
-      player.y + player.height / 2 - (this.y + this.radius)
-    );
+        const distX = Math.abs(
+            player.x + player.width / 2 - (this.x + this.radius)
+        );
+        const distY = Math.abs(
+            player.y + player.height / 2 - (this.y + this.radius)
+        );
 
-    if (
-      distX <= player.width / 2 + this.radius &&
-      distY <= player.height / 2 + this.radius
-    ) {
-      player.die();
+        if (distX <= player.width / 2 + this.radius && distY <= player.height / 2 + this.radius) {
+            player.die();
+        }
     }
-  }
 }
 
 class HalfRoundEnemy extends Enemy {
@@ -233,6 +237,13 @@ class HalfRoundEnemy extends Enemy {
     ctx.clip();
     ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
     ctx.restore();
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI, true);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
 
   checkCollision(player) {
@@ -269,10 +280,10 @@ function createEnemies(canvas) {
   );
   enemies.push( new Enemy( -50, height  ,10000 , 0) );
 
-  enemies.push(new HalfRoundEnemy(1800, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2000, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2200, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
-  enemies.push(new HalfRoundEnemy(2320, 280, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(1800, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2000, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2200, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
+  enemies.push(new HalfRoundEnemy(2320, 270, 60, "../assets/sprite/scie.png", 4, 1700, 3000));
   enemies.push(
     new RoundEnemy(2500, 475, 80, "../assets/sprite/scie.png", 13.5, 1700, 3400, 0, height, 'horizontal')
   );
