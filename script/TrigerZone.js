@@ -33,6 +33,8 @@ class TriggerZone {
         this.height = height;
         this.enemy = enemy;
         this.isTriggered = false;
+        this.initialEnemyX = enemy ? enemy.x : null;
+        this.initialEnemyY = enemy ? enemy.y : null;
     }
 
     checkTrigger(player) {
@@ -62,6 +64,12 @@ class TriggerZone {
 
     reset() {
         this.isTriggered = false;
+        if (this.enemy) {
+            // Réinitialiser la position de l'ennemi à sa position initiale
+            this.enemy.x = this.initialEnemyX;
+            this.enemy.y = this.initialEnemyY;
+            this.enemy.isAlive = true;
+        }
     }
 }
 
@@ -78,7 +86,7 @@ function createTriggerZones(canvas) {
             300, 
             100,
             new TriggerEnemy(
-                550,
+                450,
                 canvas.height - 460, 
                 440, 
                 550, 
@@ -93,7 +101,7 @@ function createTriggerZones(canvas) {
             1200, 
             canvas.height - 600, 
             200, 
-            1000,
+            20,
             new TriggerEnemy(
                 1250, 
                 canvas.height - 500, 
@@ -102,6 +110,22 @@ function createTriggerZones(canvas) {
                 canvas.height - 1600, 
                 canvas.height - 500, 
                 3
+            )
+        ),
+
+        new TriggerZone(
+            3200, 
+            canvas.height - 215, 
+            10, 
+            150,
+            new TriggerEnemy(
+                3300, 
+                canvas.height - 120, 
+                2950, 
+                3300, 
+                canvas.height - 100, 
+                canvas.height - 100, 
+                1
             )
         ),
 

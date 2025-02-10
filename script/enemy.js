@@ -373,7 +373,7 @@ function createEnemies(canvas) {
   enemies.push(
     new HalfRoundEnemy(
       1800,
-      280,
+      287,
       60,
       "../assets/sprite/scie.png",
       4,
@@ -384,7 +384,7 @@ function createEnemies(canvas) {
   enemies.push(
     new HalfRoundEnemy(
       2000,
-      280,
+      287,
       60,
       "../assets/sprite/scie.png",
       4,
@@ -395,7 +395,7 @@ function createEnemies(canvas) {
   enemies.push(
     new HalfRoundEnemy(
       2200,
-      280,
+      287,
       60,
       "../assets/sprite/scie.png",
       4,
@@ -406,7 +406,7 @@ function createEnemies(canvas) {
   enemies.push(
     new HalfRoundEnemy(
       2320,
-      280,
+      287,
       60,
       "../assets/sprite/scie.png",
       4,
