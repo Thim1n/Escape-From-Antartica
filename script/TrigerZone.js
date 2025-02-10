@@ -48,6 +48,7 @@ class TriggerZone {
         }
         return false;
     }
+    
     draw(ctx) {
         ctx.strokeStyle = this.isTriggered ? "rgba(255, 0, 0, 0.5)" : "rgba(0, 255, 0, 0.5)";
         ctx.lineWidth = 2;
