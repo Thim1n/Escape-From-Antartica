@@ -149,6 +149,7 @@ class RoundEnemy extends Enemy {
     this.minY = minY;
     this.maxY = maxY;
     this.movementType = movementType;
+    this.rotationSpeed = 0.05; // Ajout d'une vitesse de rotation
     this.rotation = 0;
   }
 
@@ -164,6 +165,8 @@ class RoundEnemy extends Enemy {
         this.directionY *= -1;
       }
     }
+
+    this.rotation += this.rotationSpeed; // Mise à jour de la rotation
 
     this.right = this.x + this.width;
     this.bottom = this.y + this.height;
@@ -204,12 +207,13 @@ class HalfRoundEnemy extends Enemy {
     this.directionX = 1;
     this.minX = minX;
     this.maxX = maxX;
+    this.rotationSpeed = 0.05;
     this.rotation = 0;
   }
 
   update() {
     this.x += this.speed * this.directionX;
-    this.rotation += 0.05;
+    this.rotation += this.rotationSpeed;
 
     if (this.x <= this.minX || this.x >= this.maxX - this.width) {
       this.directionX *= -1;
