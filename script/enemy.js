@@ -293,6 +293,12 @@ function createEnemies(canvas) {
   enemies.push(
   new RoundEnemy(3000, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
   );
+  enemies.push(
+    new RoundEnemy(3200, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    );
+    enemies.push(
+    new RoundEnemy(3400, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    );
 
   const spikeGroups = [
     { startX: 320, y: height - 250, count: 2, spacing: 30 },

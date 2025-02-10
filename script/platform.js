@@ -35,14 +35,14 @@ class Platform {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         
         ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
-        for (let i = 0; i < 3; i++) {
+        /*for (let i = 0; i < 3; i++) {
             let startX = this.x + Math.random() * this.width;
             let startY = this.y + Math.random() * this.height;
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(startX + 15, startY + 5);
             ctx.stroke();
-        }
+        }*/
 
         ctx.strokeStyle = "rgba(150, 190, 255, 1)";
         ctx.strokeRect(this.x, this.y, this.width, this.height);
@@ -224,8 +224,11 @@ function createPlatforms(canvas) {
         new Platform(1620, canvas.height - 180, 40, 10, "ice_block"),
         new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
         new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
-        new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
+        new Platform(1720, canvas.height - 730, 1930, 80, "ice_cliff"),
         new Platform(2220, canvas.height - 500, 4, 4, "ice_block"),
+        new Platform(1620, canvas.height - 500, 1, 1, "ice_block"),
+        new Platform(1620, canvas.height - 600, 1, 1, "ice_block"),
+        new Platform(1620, canvas.height - 700, 1, 1, "ice_block"),
     ];
 }
 

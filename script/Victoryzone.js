@@ -1,8 +1,8 @@
 // Fichier VictoryZone.js
 class VictoryZone {
     constructor(x, y, width = 50, height = 50) {
-        this.x = x;
-        this.y = y;
+        this.x = 3550;
+        this.y = 300;
         this.width = width;
         this.height = height;
         this.isTriggered = false;
