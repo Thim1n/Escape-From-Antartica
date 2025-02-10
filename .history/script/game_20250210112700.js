@@ -1,3 +1,4 @@
+
 window.onload = function () {
   let isGameSaved = false;
   const backgroundMusic = document.getElementById("backgroundMusic");
@@ -154,20 +155,19 @@ window.onload = function () {
   }
 
   function updateCamera() {
-    // Calcul de la position idéale de la caméra
-    const targetX = player.x - canvas.width / 2 + player.width / 2;
-    const targetY = player.y - canvas.height / 2 + player.height / 2;
-
-    // Limites du monde
-    const maxX = 2000 - canvas.width;
-    const minY = 0;
-    const maxY = Math.max(0, canvas.height - player.height);
-
-    // Application des limites avec smoothing
-    cameraX = Math.max(0, Math.min(targetX, 5000));
-
-    // Mise à jour de la caméra Y avec des limites plus appropriées
-    cameraY = Math.max(minY, Math.min(targetY, maxY));
+    function updateCamera() {
+      // Calcul de la position idéale de la caméra
+      const targetX = player.x - canvas.width / 2 + player.width / 2;
+      const targetY = player.y - canvas.height / 2 + player.height / 2;
+    
+      // Limites du monde
+      const maxX = 2000 - canvas.width; // Ajustez 2000 selon la largeur totale de votre niveau
+      const maxY = canvas.height - player.height;
+    
+      // Application des limites
+      cameraX = Math.max(0, Math.min(targetX, maxX));
+      cameraY = Math.max(0, Math.min(targetY, maxY));
+    }
   }
 
   async function drawGame() {
@@ -223,8 +223,8 @@ window.onload = function () {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          time: playerTime,
-          name: playerName,
+            time: playerTime,
+            name: playerName,
         }),
       });
     } catch (error) {

@@ -164,7 +164,7 @@ window.onload = function () {
     const maxY = Math.max(0, canvas.height - player.height);
 
     // Application des limites avec smoothing
-    cameraX = Math.max(0, Math.min(targetX, 5000));
+    cameraX = Math.max(0, Math.min(targetX, maxX));
 
     // Mise à jour de la caméra Y avec des limites plus appropriées
     cameraY = Math.max(minY, Math.min(targetY, maxY));

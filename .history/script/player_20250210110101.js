@@ -1,0 +1,122 @@
+class Player {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.width = 40;
+    this.height = 50;
+    this.color = "blue";
+    this.velocityX = 0;
+    this.velocityY = 0;
+    this.gravity = 0.4;
+    this.isJumping = false;
+    this.speed = 5;
+    this.coins = 0;
+    this.deathCount = 0;
+    this.clées = 0;
+    this.spawnX = x;
+    this.spawnY = y;
+    this.sprite = "../assets/sprite/playerNothing.png";
+    this.isWalking = false;
+    this.animationInterval = null;
+    this.animateWalk();
+  }
+
+  animateWalk() {
+    if (this.animationInterval) return;
+    this.animationInterval = setInterval(() => {
+      if (this.isWalking) {
+        this.sprite =
+          this.sprite === "../assets/sprite/playerWalk1.png"
+            ? "../assets/sprite/playerWalk2.png"
+            : "../assets/sprite/playerWalk1.png";
+      } else {
+        this.sprite = "../assets/sprite/playerNothing.png";
+        clearInterval(this.animationInterval);
+        this.animationInterval = null;
+      }
+    }, 300);
+  }
+
+  update(platforms, doors) {
+    this.velocityY += this.gravity;
+
+    const oldX = this.x;
+    const oldY = this.y;
+
+    let newY = this.y + this.velocityY;
+    let newX = this.x + this.velocityX;
+
+    let isOnGround = false;
+
+    for (let platform of platforms) {
+      if (platform instanceof DisappearingPlatform && !platform.isVisible) {
+        continue;
+      }
+
+      if (this.checkCollision(newX, this.y, platform)) {
+        if (this.velocityX > 0) {
+          newX = platform.x - this.width;
+        } else if (this.velocityX < 0) {
+          newX = platform.x + platform.width;
+        }
+        this.velocityX = 0;
+      }
+
+      if (this.checkCollision(newX, newY, platform)) {
+        if (oldY + this.height <= platform.y) {
+          newY = platform.y - this.height;
+          this.velocityY = 0;
+          isOnGround = true;
+          this.isJumping = false;
+        } else if (oldY >= platform.y + platform.height) {
+          newY = platform.y + platform.height;
+          this.velocityY = 0;
+        }
+      }
+    }
+
+    this.x = newX;
+    this.y = newY;
+  }
+
+  collectclée() {
+    this.clées++;
+  }
+
+  colle
+
+  moveLeft() {
+    this.velocityX = -this.speed;
+    this.isWalking = true;
+    this.animateWalk();
+  }
+
+  moveRight() {
+    this.velocityX = this.speed;
+    this.isWalking = true;
+    this.animateWalk();
+  }
+
+  stop() {
+    this.velocityX = 0;
+    this.isWalking = false;
+  }
+
+  draw(ctx) {
+    const img = new Image();
+    img.src = this.sprite;
+    ctx.drawImage(img, this.x, this.y, this.width, this.height);
+  }
+
+  checkCollision(x, y, platform) {
+    return (
+      x + this.width > platform.x &&
+      x < platform.x + platform.width &&
+      y + this.height > platform.y &&
+      y < platform.y + platform.height
+    );
+  }
+}
+
+
+  

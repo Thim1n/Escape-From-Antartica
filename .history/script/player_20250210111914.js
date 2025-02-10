@@ -18,8 +18,6 @@ class Player {
     this.isWalking = false;
     this.walkFrame = 0;
 
-    this.facingRight = true;
-
     this.images = {
       standing: new Image(),
       walking1: new Image(),
@@ -28,7 +26,7 @@ class Player {
 
     this.images.standing.src = "../assets/sprite/playerNothing.png";
     this.images.walking1.src = "../assets/sprite/playerWalk1.png";
-    this.images.walking2.src = "../assets/sprite/playerWalk2.png";
+    this.images.walking2.src = "../assets/sprite/playerWalk3.png";
 
     this.currentImage = this.images.standing;
   }
@@ -37,32 +35,13 @@ class Player {
     if (this.isWalking) {
       this.walkFrame = (this.walkFrame + 1) % 2;
       this.currentImage =
-        this.walkFrame === 0 ? this.images.walking1 : this.images.walking2;
-      this.facingRight = this.velocityX >= 0; // Met à jour la direction
+        this.walkFrame === 0 ? this.images.walk1 : this.images.walk2;
       setTimeout(() => this.animateWalk(), 300);
     } else {
       this.currentImage = this.images.standing;
     }
   }
 
-  draw(ctx) {
-    ctx.save();
-
-    // Position de base
-    if (!this.facingRight) {
-      // Pour aller vers la gauche
-      ctx.scale(-1, 1);
-      ctx.translate(-this.x - this.width, this.y);
-    } else {
-      // Pour aller vers la droite
-      ctx.translate(this.x, this.y);
-    }
-
-    // Dessiner l'image
-    ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
-
-    ctx.restore();
-  }
   update(platforms, doors) {
     this.velocityY += this.gravity;
     const oldX = this.x;
@@ -161,11 +140,15 @@ class Player {
     this.stopWalking();
   }
 
+  draw(ctx) {
+    
+  }
+
   collectCoin() {
     this.coins++;
   }
 
-  collectclée() {
+  collectClée() {
     this.clées++;
   }
 

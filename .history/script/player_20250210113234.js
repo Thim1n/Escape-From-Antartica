@@ -36,33 +36,35 @@ class Player {
   animateWalk() {
     if (this.isWalking) {
       this.walkFrame = (this.walkFrame + 1) % 2;
-      this.currentImage =
-        this.walkFrame === 0 ? this.images.walking1 : this.images.walking2;
+      this.currentImage = this.walkFrame === 0 ? this.images.walking1 : this.images.walking2;
       this.facingRight = this.velocityX >= 0; // Met à jour la direction
       setTimeout(() => this.animateWalk(), 300);
     } else {
       this.currentImage = this.images.standing;
     }
   }
-
+  
   draw(ctx) {
     ctx.save();
-
-    // Position de base
+    
     if (!this.facingRight) {
-      // Pour aller vers la gauche
       ctx.scale(-1, 1);
-      ctx.translate(-this.x - this.width, this.y);
+      ctx.translate(-this.x - this.width, 0);
     } else {
-      // Pour aller vers la droite
       ctx.translate(this.x, this.y);
     }
-
-    // Dessiner l'image
-    ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
-
+    
+    ctx.drawImage(
+      this.currentImage,
+      0,
+      0,
+      this.width,
+      this.height
+    );
+    
     ctx.restore();
   }
+
   update(platforms, doors) {
     this.velocityY += this.gravity;
     const oldX = this.x;
@@ -159,6 +161,10 @@ class Player {
   stop() {
     this.velocityX = 0;
     this.stopWalking();
+  }
+
+  draw(ctx) {
+    ctx.drawImage(this.currentImage, this.x, this.y, this.width, this.height);
   }
 
   collectCoin() {

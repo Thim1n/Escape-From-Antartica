@@ -48,21 +48,18 @@ class Player {
   draw(ctx) {
     ctx.save();
 
-    // Position de base
     if (!this.facingRight) {
-      // Pour aller vers la gauche
       ctx.scale(-1, 1);
-      ctx.translate(-this.x - this.width, this.y);
+      ctx.translate(-this.x - this.width, 0);
     } else {
-      // Pour aller vers la droite
       ctx.translate(this.x, this.y);
     }
 
-    // Dessiner l'image
     ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
 
     ctx.restore();
   }
+
   update(platforms, doors) {
     this.velocityY += this.gravity;
     const oldX = this.x;

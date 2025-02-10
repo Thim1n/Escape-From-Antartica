@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = x;
+    this.x = x; // Position initiale du joueur
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -15,72 +15,51 @@ class Player {
     this.clées = 0;
     this.spawnX = x;
     this.spawnY = y;
-    this.isWalking = false;
-    this.walkFrame = 0;
-
-    this.facingRight = true;
-
-    this.images = {
-      standing: new Image(),
-      walking1: new Image(),
-      walking2: new Image(),
-    };
-
-    this.images.standing.src = "../assets/sprite/playerNothing.png";
-    this.images.walking1.src = "../assets/sprite/playerWalk1.png";
-    this.images.walking2.src = "../assets/sprite/playerWalk2.png";
-
-    this.currentImage = this.images.standing;
+    this.sprite = "../assets/sprite/playerNothing.png";
+    this.animateWalk();
   }
 
-  animateWalk() {
-    if (this.isWalking) {
-      this.walkFrame = (this.walkFrame + 1) % 2;
-      this.currentImage =
-        this.walkFrame === 0 ? this.images.walking1 : this.images.walking2;
-      this.facingRight = this.velocityX >= 0; // Met à jour la direction
-      setTimeout(() => this.animateWalk(), 300);
-    } else {
-      this.currentImage = this.images.standing;
+  async animateWalk() {
+    while (this.isWalking) {
+      if (this.sprite == "../assets/sprite/playerWalk1.png") {
+        this.sprite = "../assets/sprite/playerWalk2.png";
+        this.draw();
+      } else if (this.sprite == "../assets/sprite/playerWalk2.png") {
+        this.sprite = "../assets/sprite/playerWalk1.png";
+        this.draw();
+      }
+      time.sleep(0.3);
     }
-  }
-
-  draw(ctx) {
-    ctx.save();
-
-    // Position de base
-    if (!this.facingRight) {
-      // Pour aller vers la gauche
-      ctx.scale(-1, 1);
-      ctx.translate(-this.x - this.width, this.y);
-    } else {
-      // Pour aller vers la droite
-      ctx.translate(this.x, this.y);
+    while (!this.isWalking) {
+      this.sprite = "../assets/sprite/playerNothing.png";
+      this.draw();
     }
-
-    // Dessiner l'image
-    ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
-
-    ctx.restore();
+    this.animateWalk();
   }
+
   update(platforms, doors) {
     this.velocityY += this.gravity;
+
     const oldX = this.x;
     const oldY = this.y;
+
     let newY = this.y + this.velocityY;
     let newX = this.x + this.velocityX;
+
     let isOnGround = false;
 
+    // Vérifier les collisions avec les plateformes
     for (let platform of platforms) {
       if (platform instanceof DisappearingPlatform && !platform.isVisible) {
         continue;
       }
 
       if (this.checkCollision(newX, this.y, platform)) {
-        newX =
-          this.velocityX > 0
-            ? platform.x - this.width
-            : platform.x + platform.width;
+        if (this.velocityX > 0) {
+          newX = platform.x - this.width;
+        } else if (this.velocityX < 0) {
+          newX = platform.x + platform.width;
+        }
         this.velocityX = 0;
       }
 
@@ -106,12 +85,18 @@ class Player {
       }
     }
 
+    // Vérifier les collisions avec les portes fermées
     for (let door of doors) {
       if (!door.isOpen) {
         if (this.checkCollision(newX, this.y, door)) {
-          newX = this.velocityX > 0 ? door.x - this.width : door.x + door.width;
+          if (this.velocityX > 0) {
+            newX = door.x - this.width;
+          } else if (this.velocityX < 0) {
+            newX = door.x + door.width;
+          }
           this.velocityX = 0;
         }
+
         if (this.checkCollision(newX, newY, door)) {
           if (oldY + this.height <= door.y) {
             newY = door.y - this.height;
@@ -130,12 +115,12 @@ class Player {
     this.y = newY;
   }
 
-  checkCollision(x, y, obj) {
+  checkCollision(x, y, platform) {
     return (
-      x + this.width > obj.x &&
-      x < obj.x + obj.width &&
-      y + this.height > obj.y &&
-      y < obj.y + obj.height
+      x + this.width > platform.x &&
+      x < platform.x + platform.width &&
+      y + this.height > platform.y &&
+      y < platform.y + platform.height
     );
   }
 
@@ -148,17 +133,23 @@ class Player {
 
   moveLeft() {
     this.velocityX = -this.speed;
-    this.startWalking();
   }
 
   moveRight() {
     this.velocityX = this.speed;
-    this.startWalking();
   }
 
   stop() {
     this.velocityX = 0;
-    this.stopWalking();
+  }
+
+  draw(ctx) {
+    // Créer un nouvel objet Image
+    const img = new Image();
+    img.src = this.sprite;
+
+    // Dessiner l'image
+    ctx.drawImage(img, this.x, this.y, this.width, this.height);
   }
 
   collectCoin() {
@@ -177,6 +168,7 @@ class Player {
     this.velocityY = 0;
     this.clées = 0;
 
+    // Réinitialiser les zones de déclenchement
     if (triggerZones) {
       triggerZones.forEach((zone) => {
         zone.reset();
@@ -199,13 +191,53 @@ class Player {
   }
 
   startWalking() {
-    if (!this.isWalking) {
-      this.isWalking = true;
-      this.animateWalk();
-    }
+    this.isWalking = true;
+    this.isIdle = false;
+    this.isJumping = false;
+  }
+
+  startJumping() {
+    this.isJumping = true;
+    this.isWalking = false;
+    this.isIdle = false;
+    this.currentFrame = 0;
   }
 
   stopWalking() {
     this.isWalking = false;
+    this.isIdle = true;
   }
 }
+
+// Initialisation
+let playerElement = document.getElementById("player");
+
+// Création de l'instance de player
+const player = new Player(20, 500); // Position initiale du joueur
+
+// Fonction de mise à jour du jeu
+function gameLoop() {
+  player.update(platforms, doors);
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
+// Gestion des événements de clavier
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight") {
+    player.moveRight();
+  }
+  if (event.key === "ArrowLeft") {
+    player.moveLeft();
+  }
+  if (event.key === " ") {
+    player.jump();
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+    player.stop();
+  }
+});

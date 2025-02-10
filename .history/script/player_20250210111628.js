@@ -15,54 +15,25 @@ class Player {
     this.clées = 0;
     this.spawnX = x;
     this.spawnY = y;
+    this.sprite = "../assets/sprite/playerNothing.png";
     this.isWalking = false;
     this.walkFrame = 0;
 
-    this.facingRight = true;
-
     this.images = {
-      standing: new Image(),
-      walking1: new Image(),
-      walking2: new Image(),
-    };
-
-    this.images.standing.src = "../assets/sprite/playerNothing.png";
-    this.images.walking1.src = "../assets/sprite/playerWalk1.png";
-    this.images.walking2.src = "../assets/sprite/playerWalk2.png";
-
-    this.currentImage = this.images.standing;
+      stan
+    }
   }
 
   animateWalk() {
     if (this.isWalking) {
       this.walkFrame = (this.walkFrame + 1) % 2;
-      this.currentImage =
-        this.walkFrame === 0 ? this.images.walking1 : this.images.walking2;
-      this.facingRight = this.velocityX >= 0; // Met à jour la direction
+      this.sprite = `../assets/sprite/playerWalk${this.walkFrame + 1}.png`;
       setTimeout(() => this.animateWalk(), 300);
     } else {
-      this.currentImage = this.images.standing;
+      this.sprite = "../assets/sprite/playerNothing.png";
     }
   }
 
-  draw(ctx) {
-    ctx.save();
-
-    // Position de base
-    if (!this.facingRight) {
-      // Pour aller vers la gauche
-      ctx.scale(-1, 1);
-      ctx.translate(-this.x - this.width, this.y);
-    } else {
-      // Pour aller vers la droite
-      ctx.translate(this.x, this.y);
-    }
-
-    // Dessiner l'image
-    ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
-
-    ctx.restore();
-  }
   update(platforms, doors) {
     this.velocityY += this.gravity;
     const oldX = this.x;
@@ -161,11 +132,18 @@ class Player {
     this.stopWalking();
   }
 
+  draw(ctx) {
+    const img = new Image();
+    img.src = this.sprite;
+    img.onload = () =>
+      ctx.drawImage(img, this.x, this.y, this.width, this.height);
+  }
+
   collectCoin() {
     this.coins++;
   }
 
-  collectclée() {
+  collectClée() {
     this.clées++;
   }
 
