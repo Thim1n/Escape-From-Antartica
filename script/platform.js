@@ -319,23 +319,22 @@ function createPlatforms(canvas) {
 
 		// Fin niveau 3
 		// Niveau 4 -> Mathis
-
-		/*  // Niveau de Mathis -> Les scies 
-		new Platform(3430, canvas.height - 90, 40, 50, "ice_cliff"),
-		new Platform(1750, canvas.height - 70, 300, 50, "ice_cliff"),
-		new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
-		new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(2750, canvas.height - 70, 750, 50, "ice_cliff"),
-		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(1620, canvas.height - 180, 40, 10, "ice_block"),
-		new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
-		new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
-		new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
-		new Platform(2220, canvas.height - 500, 4, 4, "ice_block"), */
+		// Niveau de Mathis -> Les scies
+		new Platform(8430, canvas.height - 90, 40, 50, "ice_cliff"),
+		new Platform(6750, canvas.height - 70, 300, 50, "ice_cliff"),
+		new Platform(7100, canvas.height - 70, 600, 50, "ice_cliff"),
+		new Platform(7350, canvas.height - 180, 100, 10, "ice_block"),
+		new Platform(7750, canvas.height - 70, 600, 50, "ice_cliff"),
+		new Platform(8500, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(6750, canvas.height - 400, 1800, 50, "ice_cliff"),
+		new Platform(7750, canvas.height - 70, 750, 50, "ice_cliff"),
+		new Platform(8500, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(6750, canvas.height - 400, 1800, 50, "ice_cliff"),
+		new Platform(6620, canvas.height - 180, 40, 10, "ice_block"),
+		new Platform(6700, canvas.height - 260, 40, 10, "ice_block"),
+		new Platform(6620, canvas.height - 340, 40, 10, "ice_block"),
+		new Platform(6620, canvas.height - 730, 1930, 80, "ice_cliff"),
+		new Platform(7220, canvas.height - 500, 4, 4, "ice_block"),
 
 		//Niveau 3 -> Matéo
 	];
