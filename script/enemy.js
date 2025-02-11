@@ -514,7 +514,7 @@ function createEnemies(canvas) {
 			500, // marge de y
 			40,
 			"../assets/sprite/scie.png",
-			6,
+			5,
 			4500,
 			4500,
 			300, // marhe de y aussi ???
