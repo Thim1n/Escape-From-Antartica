@@ -191,13 +191,51 @@ class Door extends Platform {
     }
 }
 
+class Bouncer extends Platform {
+    constructor(x, y, width, height) {
+        super(x, y, width, height);
+        this.bounceForce = 20; // Force de rebond plus importante
+    }
+
+    draw(ctx) {
+        // Style visuel du bouncer
+        ctx.fillStyle = "rgb(255, 87, 51)"; // Orange-rouge
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // Effet visuel (ressort)
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        for (let i = 0; i < this.width; i += 10) {
+            ctx.moveTo(this.x + i, this.y);
+            ctx.lineTo(this.x + i + 5, this.y + this.height);
+        }
+        ctx.stroke();
+    }
+
+    handleCollision(player) {
+        if (
+            player.velocityY > 0 && // Le joueur descend
+            player.y + player.height >= this.y &&
+            player.y + player.height <= this.y + this.height &&
+            player.x + player.width > this.x &&
+            player.x < this.x + this.width
+        ) {
+            player.velocityY = this.bounceForce;
+            player.isJumping = true;
+            return true;
+        }
+        return false;
+    }
+}
+
 
 function createPlatforms(canvas) {
     return [
         //mur a gauche pourempecher le joueur de sortir
         new Platform(-1, canvas.height -500, 1, 1000, "ice_block"),
         new Platform(0, canvas.height - 20, 816 , 20, "snow_ground"),
-        new Platform(1350, canvas.height - 20, 5000 , 20, "snow_ground"),
+        new Platform(1350, canvas.height - 20, 2300 , 20, "snow_ground"),
         new Platform(150, canvas.height - 120, 100, 10, "ice_block", true),
         new Platform(300, canvas.height - 220, 100, 10, "ice_block"),
         new Platform(450, canvas.height - 300, 100, 10, "ice_block"),
@@ -226,6 +264,22 @@ function createPlatforms(canvas) {
         new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
         new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
         new Platform(2220, canvas.height - 500, 4, 4, "ice_block"),
+        ///NIveaux thibaud 
+        new Platform(3620, canvas.height - 100, 30, 10, "ice_block"),
+        new DisappearingPlatform(3920, canvas.height - 120, 30, 10),
+        new Platform(4120, canvas.height - 200, 30, 10, "ice_block"),
+        new DisappearingPlatform(3920, canvas.height - 300, 30, 10),
+        new Platform(4120, canvas.height - 400, 30, 10, "ice_block"),
+        new DisappearingPlatform(3920, canvas.height - 500, 30, 10),
+        new Platform(4120, canvas.height - 600, 30, 10, "ice_block"),
+        new Platform(4220, canvas.height - 650, 49, 50, "ice_block"),
+        new Platform(4320, canvas.height - 600, 30, 10, "ice_block"),
+        new DisappearingPlatform(4820, canvas.height - 500, 700, 10),
+        new DisappearingPlatform(5150, canvas.height - 550, 30, 10),
+        new DisappearingPlatform(5050, canvas.height - 620, 30, 10),
+        new DisappearingPlatform(5250, canvas.height - 620, 30, 10),
+        new DisappearingPlatform(5150, canvas.height - 710, 30, 10),
+        new Bouncer(4550, canvas.height - 100, 100, 10),
     ];
 }
 

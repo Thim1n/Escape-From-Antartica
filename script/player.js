@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y) {
-    this.x = x;
+    this.x = 3600;
     this.y = y;
     this.width = 40;
     this.height = 50;
@@ -72,18 +72,21 @@ class Player {
     let isOnGround = false;
 
     for (let platform of platforms) {
-      if (platform instanceof DisappearingPlatform && !platform.isVisible) {
-        continue;
-      }
+        if (
+            platform instanceof DisappearingPlatform &&
+            !platform.isVisible
+        ) {
+            continue;
+        }
 
-      if (this.checkCollision(newX, this.y, platform)) {
-        newX =
-          this.velocityX > 0
-            ? platform.x - this.width
-            : platform.x + platform.width;
-        this.velocityX = 0;
-      }
-
+        if (platform instanceof Bouncer) {
+            if (platform.handleCollision(this)) {
+                this.velocityY = -platform.bounceForce; // Ajout de cette ligne
+                newY = platform.y - this.height;
+                this.isJumping = true;
+                continue;
+            }
+        }
       if (this.checkCollision(newX, newY, platform)) {
         if (oldY + this.height <= platform.y) {
           newY = platform.y - this.height;
