@@ -1,24 +1,22 @@
 // Fichier coin.js
 class Coin {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = 10;
-    }
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+		this.radius = 10;
+	}
 
-    draw(ctx) {
-        ctx.fillStyle = "gold";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-    }
+	draw(ctx) {
+		ctx.fillStyle = "gold";
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+		ctx.fill();
+	}
 }
 
 function createCoins(canvas) {
-    return [
-    ];
+	return [];
 }
-
 
 class Clée extends Coin {
     constructor(x, y) {
@@ -45,7 +43,6 @@ class Clée extends Coin {
     return [
         new Clée(1310, canvas.height - 670),
         new Clée(3410, canvas.height - 160),
-        new Clée(5125 , canvas.height - 800),
 
     ];
   }
