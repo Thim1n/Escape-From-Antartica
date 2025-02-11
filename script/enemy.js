@@ -98,10 +98,10 @@ class MovingEnemy extends Enemy {
 		ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
 		ctx.restore();
 
-    /*ctx.strokeStyle = "blue";
+		/*ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.strokeRect(this.x, this.y, this.width, this.height);*/
-  }
+	}
 
 	update() {
 		this.move();
@@ -394,7 +394,7 @@ function createEnemies(canvas) {
 	const enemies = [];
 	const height = canvas.height;
 
-	enemies.push(
+	/* enemies.push(
 		new MovingEnemy(
 			710,
 			height - 650,
@@ -492,11 +492,11 @@ function createEnemies(canvas) {
 			320,
 			"vertical"
 		)
-	);
+	); */
 	// Niveau 3 Matéo
 	enemies.push(
 		new RoundEnemy(
-			3975, // x de base
+			1975, // x de base
 			500, // marge de y
 			40,
 			"../assets/sprite/scie.png",
@@ -510,13 +510,13 @@ function createEnemies(canvas) {
 	);
 	enemies.push(
 		new RoundEnemy(
-			4500, // x de base
+			2500, // x de base
 			500, // marge de y
 			40,
 			"../assets/sprite/scie.png",
 			5,
-			4500,
-			4500,
+			2500,
+			2500,
 			300, // marhe de y aussi ???
 			600,
 			"vertical"
@@ -525,13 +525,13 @@ function createEnemies(canvas) {
 
 	enemies.push(
 		new RoundEnemy(
-			4700, // x de base
+			2700, // x de base
 			300, // marge de y
 			40,
 			"../assets/sprite/scie.png",
 			10,
-			4700,
-			5100,
+			2700,
+			3100,
 			300, // marhe de y aussi ???
 			600,
 			"horizontal"
@@ -539,12 +539,12 @@ function createEnemies(canvas) {
 	);
 
 	//Fin niveau Matéo
-	enemies.push(
+	/*enemies.push(
 		new RoundEnemy(
-			3200,
+			1200,
 			100,
 			40,
-			"../assets/sprite/scie.png",
+			"../assets/sprite/enemy.png",
 			6,
 			2800,
 			2800,
@@ -555,25 +555,25 @@ function createEnemies(canvas) {
 	);
 	enemies.push(
 		new RoundEnemy(
-			3400,
+			1400,
 			100,
 			40,
-			"../assets/sprite/scie.png",
+			"../assets/sprite/enemy.png",
 			6,
-			2800,
-			2800,
+			800,
+			800,
 			90,
 			320,
 			"vertical"
 		)
-	);
+	);*/
 	const spikeGroups = [
 		{ startX: 320, y: height - 250, count: 2, spacing: 30 },
 		{ startX: 820, y: height - 30, count: 17, spacing: 30 },
-		{ startX: 2340, y: height - 100, count: 4, spacing: 30 },
+		// { startX: 2340, y: height - 100, count: 4, spacing: 30 },
 
 		// Spike en dessous niveau 3
-		{ startX: 3715, y: canvas.height - 50, count: 25, spacing: 30 },
+		{ startX: 1715, y: canvas.height - 50, count: 25, spacing: 30 },
 
 		// Tour vers le bas
 		// Relié avec platform.js

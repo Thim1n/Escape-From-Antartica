@@ -254,6 +254,8 @@ function createPlatforms(canvas) {
 		//mur a gauche pourempecher le joueur de sortir
 		new Platform(-1, canvas.height - 500, 1, 1000, "ice_block"),
 		new Platform(0, canvas.height - 20, 816, 20, "snow_ground"),
+
+		// Niveau 1 -> ( Thibaud )
 		new Platform(1350, canvas.height - 20, 5000, 20, "snow_ground"),
 		new Platform(150, canvas.height - 120, 100, 10, "ice_block", true),
 		new Platform(300, canvas.height - 220, 100, 10, "ice_block"),
@@ -268,6 +270,41 @@ function createPlatforms(canvas) {
 		new Platform(1420, canvas.height - 850, 200, 750, "ice_cliff"),
 		new Platform(1420, canvas.height - 100, 200, 10, "ice_block"),
 		new DisappearingPlatform(250, canvas.height - 420, 100, 10),
+
+		// Fin niveau 1
+		// Niveau 2 -> Matéo
+		new Platform(1700, canvas.height - 100, 100, 20, "ice_block"),
+		new Platform(1800, canvas.height - 200, 100, 20, "ice_block"),
+		new Platform(2150, canvas.height - 200, 100, 20, "ice_block"),
+		new Platform(2320, canvas.height - 200, 100, 20, "ice_block"), // Deuxieme plateforme du saut bloqué
+
+		// Plateforme bloquant le saut
+		new Platform(2150, canvas.height - 800, 270, 520, "ice_cliff"),
+
+		new Platform(2680, canvas.height - 200, 100, 20, "ice_block"),
+
+		new Bouncer(2800, canvas.height - 100, 100, 20, "ice_block"), // BOUNCER
+
+		new Platform(3000, canvas.height - 500, 100, 20, "ice_block"),
+
+		// Tour vers le bas. ===========================
+		// Bloc sur le cote
+		new Platform(3100, canvas.height - 500, 100, 480, "ice_block"),
+		new Platform(3400, canvas.height - 800, 20, 700, "ice_block"),
+
+		// Plateforme dans la tour
+		// Relié avec les ennemis entre la ligne x et x
+		new DisappearingPlatform(3200, canvas.height - 500, 100, 20),
+		new DisappearingPlatform(3300, canvas.height - 310, 100, 20),
+		new DisappearingPlatform(3200, canvas.height - 120, 100, 20),
+
+		// Fin niveau 2
+		// Niveau 3 -> Thibaud
+
+		// Fin niveau 3
+		// Niveau 4 -> Mathis
+
+		/*  // Niveau de Mathis -> Les scies 
 		new Platform(3430, canvas.height - 90, 40, 50, "ice_cliff"),
 		new Platform(1750, canvas.height - 70, 300, 50, "ice_cliff"),
 		new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
@@ -282,39 +319,15 @@ function createPlatforms(canvas) {
 		new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
 		new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
 		new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
-		new Platform(2220, canvas.height - 500, 4, 4, "ice_block"),
+		new Platform(2220, canvas.height - 500, 4, 4, "ice_block"), */
 
 		//Niveau 3 -> Matéo
-		new Platform(3700, canvas.height - 100, 100, 20, "ice_block"),
-		new Platform(3800, canvas.height - 200, 100, 20, "ice_block"),
-		new Platform(4150, canvas.height - 200, 100, 20, "ice_block"),
-		new Platform(4320, canvas.height - 200, 100, 20, "ice_block"), // Deuxieme plateforme du saut bloqué
-
-		// Plateforme bloquant le saut
-		new Platform(4150, canvas.height - 800, 270, 520, "ice_cliff"),
-
-		new Platform(4680, canvas.height - 200, 100, 20, "ice_block"),
-
-		new Bouncer(4800, canvas.height - 100, 100, 20, "ice_block"), // BOUNCER
-
-		new Platform(5000, canvas.height - 500, 100, 20, "ice_block"),
-
-		// Tour vers le bas. ===========================
-		// Bloc sur le cote
-		new Platform(5100, canvas.height - 500, 100, 480, "ice_block"),
-		new Platform(5400, canvas.height - 800, 20, 700, "ice_block"),
-
-		// Plateforme dans la tour
-		// Relié avec les ennemis entre la ligne x et x
-		new DisappearingPlatform(5200, canvas.height - 500, 100, 20),
-		new DisappearingPlatform(5300, canvas.height - 310, 100, 20),
-		new DisappearingPlatform(5200, canvas.height - 120, 100, 20),
 	];
 }
 
 function createDoors(canvas) {
-    return [
-        new Door(1450, canvas.height - 95,60,80 ),
-        new Door(3430, canvas.height - 675, 155, 300),
-    ];
+	return [
+		new Door(1450, canvas.height - 95, 60, 80),
+		new Door(3430, canvas.height - 675, 155, 300),
+	];
 }
