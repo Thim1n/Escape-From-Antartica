@@ -245,6 +245,6 @@ function createPlatforms(canvas) {
 function createDoors(canvas) {
     return [
         new Door(1450, canvas.height - 95,60,80 ),
-        new Door(3500, canvas.height - 650, 50, 250),
+        new Door(3430, canvas.height - 675, 155, 300),
     ];
 }

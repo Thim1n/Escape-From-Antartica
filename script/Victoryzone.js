@@ -1,17 +1,34 @@
-// Fichier VictoryZone.js
 class VictoryZone {
-    constructor(x, y, width = 50, height = 50) {
-        this.x = 3550;
-        this.y = 300;
+    constructor(x, y, width = 50, height = 50, imageSrc = null) {
+        this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
         this.isTriggered = false;
+
+        // Charger l'image si une source d'image est fournie
+        if (imageSrc) {
+            this.image = new Image();
+            this.image.onload = () => {
+                console.log("Image chargée avec succès");
+                this.imageLoaded = true;
+            };
+            this.image.onerror = () => {
+                console.error("Erreur de chargement de l'image");
+            };
+            this.image.src = imageSrc;
+        }
     }
 
     draw(ctx) {
-        // Rectangle vert semi-transparent pour la visibilité pendant les tests
-        ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.image) {
+            // Dessiner l'image si elle est chargée
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        } else {
+            // Rectangle vert semi-transparent pour la visibilité pendant les tests
+            ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
 
     checkVictory(player) {
