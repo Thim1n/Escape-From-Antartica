@@ -66,15 +66,15 @@ class TriggerZone {
 		}
 	}
 
-	reset() {
-		this.isTriggered = false;
-		if (this.enemy) {
-			// Réinitialiser la position de l'ennemi à sa position initiale
-			this.enemy.x = this.initialEnemyX;
-			this.enemy.y = this.initialEnemyY;
-			this.enemy.isAlive = true;
-		}
-	}
+    reset() {
+        this.isTriggered = false;
+        if (this.enemy) {
+            // Réinitialiser la position de l'ennemi à sa position initiale
+            this.enemy.x = this.initialEnemyX;
+            this.enemy.y = this.initialEnemyY;
+            this.enemy.isAlive = true;
+        }
+    }
 }
 
 // Fonction de création des zones

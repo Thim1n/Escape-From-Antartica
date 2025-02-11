@@ -98,10 +98,10 @@ class MovingEnemy extends Enemy {
 		ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
 		ctx.restore();
 
-		/*ctx.strokeStyle = "blue";
-	  ctx.lineWidth = 2;
-	  ctx.strokeRect(this.x, this.y, this.width, this.height);*/
-	}
+    /*ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(this.x, this.y, this.width, this.height);*/
+  }
 
 	update() {
 		this.move();
