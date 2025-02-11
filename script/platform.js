@@ -140,43 +140,42 @@ class DisappearingPlatform extends Platform {
 		}
 	}
 }
-
 class Bouncer extends Platform {
-	constructor(x, y, width, height) {
-		super(x, y, width, height);
-		this.bounceForce = 20; // Force de rebond plus importante
-	}
+    constructor(x, y, width, height) {
+        super(x, y, width, height);
+        this.bounceForce = 20; // Force de rebond plus importante
+    }
 
-	draw(ctx) {
-		// Style visuel du bouncer
-		ctx.fillStyle = "rgb(255, 87, 51)"; // Orange-rouge
-		ctx.fillRect(this.x, this.y, this.width, this.height);
+    draw(ctx) {
+        // Style visuel du bouncer
+        ctx.fillStyle = "rgb(255, 87, 51)"; // Orange-rouge
+        ctx.fillRect(this.x, this.y, this.width, this.height);
 
-		// Effet visuel (ressort)
-		ctx.beginPath();
-		ctx.strokeStyle = "white";
-		ctx.lineWidth = 2;
-		for (let i = 0; i < this.width; i += 10) {
-			ctx.moveTo(this.x + i, this.y);
-			ctx.lineTo(this.x + i + 5, this.y + this.height);
-		}
-		ctx.stroke();
-	}
+        // Effet visuel (ressort)
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        for (let i = 0; i < this.width; i += 10) {
+            ctx.moveTo(this.x + i, this.y);
+            ctx.lineTo(this.x + i + 5, this.y + this.height);
+        }
+        ctx.stroke();
+    }
 
-	handleCollision(player) {
-		if (
-			player.velocityY > 0 && // Le joueur descend
-			player.y + player.height >= this.y &&
-			player.y + player.height <= this.y + this.height &&
-			player.x + player.width > this.x &&
-			player.x < this.x + this.width
-		) {
-			player.velocityY = this.bounceForce;
-			player.isJumping = true;
-			return true;
-		}
-		return false;
-	}
+    handleCollision(player) {
+        if (
+            player.velocityY > 0 && // Le joueur descend
+            player.y + player.height >= this.y &&
+            player.y + player.height <= this.y + this.height &&
+            player.x + player.width > this.x &&
+            player.x < this.x + this.width
+        ) {
+            player.velocityY = this.bounceForce;
+            player.isJumping = true;
+            return true;
+        }
+        return false;
+    }
 }
 
 class Door extends Platform {
@@ -256,7 +255,7 @@ function createPlatforms(canvas) {
 		new Platform(0, canvas.height - 20, 816, 20, "snow_ground"),
 
 		// Niveau 1 -> ( Thibaud )
-		new Platform(1350, canvas.height - 20, 5000, 20, "snow_ground"),
+		new Platform(1350, canvas.height - 20, 2300, 20, "snow_ground"),
 		new Platform(150, canvas.height - 120, 100, 10, "ice_block", true),
 		new Platform(300, canvas.height - 220, 100, 10, "ice_block"),
 		new Platform(450, canvas.height - 300, 100, 10, "ice_block"),
@@ -319,22 +318,23 @@ function createPlatforms(canvas) {
 
 		// Fin niveau 3
 		// Niveau 4 -> Mathis
-		// Niveau de Mathis -> Les scies
-		new Platform(8430, canvas.height - 90, 40, 50, "ice_cliff"),
-		new Platform(6750, canvas.height - 70, 300, 50, "ice_cliff"),
-		new Platform(7100, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(7350, canvas.height - 180, 100, 10, "ice_block"),
-		new Platform(7750, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(8500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(6750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(7750, canvas.height - 70, 750, 50, "ice_cliff"),
-		new Platform(8500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(6750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(6620, canvas.height - 180, 40, 10, "ice_block"),
-		new Platform(6700, canvas.height - 260, 40, 10, "ice_block"),
-		new Platform(6620, canvas.height - 340, 40, 10, "ice_block"),
-		new Platform(6620, canvas.height - 730, 1930, 80, "ice_cliff"),
-		new Platform(7220, canvas.height - 500, 4, 4, "ice_block"),
+
+		/*  // Niveau de Mathis -> Les scies 
+		new Platform(3430, canvas.height - 90, 40, 50, "ice_cliff"),
+		new Platform(1750, canvas.height - 70, 300, 50, "ice_cliff"),
+		new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
+		new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
+		new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
+		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
+		new Platform(2750, canvas.height - 70, 750, 50, "ice_cliff"),
+		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
+		new Platform(1620, canvas.height - 180, 40, 10, "ice_block"),
+		new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
+		new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
+		new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
+		new Platform(2220, canvas.height - 500, 4, 4, "ice_block"), */
 
 		//Niveau 3 -> Matéo
 	];
@@ -343,6 +343,6 @@ function createPlatforms(canvas) {
 function createDoors(canvas) {
 	return [
 		new Door(1450, canvas.height - 95, 60, 80),
-		new Door(3430, canvas.height - 675, 155, 300),
+		new Door(3380, canvas.height - 95, 60, 80),
 	];
 }

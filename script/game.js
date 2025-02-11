@@ -21,25 +21,19 @@ window.onload = function () {
 	let cameraY = 0;
 	const keysPressed = {};
 
-	// Game elements
-	const platforms = createPlatforms(canvas);
-	const player = new Player(20, canvas.height - 20 - 50);
-	let coins = createCoins(canvas);
-	let clée = createClées(canvas);
-	let enemies = createEnemies(canvas);
-	let triggerZones = createTriggerZones(canvas);
-	let doors = createDoors(canvas);
-	const victoryZone = new VictoryZone(
-		600000,
-		canvas.height - 170,
-		200,
-		150,
-		"../assets/sprite/Victory_zone.png"
-	);
-	let isPaused = false;
-	// Création des éléments du menu pause
-	const pauseMenu = document.createElement("div");
-	pauseMenu.style.cssText = `
+  // Game elements
+  const platforms = createPlatforms(canvas);
+  const player = new Player(20, canvas.height - 20 - 50);
+  let coins = createCoins(canvas);
+  let clée = createClées(canvas);
+  let enemies = createEnemies(canvas);
+  let triggerZones = createTriggerZones(canvas);
+  let doors = createDoors(canvas);
+  const victoryZone = new VictoryZone(5500, canvas.height - 170,200,150, "../assets/sprite/Victory_zone.png");
+  let isPaused = false;
+  // Création des éléments du menu pause
+  const pauseMenu = document.createElement('div');
+  pauseMenu.style.cssText = `
     position: absolute;
     top: 50%;
     left: 50%;

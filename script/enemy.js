@@ -164,62 +164,75 @@ class TriggerEnemy extends MovingEnemy {
 		this.right = this.x + this.width;
 		this.bottom = this.y + this.height;
 	}
-}
-
+};
 class SpikeEnemy extends Enemy {
 	constructor(x, y, orientation = "up", width = 30, height = 30) {
-		super(x, y, width, height);
-		this.color = "#8B0000";
-		this.orientation = orientation;
-		this.updatePoints();
+	  super(x, y, width, height);
+	  this.color = "#8B0000";
+	  this.orientation = orientation;
+	  this.updatePoints();
 	}
-
+  
 	updatePoints() {
-		switch (this.orientation) {
-			case "up":
-				this.points = {
-					tipX: this.x + this.width / 2,
-					tipY: this.y,
-					rightX: this.x + this.width,
-					rightY: this.y + this.height,
-					leftX: this.x,
-					leftY: this.y + this.height,
-				};
-				break;
-			case "right":
-				this.points = {
-					tipX: this.x + this.width,
-					tipY: this.y + this.height / 2,
-					rightX: this.x,
-					rightY: this.y + this.height,
-					leftX: this.x,
-					leftY: this.y,
-				};
-				break;
-			case "down":
-				this.points = {
-					tipX: this.x + this.width / 2,
-					tipY: this.y + this.height,
-					rightX: this.x,
-					rightY: this.y,
-					leftX: this.x + this.width,
-					leftY: this.y,
-				};
-				break;
-			case "left":
-				this.points = {
-					tipX: this.x,
-					tipY: this.y + this.height / 2,
-					rightX: this.x + this.width,
-					rightY: this.y,
-					leftX: this.x + this.width,
-					leftY: this.y + this.height,
-				};
-				break;
-		}
+	  switch (this.orientation) {
+		case "up":
+		  this.points = {
+			tipX: this.x + this.width / 2,
+			tipY: this.y,
+			rightX: this.x + this.width,
+			rightY: this.y + this.height,
+			leftX: this.x,
+			leftY: this.y + this.height
+		  };
+		  break;
+		case "right":
+		  this.points = {
+			tipX: this.x + this.width,
+			tipY: this.y + this.height / 2,
+			rightX: this.x,
+			rightY: this.y + this.height,
+			leftX: this.x,
+			leftY: this.y
+		  };
+		  break;
+		case "down":
+		  this.points = {
+			tipX: this.x + this.width / 2,
+			tipY: this.y + this.height,
+			rightX: this.x,
+			rightY: this.y,
+			leftX: this.x + this.width,
+			leftY: this.y
+		  };
+		  break;
+		case "left":
+		  this.points = {
+			tipX: this.x,
+			tipY: this.y + this.height / 2,
+			rightX: this.x + this.width,
+			rightY: this.y,
+			leftX: this.x + this.width,
+			leftY: this.y + this.height
+		  };
+		  break;
+	  }
 	}
-}
-
+  
+	draw(ctx) {
+	  ctx.fillStyle = this.color;
+	  ctx.strokeStyle = "#600000";
+	  ctx.lineWidth = 2;
+  
+	  ctx.beginPath();
+	  ctx.moveTo(this.points.tipX, this.points.tipY);
+	  ctx.lineTo(this.points.rightX, this.points.rightY);
+	  ctx.lineTo(this.points.leftX, this.points.leftY);
+	  ctx.closePath();
+  
+	  ctx.fill();
+	  ctx.stroke();
+	}
+  }
 class RoundEnemy extends Enemy {
 	constructor(
 		x,
@@ -417,7 +430,7 @@ function createEnemies(canvas) {
 
 	const enemies = [];
 	const height = canvas.height;
-
+	enemies.push(new Enemy(0, canvas.height +500, 10000, 1));	
 	/* enemies.push(
 		new MovingEnemy(
 			710,
@@ -628,9 +641,9 @@ function createEnemies(canvas) {
 
 		// Tour vers le bas
 		// Relié avec platform.js
-		{ startX: 5300, y: canvas.height - 510, count: 3, spacing: 34 },
-		{ startX: 5200, y: canvas.height - 320, count: 3, spacing: 34 },
-		{ startX: 5300, y: canvas.height - 130, count: 3, spacing: 34 },
+		{ startX: 3300, y: canvas.height - 510, count: 3, spacing: 34 },
+		{ startX: 3200, y: canvas.height - 320, count: 3, spacing: 34 },
+		{ startX: 3300, y: canvas.height - 130, count: 3, spacing: 34 },
 	];
 
 	spikeGroups.forEach((group) => {

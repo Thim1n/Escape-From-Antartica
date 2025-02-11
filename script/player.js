@@ -72,80 +72,80 @@ class Player {
 		let newY = this.y + this.velocityY;
 		let newX = this.x + this.velocityX;
 		let isOnGround = false;
-
+		
 		for (let platform of platforms) {
-			if (
-				platform instanceof DisappearingPlatform &&
-				!platform.isVisible
-			) {
-				continue;
-			}
-
-			if (platform instanceof Bouncer) {
-				if (platform.handleCollision(this)) {
-					this.velocityY = -platform.bounceForce; // Ajout de cette ligne
-					newY = platform.y - this.height;
-					this.isJumping = true;
-					continue;
-				}
-			}
-
-			if (this.checkCollision(newX, this.y, platform)) {
-				newX =
-					this.velocityX > 0
-						? platform.x - this.width
-						: platform.x + platform.width;
-				this.velocityX = 0;
-			}
-
-			if (this.checkCollision(newX, newY, platform)) {
-				if (oldY + this.height <= platform.y) {
-					newY = platform.y - this.height;
-					this.velocityY = 0;
-					isOnGround = true;
-					this.isJumping = false;
-
-					if (platform instanceof DisappearingPlatform) {
-						platform.handleCollision(this);
-						if (!platform.isVisible) {
-							newY = oldY + this.velocityY;
-							isOnGround = false;
-							this.isJumping = true;
-						}
-					}
-				} else if (oldY >= platform.y + platform.height) {
-					newY = platform.y + platform.height;
-					this.velocityY = 0;
-				}
-			}
+		if (
+		platform instanceof DisappearingPlatform &&
+		!platform.isVisible
+		) {
+		continue;
 		}
-
+		
+		if (platform instanceof Bouncer) {
+		if (platform.handleCollision(this)) {
+		this.velocityY = -platform.bounceForce; // Ajout de cette ligne
+		newY = platform.y - this.height;
+		this.isJumping = true;
+		continue;
+		}
+		}
+		
+		if (this.checkCollision(newX, this.y, platform)) {
+		newX =
+		this.velocityX > 0
+		? platform.x - this.width
+		: platform.x + platform.width;
+		this.velocityX = 0;
+		}
+		
+		if (this.checkCollision(newX, newY, platform)) {
+		if (oldY + this.height <= platform.y) {
+		newY = platform.y - this.height;
+		this.velocityY = 0;
+		isOnGround = true;
+		this.isJumping = false;
+		
+		if (platform instanceof DisappearingPlatform) {
+		platform.handleCollision(this);
+		if (!platform.isVisible) {
+		newY = oldY + this.velocityY;
+		isOnGround = false;
+		this.isJumping = true;
+		}
+		}
+		} else if (oldY >= platform.y + platform.height) {
+		newY = platform.y + platform.height;
+		this.velocityY = 0;
+		}
+		}
+		}
+		
 		for (let door of doors) {
-			if (!door.isOpen) {
-				if (this.checkCollision(newX, this.y, door)) {
-					newX =
-						this.velocityX > 0
-							? door.x - this.width
-							: door.x + door.width;
-					this.velocityX = 0;
-				}
-				if (this.checkCollision(newX, newY, door)) {
-					if (oldY + this.height <= door.y) {
-						newY = door.y - this.height;
-						this.velocityY = 0;
-						isOnGround = true;
-						this.isJumping = false;
-					} else if (oldY >= door.y + door.height) {
-						newY = door.y + door.height;
-						this.velocityY = 0;
-					}
-				}
-			}
+		if (!door.isOpen) {
+		if (this.checkCollision(newX, this.y, door)) {
+		newX =
+		this.velocityX > 0
+		? door.x - this.width
+		: door.x + door.width;
+		this.velocityX = 0;
 		}
-
+		if (this.checkCollision(newX, newY, door)) {
+		if (oldY + this.height <= door.y) {
+		newY = door.y - this.height;
+		this.velocityY = 0;
+		isOnGround = true;
+		this.isJumping = false;
+		} else if (oldY >= door.y + door.height) {
+		newY = door.y + door.height;
+		this.velocityY = 0;
+		}
+		}
+		}
+		}
+		
 		this.x = newX;
 		this.y = newY;
-	}
+		}
 
 	checkCollision(x, y, obj) {
 		return (
