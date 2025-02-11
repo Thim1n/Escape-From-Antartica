@@ -167,32 +167,56 @@ class TriggerEnemy extends MovingEnemy {
 }
 
 class SpikeEnemy extends Enemy {
-	constructor(x, y, width = 30, height = 30) {
+	constructor(x, y, orientation = "up", width = 30, height = 30) {
 		super(x, y, width, height);
 		this.color = "#8B0000";
-		this.points = {
-			topX: this.x + width / 2,
-			topY: this.y,
-			rightX: this.x + width,
-			rightY: this.y + height,
-			leftX: this.x,
-			leftY: this.y + height,
-		};
+		this.orientation = orientation;
+		this.updatePoints();
 	}
 
-	draw(ctx) {
-		ctx.fillStyle = this.color;
-		ctx.strokeStyle = "#600000";
-		ctx.lineWidth = 2;
-
-		ctx.beginPath();
-		ctx.moveTo(this.points.topX, this.points.topY);
-		ctx.lineTo(this.points.rightX, this.points.rightY);
-		ctx.lineTo(this.points.leftX, this.points.leftY);
-		ctx.closePath();
-
-		ctx.fill();
-		ctx.stroke();
+	updatePoints() {
+		switch (this.orientation) {
+			case "up":
+				this.points = {
+					tipX: this.x + this.width / 2,
+					tipY: this.y,
+					rightX: this.x + this.width,
+					rightY: this.y + this.height,
+					leftX: this.x,
+					leftY: this.y + this.height,
+				};
+				break;
+			case "right":
+				this.points = {
+					tipX: this.x + this.width,
+					tipY: this.y + this.height / 2,
+					rightX: this.x,
+					rightY: this.y + this.height,
+					leftX: this.x,
+					leftY: this.y,
+				};
+				break;
+			case "down":
+				this.points = {
+					tipX: this.x + this.width / 2,
+					tipY: this.y + this.height,
+					rightX: this.x,
+					rightY: this.y,
+					leftX: this.x + this.width,
+					leftY: this.y,
+				};
+				break;
+			case "left":
+				this.points = {
+					tipX: this.x,
+					tipY: this.y + this.height / 2,
+					rightX: this.x + this.width,
+					rightY: this.y,
+					leftX: this.x + this.width,
+					leftY: this.y + this.height,
+				};
+				break;
+		}
 	}
 }
 
@@ -536,6 +560,33 @@ function createEnemies(canvas) {
 			600,
 			"horizontal"
 		)
+	);
+
+	// Niveau 3 Thibaud
+
+	enemies.push(
+		new RoundEnemy(
+			4080,
+			200,
+			15,
+			"../assets/sprite/scie.png",
+			6,
+			4080,
+			4080,
+			100,
+			500,
+			"vertical"
+		)
+	);
+
+	enemies.push(new SpikeEnemy(4195, canvas.height - 650, "left", 23, 25));
+	enemies.push(new SpikeEnemy(4195, canvas.height - 625, "left", 23, 25));
+	enemies.push(new SpikeEnemy(4245, canvas.height - 670, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4215, canvas.height - 670, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4265, canvas.height - 650, "right", 23, 25));
+	enemies.push(new SpikeEnemy(4265, canvas.height - 625, "right", 23, 25));
+	enemies.push(
+		new MovingEnemy(5250, canvas.height - 540, 4820, 5500, 500, 500, 5)
 	);
 
 	//Fin niveau Matéo

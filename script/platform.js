@@ -301,6 +301,22 @@ function createPlatforms(canvas) {
 		// Fin niveau 2
 		// Niveau 3 -> Thibaud
 
+		new Platform(3620, canvas.height - 100, 30, 10, "ice_block"),
+		new DisappearingPlatform(3920, canvas.height - 120, 30, 10),
+		new Platform(4120, canvas.height - 200, 30, 10, "ice_block"),
+		new DisappearingPlatform(3920, canvas.height - 300, 30, 10),
+		new Platform(4120, canvas.height - 400, 30, 10, "ice_block"),
+		new DisappearingPlatform(3920, canvas.height - 500, 30, 10),
+		new Platform(4120, canvas.height - 600, 30, 10, "ice_block"),
+		new Platform(4220, canvas.height - 650, 49, 50, "ice_block"),
+		new Platform(4320, canvas.height - 600, 30, 10, "ice_block"),
+		new DisappearingPlatform(4820, canvas.height - 500, 700, 10),
+		new DisappearingPlatform(5150, canvas.height - 550, 30, 10),
+		new DisappearingPlatform(5050, canvas.height - 620, 30, 10),
+		new DisappearingPlatform(5250, canvas.height - 620, 30, 10),
+		new DisappearingPlatform(5150, canvas.height - 710, 30, 10),
+		new Bouncer(4550, canvas.height - 100, 100, 10),
+
 		// Fin niveau 3
 		// Niveau 4 -> Mathis
 

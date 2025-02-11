@@ -21,19 +21,25 @@ window.onload = function () {
 	let cameraY = 0;
 	const keysPressed = {};
 
-  // Game elements
-  const platforms = createPlatforms(canvas);
-  const player = new Player(20, canvas.height - 20 - 50);
-  let coins = createCoins(canvas);
-  let clée = createClées(canvas);
-  let enemies = createEnemies(canvas);
-  let triggerZones = createTriggerZones(canvas);
-  let doors = createDoors(canvas);
-  const victoryZone = new VictoryZone(4550, canvas.height - 170,200,150, "../assets/sprite/Victory_zone.png");
-  let isPaused = false;
-  // Création des éléments du menu pause
-  const pauseMenu = document.createElement('div');
-  pauseMenu.style.cssText = `
+	// Game elements
+	const platforms = createPlatforms(canvas);
+	const player = new Player(20, canvas.height - 20 - 50);
+	let coins = createCoins(canvas);
+	let clée = createClées(canvas);
+	let enemies = createEnemies(canvas);
+	let triggerZones = createTriggerZones(canvas);
+	let doors = createDoors(canvas);
+	const victoryZone = new VictoryZone(
+		600000,
+		canvas.height - 170,
+		200,
+		150,
+		"../assets/sprite/Victory_zone.png"
+	);
+	let isPaused = false;
+	// Création des éléments du menu pause
+	const pauseMenu = document.createElement("div");
+	pauseMenu.style.cssText = `
     position: absolute;
     top: 50%;
     left: 50%;
@@ -46,12 +52,12 @@ window.onload = function () {
     align-items: center;
     gap: 10px;
   `;
-  document.body.appendChild(pauseMenu);
+	document.body.appendChild(pauseMenu);
 
-  // Création des boutons
-  const resumeButton = document.createElement('button');
-  resumeButton.textContent = 'Continuer';
-  resumeButton.style.cssText = `
+	// Création des boutons
+	const resumeButton = document.createElement("button");
+	resumeButton.textContent = "Continuer";
+	resumeButton.style.cssText = `
     padding: 10px 20px;
     font-size: 18px;
     margin: 5px;
@@ -63,9 +69,9 @@ window.onload = function () {
     width: 200px;
   `;
 
-  const mainMenuButton = document.createElement('button');
-  mainMenuButton.textContent = 'Menu Principal';
-  mainMenuButton.style.cssText = `
+	const mainMenuButton = document.createElement("button");
+	mainMenuButton.textContent = "Menu Principal";
+	mainMenuButton.style.cssText = `
     padding: 10px 20px;
     font-size: 18px;
     margin: 5px;
@@ -77,43 +83,43 @@ window.onload = function () {
     width: 200px;
   `;
 
-  pauseMenu.appendChild(resumeButton);
-  pauseMenu.appendChild(mainMenuButton);
+	pauseMenu.appendChild(resumeButton);
+	pauseMenu.appendChild(mainMenuButton);
 
-  // Gestionnaires d'événements pour les boutons
-  resumeButton.addEventListener('click', () => {
-    togglePause();
-  });
+	// Gestionnaires d'événements pour les boutons
+	resumeButton.addEventListener("click", () => {
+		togglePause();
+	});
 
-  mainMenuButton.addEventListener('click', () => {
-    window.location.href = '../index.html'; // Redirection vers le menu principal
-  });
+	mainMenuButton.addEventListener("click", () => {
+		window.location.href = "../index.html"; // Redirection vers le menu principal
+	});
 
-  // Modifiez les event listeners pour inclure la touche Escape
-  window.addEventListener("keydown", (event) => {
-    keysPressed[event.code] = true;
-    if (event.code === "Space" || event.code === "ArrowUp") {
-      if (!isPaused) player.jump();
-    }
-    if (event.code === "KeyR") {
-      if (!isPaused) resetGame();
-    }
-    if (event.code === "Escape") {
-      togglePause();
-    }
-  });
+	// Modifiez les event listeners pour inclure la touche Escape
+	window.addEventListener("keydown", (event) => {
+		keysPressed[event.code] = true;
+		if (event.code === "Space" || event.code === "ArrowUp") {
+			if (!isPaused) player.jump();
+		}
+		if (event.code === "KeyR") {
+			if (!isPaused) resetGame();
+		}
+		if (event.code === "Escape") {
+			togglePause();
+		}
+	});
 
-  // Fonction pour basculer l'état de pause
-  function togglePause() {
-    isPaused = !isPaused;
-    if (isPaused) {
-      pauseMenu.style.display = 'flex';
-      if (backgroundMusic) backgroundMusic.pause();
-    } else {
-      pauseMenu.style.display = 'none';
-      if (backgroundMusic && timerStarted) backgroundMusic.play();
-    }
-  }
+	// Fonction pour basculer l'état de pause
+	function togglePause() {
+		isPaused = !isPaused;
+		if (isPaused) {
+			pauseMenu.style.display = "flex";
+			if (backgroundMusic) backgroundMusic.pause();
+		} else {
+			pauseMenu.style.display = "none";
+			if (backgroundMusic && timerStarted) backgroundMusic.play();
+		}
+	}
 
 	// Event listeners
 	window.addEventListener("resize", () => {
@@ -333,9 +339,10 @@ window.onload = function () {
 			if (elapsed > frameDelay) {
 				lastFrameTime = currentTime;
 
-        if (!isGameWon && !isPaused) {  // Ajout de la condition !isPaused
-          gameTime = Date.now() - startTime;
-          startMusicWhenTimerStarts();
+				if (!isGameWon && !isPaused) {
+					// Ajout de la condition !isPaused
+					gameTime = Date.now() - startTime;
+					startMusicWhenTimerStarts();
 
 					updatePlayerMovement();
 					player.update(platforms, doors);
@@ -360,16 +367,16 @@ window.onload = function () {
 					}
 				}
 
-        drawGame();
-        
-        // Ajout d'un overlay sombre quand le jeu est en pause
-        if (isPaused) {
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-      }
-      requestAnimationFrame(update);
-    }
+				drawGame();
+
+				// Ajout d'un overlay sombre quand le jeu est en pause
+				if (isPaused) {
+					ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+					ctx.fillRect(0, 0, canvas.width, canvas.height);
+				}
+			}
+			requestAnimationFrame(update);
+		}
 
 		requestAnimationFrame(update);
 	}
