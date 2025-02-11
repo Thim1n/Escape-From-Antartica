@@ -29,7 +29,7 @@ window.onload = function () {
   let enemies = createEnemies(canvas);
   let triggerZones = createTriggerZones(canvas);
   let doors = createDoors(canvas);
-  const victoryZone = new VictoryZone(3550, canvas.height - 300);
+  const victoryZone = new VictoryZone(4550, canvas.height - 170,200,150, "../assets/sprite/Victory_zone.png");
   let isPaused = false;
   // Création des éléments du menu pause
   const pauseMenu = document.createElement('div');
@@ -372,4 +372,3 @@ window.onload = function () {
 
   gameLoop();
 };
-La

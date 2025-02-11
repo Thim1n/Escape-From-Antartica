@@ -430,13 +430,13 @@ function createEnemies(canvas) {
   );
   enemies.push(
     new RoundEnemy(
-      2800,
+      2600,
       100,
       40,
       "../assets/sprite/scie.png",
       6,
-      2800,
-      2800,
+      2600,
+      2600,
       90,
       320,
       "vertical"
@@ -444,7 +444,7 @@ function createEnemies(canvas) {
   );
   enemies.push(
     new RoundEnemy(
-      3000,
+      2800,
       100,
       40,
       "../assets/sprite/scie.png",
@@ -457,10 +457,10 @@ function createEnemies(canvas) {
     )
   );
   enemies.push(
-    new RoundEnemy(3200, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    new RoundEnemy(3000, 100, 40, "../assets/sprite/scie.png", 6, 3000, 3000, 90, 320, 'vertical')
     );
     enemies.push(
-    new RoundEnemy(3400, 100, 40, "../assets/sprite/scie.png", 6, 2800, 2800, 90, 320, 'vertical')
+    new RoundEnemy(3200, 100, 40, "../assets/sprite/scie.png", 6, 3200, 3200, 90, 320, 'vertical')
     );
   const spikeGroups = [
     { startX: 320, y: height - 250, count: 2, spacing: 30 },
