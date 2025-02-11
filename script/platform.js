@@ -225,20 +225,7 @@ function createPlatforms(canvas) {
         new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
         new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
         new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
-        new Platform(2220, canvas.height - 500, 4, 4, "ice_block"),
-        //partie 3
-        new Platform(4670, canvas.height - 70, 530, 50, "ice_cliff"),
-        new Platform(4670, canvas.height - 730, 530, 50, "ice_cliff"),
-        new Platform(4670, canvas.height - 70, 530, 50, "ice_cliff"),
-        new Platform(4570, canvas.height - 520, 100, 10, "ice_block"),
-        new DisappearingPlatform(4670, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4710, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4750, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4790, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4830, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4870, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4910, canvas.height - 520, 40, 10),
-        new DisappearingPlatform(4950, canvas.height - 520, 40, 10),       
+        new Platform(2220, canvas.height - 500, 4, 4, "ice_block"),      
     ];
 }
 
