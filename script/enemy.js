@@ -98,10 +98,10 @@ class MovingEnemy extends Enemy {
 		ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
 		ctx.restore();
 
-    /*ctx.strokeStyle = "blue";
+		/*ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
     ctx.strokeRect(this.x, this.y, this.width, this.height);*/
-  }
+	}
 
 	update() {
 		this.move();
@@ -164,94 +164,75 @@ class TriggerEnemy extends MovingEnemy {
 		this.right = this.x + this.width;
 		this.bottom = this.y + this.height;
 	}
-}
-
+};
 class SpikeEnemy extends Enemy {
-  constructor(x, y, orientation = "up", width = 30, height = 30) {
-    super(x, y, width, height);
-    this.color = "#8B0000";
-    this.orientation = orientation;
-    this.updatePoints();
-  }
-
-  updatePoints() {
-    switch (this.orientation) {
-      case "up":
-        this.points = {
-          tipX: this.x + this.width / 2,
-          tipY: this.y,
-          rightX: this.x + this.width,
-          rightY: this.y + this.height,
-          leftX: this.x,
-          leftY: this.y + this.height
-        };
-        break;
-      case "right":
-        this.points = {
-          tipX: this.x + this.width,
-          tipY: this.y + this.height / 2,
-          rightX: this.x,
-          rightY: this.y + this.height,
-          leftX: this.x,
-          leftY: this.y
-        };
-        break;
-      case "down":
-        this.points = {
-          tipX: this.x + this.width / 2,
-          tipY: this.y + this.height,
-          rightX: this.x,
-          rightY: this.y,
-          leftX: this.x + this.width,
-          leftY: this.y
-        };
-        break;
-      case "left":
-        this.points = {
-          tipX: this.x,
-          tipY: this.y + this.height / 2,
-          rightX: this.x + this.width,
-          rightY: this.y,
-          leftX: this.x + this.width,
-          leftY: this.y + this.height
-        };
-        break;
-    }
-  }
-	constructor(x, y, width = 30, height = 30) {
-		super(x, y, width, height);
-		this.color = "#8B0000";
-		this.points = {
-			topX: this.x + width / 2,
-			topY: this.y,
-			rightX: this.x + width,
-			rightY: this.y + height,
+	constructor(x, y, orientation = "up", width = 30, height = 30) {
+	  super(x, y, width, height);
+	  this.color = "#8B0000";
+	  this.orientation = orientation;
+	  this.updatePoints();
+	}
+  
+	updatePoints() {
+	  switch (this.orientation) {
+		case "up":
+		  this.points = {
+			tipX: this.x + this.width / 2,
+			tipY: this.y,
+			rightX: this.x + this.width,
+			rightY: this.y + this.height,
 			leftX: this.x,
-			leftY: this.y + height,
-		};
+			leftY: this.y + this.height
+		  };
+		  break;
+		case "right":
+		  this.points = {
+			tipX: this.x + this.width,
+			tipY: this.y + this.height / 2,
+			rightX: this.x,
+			rightY: this.y + this.height,
+			leftX: this.x,
+			leftY: this.y
+		  };
+		  break;
+		case "down":
+		  this.points = {
+			tipX: this.x + this.width / 2,
+			tipY: this.y + this.height,
+			rightX: this.x,
+			rightY: this.y,
+			leftX: this.x + this.width,
+			leftY: this.y
+		  };
+		  break;
+		case "left":
+		  this.points = {
+			tipX: this.x,
+			tipY: this.y + this.height / 2,
+			rightX: this.x + this.width,
+			rightY: this.y,
+			leftX: this.x + this.width,
+			leftY: this.y + this.height
+		  };
+		  break;
+	  }
 	}
-
+  
 	draw(ctx) {
-		ctx.fillStyle = this.color;
-		ctx.strokeStyle = "#600000";
-		ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.moveTo(this.points.tipX, this.points.tipY);
-    ctx.lineTo(this.points.rightX, this.points.rightY);
-    ctx.lineTo(this.points.leftX, this.points.leftY);
-    ctx.closePath();
-		ctx.beginPath();
-		ctx.moveTo(this.points.topX, this.points.topY);
-		ctx.lineTo(this.points.rightX, this.points.rightY);
-		ctx.lineTo(this.points.leftX, this.points.leftY);
-		ctx.closePath();
-
-		ctx.fill();
-		ctx.stroke();
+	  ctx.fillStyle = this.color;
+	  ctx.strokeStyle = "#600000";
+	  ctx.lineWidth = 2;
+  
+	  ctx.beginPath();
+	  ctx.moveTo(this.points.tipX, this.points.tipY);
+	  ctx.lineTo(this.points.rightX, this.points.rightY);
+	  ctx.lineTo(this.points.leftX, this.points.leftY);
+	  ctx.closePath();
+  
+	  ctx.fill();
+	  ctx.stroke();
 	}
-}
-
+  }
 class RoundEnemy extends Enemy {
 	constructor(
 		x,
@@ -449,20 +430,8 @@ function createEnemies(canvas) {
 
 	const enemies = [];
 	const height = canvas.height;
-
-  enemies.push(
-    new MovingEnemy(
-      710,
-      height - 650,
-      600,
-      820,
-      height - 460,
-      height - 460,
-      2.5
-    )
-  );
-  enemies.push(new Enemy(-50, height, 10000, 1));
-	enemies.push(
+	enemies.push(new Enemy(0, canvas.height +500, 10000, 1));	
+	/* enemies.push(
 		new MovingEnemy(
 			710,
 			height - 650,
@@ -560,11 +529,11 @@ function createEnemies(canvas) {
 			320,
 			"vertical"
 		)
-	);
+	); */
 	// Niveau 3 Matéo
 	enemies.push(
 		new RoundEnemy(
-			3975, // x de base
+			1975, // x de base
 			500, // marge de y
 			40,
 			"../assets/sprite/scie.png",
@@ -578,13 +547,13 @@ function createEnemies(canvas) {
 	);
 	enemies.push(
 		new RoundEnemy(
-			4500, // x de base
+			2500, // x de base
 			500, // marge de y
 			40,
 			"../assets/sprite/scie.png",
 			5,
-			4500,
-			4500,
+			2500,
+			2500,
 			300, // marhe de y aussi ???
 			600,
 			"vertical"
@@ -593,26 +562,53 @@ function createEnemies(canvas) {
 
 	enemies.push(
 		new RoundEnemy(
-			4700, // x de base
+			2700, // x de base
 			300, // marge de y
 			40,
 			"../assets/sprite/scie.png",
 			10,
-			4700,
-			5100,
+			2700,
+			3100,
 			300, // marhe de y aussi ???
 			600,
 			"horizontal"
 		)
 	);
 
+	// Niveau 3 Thibaud
+
+	enemies.push(
+		new RoundEnemy(
+			4080,
+			200,
+			15,
+			"../assets/sprite/scie.png",
+			6,
+			4080,
+			4080,
+			100,
+			500,
+			"vertical"
+		)
+	);
+
+	enemies.push(new SpikeEnemy(4195, canvas.height - 650, "left", 23, 25));
+	enemies.push(new SpikeEnemy(4195, canvas.height - 625, "left", 23, 25));
+	enemies.push(new SpikeEnemy(4245, canvas.height - 670, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4215, canvas.height - 670, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4265, canvas.height - 650, "right", 23, 25));
+	enemies.push(new SpikeEnemy(4265, canvas.height - 625, "right", 23, 25));
+	enemies.push(
+		new MovingEnemy(5250, canvas.height - 540, 4820, 5500, 500, 500, 5)
+	);
+
 	//Fin niveau Matéo
-	enemies.push(
+	/*enemies.push(
 		new RoundEnemy(
-			3200,
+			1200,
 			100,
 			40,
-			"../assets/sprite/scie.png",
+			"../assets/sprite/enemy.png",
 			6,
 			2800,
 			2800,
@@ -623,61 +619,33 @@ function createEnemies(canvas) {
 	);
 	enemies.push(
 		new RoundEnemy(
-			3400,
+			1400,
 			100,
 			40,
-			"../assets/sprite/scie.png",
+			"../assets/sprite/enemy.png",
 			6,
-			2800,
-			2800,
+			800,
+			800,
 			90,
 			320,
 			"vertical"
 		)
-	);
+	);*/
 	const spikeGroups = [
 		{ startX: 320, y: height - 250, count: 2, spacing: 30 },
 		{ startX: 820, y: height - 30, count: 17, spacing: 30 },
-		{ startX: 2340, y: height - 100, count: 4, spacing: 30 },
+		// { startX: 2340, y: height - 100, count: 4, spacing: 30 },
 
 		// Spike en dessous niveau 3
-		{ startX: 3715, y: canvas.height - 50, count: 25, spacing: 30 },
+		{ startX: 1715, y: canvas.height - 50, count: 25, spacing: 30 },
 
 		// Tour vers le bas
 		// Relié avec platform.js
-		{ startX: 5300, y: canvas.height - 510, count: 3, spacing: 34 },
-		{ startX: 5200, y: canvas.height - 320, count: 3, spacing: 34 },
-		{ startX: 5300, y: canvas.height - 130, count: 3, spacing: 34 },
+		{ startX: 3300, y: canvas.height - 510, count: 3, spacing: 34 },
+		{ startX: 3200, y: canvas.height - 320, count: 3, spacing: 34 },
+		{ startX: 3300, y: canvas.height - 130, count: 3, spacing: 34 },
 	];
 
-  spikeGroups.forEach((group) => {
-    for (let i = 0; i < group.count; i++) {
-      enemies.push(new SpikeEnemy(group.startX + i * group.spacing, group.y));
-    }
-  });
-///Niveaus thibaud 
-  enemies.push(
-    new RoundEnemy(
-      4080,
-      200,
-      15,
-      "../assets/sprite/scie.png",
-      6,
-      4080,
-      4080,
-      100,
-      500,
-      "vertical"
-    )
-  );
-
-  enemies.push(new SpikeEnemy (4195, canvas.height-650 , "left", 23, 25));
-  enemies.push(new SpikeEnemy (4195, canvas.height-625 , "left", 23, 25));
-  enemies.push(new SpikeEnemy (4245, canvas.height-670 , "up", 26, 25));
-  enemies.push(new SpikeEnemy (4215, canvas.height-670 , "up", 26, 25));
-  enemies.push(new SpikeEnemy (4265, canvas.height-650 , "right", 23, 25));
-  enemies.push(new SpikeEnemy (4265, canvas.height-625 , "right", 23, 25));
-  enemies.push(new MovingEnemy(5250, canvas.height-540, 4820, 5500, 500, 500,5));
 	spikeGroups.forEach((group) => {
 		for (let i = 0; i < group.count; i++) {
 			enemies.push(

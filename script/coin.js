@@ -42,7 +42,8 @@ class Clée extends Coin {
   function createClées(canvas) {
     return [
         new Clée(1310, canvas.height - 670),
-        new Clée(3410, canvas.height - 160),
+        new Clée(3310, canvas.height - 80),
+        new Clée(7150, 700),
 
     ];
   }
