@@ -31,20 +31,22 @@ class VictoryZone {
         }
     }
 
-    checkVictory(player) {
-        if (!this.isTriggered &&
-            player.x < this.x + this.width &&
-            player.x + player.width > this.x &&
-            player.y < this.y + this.height &&
-            player.y + player.height > this.y) {
-            this.isTriggered = true;
+	checkVictory(player) {
+		if (
+			!this.isTriggered &&
+			player.x < this.x + this.width &&
+			player.x + player.width > this.x &&
+			player.y < this.y + this.height &&
+			player.y + player.height > this.y
+		) {
+			this.isTriggered = true;
 
-            return true;
-        }
-        return false;
-    }
+			return true;
+		}
+		return false;
+	}
 
-    reset() {
-        this.isTriggered = false;
-    }
+	reset() {
+		this.isTriggered = false;
+	}
 }
