@@ -48,7 +48,7 @@ Une fois le serveur Node.js en marche, vous pouvez lancer le jeu dans votre navi
 
 npm install -g live-server
 
-    Allez dans le dossier principal du projet (où se trouvent les fichiers HTML, CSS et JS) et lancez le serveur local :
+    Allez dans le dossier principal du projet et lancez le serveur local :
 
 live-server
 
