@@ -350,9 +350,6 @@ class HalfRoundEnemy extends Enemy {
 			this.radius * 2
 		);
 		ctx.restore();
-		ctx.strokeStyle = "blue";
-		ctx.lineWidth = 2;
-		ctx.beginPath();
 		ctx.arc(
 			this.x + this.radius,
 			this.y + this.radius,
@@ -361,9 +358,7 @@ class HalfRoundEnemy extends Enemy {
 			Math.PI,
 			true
 		);
-		ctx.strokeStyle = "blue";
-		ctx.lineWidth = 2;
-		ctx.stroke();
+		
 	}
 
 	checkCollision(player) {
