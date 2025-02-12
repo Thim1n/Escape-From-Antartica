@@ -1,4 +1,7 @@
 /* Leaderboard.css */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
+
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(200, 220, 255, 0.9)), 
@@ -13,9 +16,14 @@ body {
     padding: 2rem;
 }
 
-h1 {
+
+.pixelify-sans-h1 {
+    font-family: "Pixelify Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
     color: #1b3d6b;
-    font-size: 3rem;
+    font-size: 4rem;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
     margin-bottom: 2rem;
 }

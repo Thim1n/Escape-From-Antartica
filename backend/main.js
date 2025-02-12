@@ -12,7 +12,7 @@ app.use(cors());
 
 // Connexion à la base de données
 const sequelize = new Sequelize("gamedatabase", "root", "root", {
-	host: "10.111.9.74",
+	host: "localhost",
 	dialect: "mysql",
 });
 
@@ -272,6 +272,6 @@ app.get("/getplayerid", async (req, res) => {
 });
 
 // Démarrer le serveur
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
 	console.log("Serveur démarré sur http://10.111.9.74:3000");
 });

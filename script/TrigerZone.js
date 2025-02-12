@@ -149,7 +149,7 @@ function createTriggerZones(canvas) {
 				2270,
 				2270,
 				canvas.height - 120,
-				canvas.height - 1600,
+				canvas.height - 160000,
 				10
 			)
 		),

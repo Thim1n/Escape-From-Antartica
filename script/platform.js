@@ -305,7 +305,7 @@ function createPlatforms(canvas) {
 		new Platform(4120, canvas.height - 400, 30, 10, "ice_block"),
 		new DisappearingPlatform(3920, canvas.height - 500, 30, 10),
 		new Platform(4120, canvas.height - 600, 30, 10, "ice_block"),
-		new Platform(4220, canvas.height - 650, 49, 50, "ice_block"),
+		new Platform(4220, canvas.height - 650, 49, 900, "ice_block"),
 		new Platform(4320, canvas.height - 600, 30, 10, "ice_block"),
 		new DisappearingPlatform(4820, canvas.height - 500, 700, 10),
 		new DisappearingPlatform(5150, canvas.height - 550, 30, 10),

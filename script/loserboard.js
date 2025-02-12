@@ -1,6 +1,6 @@
 async function fetchLeaderboardData() {
 	try {
-		const response = await fetch("http://127.0.0.1:3000/loserboard");
+		const response = await fetch("http://10.111.9.74:3000/loserboard");
 		const data = await response.json();
 		console.log("Données fetchées : ", data);
 		return data;
