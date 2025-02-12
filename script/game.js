@@ -276,15 +276,18 @@ window.onload = function () {
 		victoryZone.draw(ctx);
 		player.draw(ctx);
 
-		ctx.restore();
 
+		ctx.fillStyle = "black";
+		ctx.font = "20px Arial";
+		ctx.fillText("Tu peux te laisser tomber dans le vide puis sauter", 600, canvas.height - 700);
+	
+		ctx.restore();
 		// Draw UI elements
 		ctx.fillStyle = "black";
 		ctx.font = "20px Arial";
 		ctx.fillText(`Temps: ${formatTime(gameTime)}`, 10, 30);
-		ctx.fillText(`Pièces: ${player.coins}`, 10, 55);
-		ctx.fillText(`Clées: ${player.clées}`, 10, 80);
-		ctx.fillText(`Morts: ${player.deathCount}`, 10, 105);
+		ctx.fillText(`Clées: ${player.clées}`, 10, 50);
+		ctx.fillText(`Morts: ${player.deathCount}`, 10, 70);
 
 		if (isGameWon) {
 			ctx.fillStyle = "rgba(0, 0, 0, 0.5)";

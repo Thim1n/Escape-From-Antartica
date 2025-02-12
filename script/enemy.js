@@ -606,9 +606,8 @@ function createEnemies(canvas) {
 			"vertical"
 		)
 	);
-
+	enemies.push(new SpikeEnemy(345, height - 245, "up",  21,  25));
 	const spikeGroups = [
-		{ startX: 320, y: height - 250, count: 2, spacing: 30 },
 		{ startX: 820, y: height - 30, count: 17, spacing: 30 },
 		{ startX: 2340 + 4180, y: height - 100, count: 4, spacing: 30 },
 

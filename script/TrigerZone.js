@@ -122,21 +122,6 @@ function createTriggerZones(canvas) {
 			)
 		),
 
-		new TriggerZone(
-			3200,
-			canvas.height - 215,
-			10,
-			150,
-			new TriggerEnemy(
-				3300,
-				canvas.height - 120,
-				2950,
-				3300,
-				canvas.height - 100,
-				canvas.height - 100,
-				1
-			)
-		),
 
 		new TriggerZone(
 			2240,
