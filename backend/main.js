@@ -12,7 +12,7 @@ app.use(cors());
 
 // Connexion à la base de données
 const sequelize = new Sequelize("gamedatabase", "root", "root", {
-	host: "localhost",
+	host: "10.111.9.74",
 	dialect: "mysql",
 });
 
@@ -87,6 +87,19 @@ sequelize
 // Route de base
 app.get("/", (req, res) => {
 	res.json({ message: "Bienvenue sur l'api d'Escape from Antartica" });
+});
+
+app.get("/users", async (req, res) => {
+	try {
+		const userList = await User.findAll(); // Récupère tous les utilisateurs
+		res.json(userList);
+	} catch (error) {
+		console.error(
+			"Erreur lors de la récupération des utilisateurs :",
+			error
+		);
+		res.status(500).json({ message: "Erreur serveur" });
+	}
 });
 
 // Route du leaderboard modifiée pour afficher les morts
@@ -260,5 +273,5 @@ app.get("/getplayerid", async (req, res) => {
 
 // Démarrer le serveur
 app.listen(3000, () => {
-	console.log("Serveur démarré sur http://localhost:3000");
+	console.log("Serveur démarré sur http://10.111.9.74:3000");
 });

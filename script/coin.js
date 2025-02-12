@@ -43,7 +43,7 @@ function createClées(canvas) {
 	return [
 		new Clée(1310, canvas.height - 670),
 		new Clée(3115, canvas.height - 570),
-		new Clée(5125, canvas.height - 670),
+    new Clée(5125, canvas.height - 670),
 		new Clée(7590, canvas.height - 170),
 	];
 }

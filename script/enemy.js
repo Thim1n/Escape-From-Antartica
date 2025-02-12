@@ -350,15 +350,6 @@ class HalfRoundEnemy extends Enemy {
 			this.radius * 2
 		);
 		ctx.restore();
-		ctx.arc(
-			this.x + this.radius,
-			this.y + this.radius,
-			this.radius,
-			0,
-			Math.PI,
-			true
-		);
-		
 	}
 
 	checkCollision(player) {

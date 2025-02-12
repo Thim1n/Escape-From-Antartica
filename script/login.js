@@ -6,7 +6,7 @@ async function handleSubmit(event) {
 	localStorage.setItem("playerName", username);
 
 	try {
-		const res = await fetch("http://localhost:3000/adduser", {
+		const res = await fetch("http://10.111.9.74:3000/adduser", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
