@@ -307,7 +307,7 @@ window.onload = function () {
 		const playerTime = gameTime;
 
 		try {
-			fetch("http://localhost:3000/savegame", {
+			fetch("http://10.111.9.74:3000/savegame", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

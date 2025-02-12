@@ -52,7 +52,7 @@ npm install -g live-server
 
 live-server
 
-Le jeu sera accessible dans votre navigateur à l'adresse http://localhost:8080.
+Le jeu sera accessible dans votre navigateur à l'adresse http://10.111.9.74:8080.
 Objectif du jeu
 
 Le but est de progresser dans le niveau en évitant les obstacles et en collectant des bonus, tout en minimisant le nombre de morts. Chaque partie est rapide, mais chaque échec vous pousse à améliorer vos compétences pour atteindre un meilleur score. Le score final est basé sur le temps écoulé et le nombre de morts.
