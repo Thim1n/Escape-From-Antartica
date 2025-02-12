@@ -477,10 +477,10 @@ function createEnemies(canvas) {
 
 	enemies.push(new SpikeEnemy(4195, canvas.height - 650, "left", 23, 25));
 	enemies.push(new SpikeEnemy(4195, canvas.height - 625, "left", 23, 25));
-	enemies.push(new SpikeEnemy(4245, canvas.height - 670, "up", 26, 25));
-	enemies.push(new SpikeEnemy(4215, canvas.height - 670, "up", 26, 25));
-	enemies.push(new SpikeEnemy(4265, canvas.height - 650, "right", 23, 25));
-	enemies.push(new SpikeEnemy(4265, canvas.height - 625, "right", 23, 25));
+	enemies.push(new SpikeEnemy(4245, canvas.height - 675, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4215, canvas.height - 675, "up", 26, 25));
+	enemies.push(new SpikeEnemy(4270, canvas.height - 650, "right", 23, 25));
+	enemies.push(new SpikeEnemy(4270, canvas.height - 625, "right", 23, 25));
 	enemies.push(
 		new MovingEnemy(5250, canvas.height - 540, 4820, 5500, 500, 500, 5)
 	);
