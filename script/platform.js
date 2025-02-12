@@ -72,26 +72,24 @@ class Platform {
 	}
 
 	drawIceCliff(ctx) {
+		// Dégradé bleu clair inspiré de l'image
 		let gradient = ctx.createLinearGradient(
 			this.x,
 			this.y,
 			this.x,
 			this.y + this.height
 		);
-		gradient.addColorStop(0, "rgb(200, 210, 220)");
-		gradient.addColorStop(1, "rgb(170, 190, 210)");
+		gradient.addColorStop(0, "rgb(140, 200, 255)"); // Bleu clair en haut
+		gradient.addColorStop(1, "rgb(100, 180, 255)"); // Bleu légèrement plus foncé en bas
 		ctx.fillStyle = gradient;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 
-		ctx.fillStyle = "white";
+		// Effet de stries nettes dans la glace
+		ctx.strokeStyle = "rgba(255, 255, 255, 0.8)"; // Blanc semi-transparent
+		ctx.lineWidth = 3;
 		ctx.beginPath();
-		ctx.moveTo(this.x, this.y);
-		for (let x = this.x; x < this.x + this.width; x += 10) {
-			ctx.lineTo(x, this.y + Math.random() * 5);
-		}
-		ctx.lineTo(this.x + this.width, this.y);
-		ctx.closePath();
-		ctx.fill();
+
+		ctx.stroke();
 	}
 }
 
@@ -141,41 +139,41 @@ class DisappearingPlatform extends Platform {
 	}
 }
 class Bouncer extends Platform {
-    constructor(x, y, width, height) {
-        super(x, y, width, height);
-        this.bounceForce = 20; // Force de rebond plus importante
-    }
+	constructor(x, y, width, height) {
+		super(x, y, width, height);
+		this.bounceForce = 20; // Force de rebond plus importante
+	}
 
-    draw(ctx) {
-        // Style visuel du bouncer
-        ctx.fillStyle = "rgb(255, 87, 51)"; // Orange-rouge
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+	draw(ctx) {
+		// Style visuel du bouncer
+		ctx.fillStyle = "rgb(255, 87, 51)"; // Orange-rouge
+		ctx.fillRect(this.x, this.y, this.width, this.height);
 
-        // Effet visuel (ressort)
-        ctx.beginPath();
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 2;
-        for (let i = 0; i < this.width; i += 10) {
-            ctx.moveTo(this.x + i, this.y);
-            ctx.lineTo(this.x + i + 5, this.y + this.height);
-        }
-        ctx.stroke();
-    }
+		// Effet visuel (ressort)
+		ctx.beginPath();
+		ctx.strokeStyle = "white";
+		ctx.lineWidth = 2;
+		for (let i = 0; i < this.width; i += 10) {
+			ctx.moveTo(this.x + i, this.y);
+			ctx.lineTo(this.x + i + 5, this.y + this.height);
+		}
+		ctx.stroke();
+	}
 
-    handleCollision(player) {
-        if (
-            player.velocityY > 0 && // Le joueur descend
-            player.y + player.height >= this.y &&
-            player.y + player.height <= this.y + this.height &&
-            player.x + player.width > this.x &&
-            player.x < this.x + this.width
-        ) {
-            player.velocityY = this.bounceForce;
-            player.isJumping = true;
-            return true;
-        }
-        return false;
-    }
+	handleCollision(player) {
+		if (
+			player.velocityY > 0 && // Le joueur descend
+			player.y + player.height >= this.y &&
+			player.y + player.height <= this.y + this.height &&
+			player.x + player.width > this.x &&
+			player.x < this.x + this.width
+		) {
+			player.velocityY = this.bounceForce;
+			player.isJumping = true;
+			return true;
+		}
+		return false;
+	}
 }
 
 class Door extends Platform {
@@ -316,25 +314,37 @@ function createPlatforms(canvas) {
 		new DisappearingPlatform(5150, canvas.height - 710, 30, 10),
 		new Bouncer(4550, canvas.height - 100, 100, 10),
 
+		// Sol a la fin du niveau 3
+		new Platform(5500, canvas.height - 20, 10000, 20, "snow_ground"),
+
+		// Mur et porte à la fin du niveau 3
+		new Platform(5700, canvas.height - 800, 100, 720, "ice_cliff"),
+
 		// Fin niveau 3
 		// Niveau 4 -> Mathis
 
-		/*  // Niveau de Mathis -> Les scies 
-		new Platform(3430, canvas.height - 90, 40, 50, "ice_cliff"),
-		new Platform(1750, canvas.height - 70, 300, 50, "ice_cliff"),
-		new Platform(2100, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(2350, canvas.height - 180, 100, 10, "ice_block"),
-		new Platform(2750, canvas.height - 70, 600, 50, "ice_cliff"),
-		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(2750, canvas.height - 70, 750, 50, "ice_cliff"),
-		new Platform(3500, canvas.height - 400, 50, 380, "ice_cliff"),
-		new Platform(1750, canvas.height - 400, 1800, 50, "ice_cliff"),
-		new Platform(1620, canvas.height - 180, 40, 10, "ice_block"),
-		new Platform(1700, canvas.height - 260, 40, 10, "ice_block"),
-		new Platform(1620, canvas.height - 340, 40, 10, "ice_block"),
-		new Platform(1620, canvas.height - 730, 1930, 80, "ice_cliff"),
-		new Platform(2220, canvas.height - 500, 4, 4, "ice_block"), */
+		// Niveau de Mathis -> Les scies
+		new Platform(5930, canvas.height - 400, 2300, 50, "ice_cliff"), // Sol de premier étage
+
+		new Platform(7610, canvas.height - 90, 40, 50, "ice_cliff"),
+		new Platform(5930, canvas.height - 70, 300, 50, "ice_cliff"), // Première plateforme rdc
+		new Platform(6280, canvas.height - 70, 600, 50, "ice_cliff"), // Plateforme du mileu en rdc
+		new Platform(6530, canvas.height - 180, 100, 10, "ice_block"), // Plateforme pour sauter dessus
+		new Platform(6930, canvas.height - 70, 600, 50, "ice_cliff"),
+		// new Platform(7680, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(6930, canvas.height - 70, 750, 50, "ice_cliff"),
+		new Platform(7680, canvas.height - 400, 50, 380, "ice_cliff"),
+		new Platform(7680, canvas.height - 700, 50, 235, "ice_cliff"),
+
+		new Platform(5800, canvas.height - 180, 40, 10, "ice_block"),
+		new Platform(5880, canvas.height - 260, 40, 10, "ice_block"),
+		new Platform(5800, canvas.height - 340, 40, 10, "ice_block"),
+		new Platform(5800, canvas.height - 730, 1930, 80, "ice_cliff"),
+		new Platform(6400, canvas.height - 500, 4, 4, "ice_block"),
+
+		// Mur de fin
+
+		new Platform(),
 
 		//Niveau 3 -> Matéo
 	];
@@ -344,5 +354,7 @@ function createDoors(canvas) {
 	return [
 		new Door(1450, canvas.height - 95, 60, 80),
 		new Door(3380, canvas.height - 95, 60, 80),
+		new Door(5725, canvas.height - 95, 60, 80),
+		new Door(7680, canvas.height - 470, 60, 80),
 	];
 }

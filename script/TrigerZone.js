@@ -60,6 +60,11 @@ class TriggerZone {
 		ctx.strokeRect(this.x, this.y, this.width, this.height);
 		ctx.setLineDash([]); // Réinitialiser le style de ligne
 
+		// Dessiner la hitbox pour le débogage
+		ctx.strokeStyle = "red";
+		ctx.lineWidth = 2;
+		ctx.strokeRect(this.x, this.y, this.width, this.height);
+
 		// Si l'ennemi existe et est en vie, le dessiner aussi
 		if (this.enemy && this.enemy.isAlive) {
 			this.enemy.draw(ctx);
@@ -165,6 +170,22 @@ function createTriggerZones(canvas) {
 			)
 		),
 
+		new TriggerZone(
+			7400,
+			canvas.height - 170,
+			10,
+			150,
+			new TriggerEnemy(
+				7500,
+				canvas.height - 120,
+				7200,
+				7505,
+				canvas.height - 120,
+				canvas.height - 120,
+				2
+			)
+		),
+
 		// Troisième zone de déclenchement avec TriggerSpike
 		/*new TriggerZone(
             2330, 
@@ -187,11 +208,6 @@ function createTriggerZones(canvas) {
             canvas.height - 100, 
             400, 
             100,
-            new TriggerSpike(2520, canvas.height - 100)  // Utilisation de TriggerSpike ici
-        ),
-
-        new TriggerZone(
-            2330, 
             canvas.height - 100, 
             400, 
             100,

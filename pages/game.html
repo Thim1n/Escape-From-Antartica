@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Escape from Antarctica</title>
-    <link rel="stylesheet" href="../styles/game.css" />
-  </head>
-  <body>
-    <!-- Élément player -->
-    <div id="player"></div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+		/>
+		<title>Escape from Antarctica</title>
+		<link rel="stylesheet" href="../styles/game.css" />
+	</head>
+	<body>
+		<!-- Élément player -->
+		<div id="player"></div>
 
-    <audio id="backgroundMusic" loop>
-      <source src="../assets/sound_effect/Son.mp3" type="audio/mp3" />
-      Votre navigateur ne supporte pas l'audio.
-    </audio>
-    
-    <canvas id="gameCanvas"></canvas>
+		<audio id="backgroundMusic" loop>
+			<source src="../assets/sound_effect/Son.mp3" type="audio/mp3" />
+			Votre navigateur ne supporte pas l'audio.
+		</audio>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let music = document.getElementById("backgroundMusic");
+		<canvas id="gameCanvas"></canvas>
+		<div id="victoryMenu" class="victory-menu">
+			<h2>Victoire !</h2>
+			<p id="finalTime"></p>
+			<button onclick="window.location.href='../index.html'">
+				Menu principal
+			</button>
+		</div>
 
-        // Tenter de jouer la musique dès que la page est chargée
-        music.play().catch((error) => {
-          console.log("🚨 Erreur de lecture :", error);
-          // Si la lecture est bloquée, on peut demander une interaction utilisateur
-          document.body.addEventListener("click", function () {
-            music.play().catch((error) => console.log("🚨 Erreur de lecture après interaction :", error));
-          });
-        });
-      });
-    </script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				let music = document.getElementById("backgroundMusic");
 
-    <script src="../script/platform.js"></script>
-    <script src="../script/coin.js"></script>
-    <script src="../script/enemy.js"></script>
-    <script src="../script/player.js"></script>
-    <script src="../script/TrigerZone.js"></script>
-    <script src="../script/Victoryzone.js"></script>
-    <script src="../script/game.js"></script>
-  </body>
+				// Tenter de jouer la musique dès que la page est chargée
+				music.play().catch((error) => {
+					console.log("🚨 Erreur de lecture :", error);
+					// Si la lecture est bloquée, on peut demander une interaction utilisateur
+					document.body.addEventListener("click", function () {
+						music
+							.play()
+							.catch((error) =>
+								console.log(
+									"🚨 Erreur de lecture après interaction :",
+									error
+								)
+							);
+					});
+				});
+			});
+		</script>
+
+		<script src="../script/platform.js"></script>
+		<script src="../script/coin.js"></script>
+		<script src="../script/enemy.js"></script>
+		<script src="../script/player.js"></script>
+		<script src="../script/TrigerZone.js"></script>
+		<script src="../script/Victoryzone.js"></script>
+		<script src="../script/game.js"></script>
+	</body>
 </html>

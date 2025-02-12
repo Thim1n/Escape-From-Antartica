@@ -21,19 +21,25 @@ window.onload = function () {
 	let cameraY = 0;
 	const keysPressed = {};
 
-  // Game elements
-  const platforms = createPlatforms(canvas);
-  const player = new Player(20, canvas.height - 20 - 50);
-  let coins = createCoins(canvas);
-  let clée = createClées(canvas);
-  let enemies = createEnemies(canvas);
-  let triggerZones = createTriggerZones(canvas);
-  let doors = createDoors(canvas);
-  const victoryZone = new VictoryZone(5500, canvas.height - 170,200,150, "../assets/sprite/Victory_zone.png");
-  let isPaused = false;
-  // Création des éléments du menu pause
-  const pauseMenu = document.createElement('div');
-  pauseMenu.style.cssText = `
+	// Game elements
+	const platforms = createPlatforms(canvas);
+	const player = new Player(20, canvas.height - 20 - 50);
+	let coins = createCoins(canvas);
+	let clée = createClées(canvas);
+	let enemies = createEnemies(canvas);
+	let triggerZones = createTriggerZones(canvas);
+	let doors = createDoors(canvas);
+	const victoryZone = new VictoryZone(
+		8000,
+		canvas.height - 550,
+		200,
+		150,
+		"../assets/sprite/Victory_zone.png"
+	);
+	let isPaused = false;
+	// Création des éléments du menu pause
+	const pauseMenu = document.createElement("div");
+	pauseMenu.style.cssText = `
     position: absolute;
     top: 50%;
     left: 50%;
@@ -248,7 +254,7 @@ window.onload = function () {
 		const maxY = Math.max(0, canvas.height - player.height);
 
 		// Application des limites avec smoothing
-		cameraX = Math.max(0, Math.min(targetX, 5000));
+		cameraX = Math.max(0, Math.min(targetX, 10000));
 
 		// Mise à jour de la caméra Y avec des limites plus appropriées
 		cameraY = Math.max(minY, Math.min(targetY, maxY));
@@ -281,19 +287,14 @@ window.onload = function () {
 		ctx.fillText(`Morts: ${player.deathCount}`, 10, 105);
 
 		if (isGameWon) {
-			ctx.fillStyle = "green";
-			ctx.font = "40px Arial";
-			ctx.fillText(
-				"Victoire !",
-				canvas.width / 2 - 80,
-				canvas.height / 2
-			);
-			ctx.font = "30px Arial";
-			ctx.fillText(
-				`Temps final: ${formatTime(gameTime)}`,
-				canvas.width / 2 - 100,
-				canvas.height / 2 + 40
-			);
+			ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			// Afficher le menu de victoire
+			const victoryMenu = document.getElementById("victoryMenu");
+			const finalTime = document.getElementById("finalTime");
+			finalTime.textContent = `Temps total : ${formatTime(gameTime)}`;
+			victoryMenu.style.display = "block";
 			if (!isGameSaved) {
 				saveGameAPI();
 				isGameSaved = true;
@@ -314,6 +315,7 @@ window.onload = function () {
 				body: JSON.stringify({
 					time: playerTime,
 					name: playerName,
+					deaths: player.deathCount,
 				}),
 			});
 		} catch (error) {

@@ -10,8 +10,8 @@ class Enemy {
 	}
 
 	draw(ctx) {
-		ctx.fillStyle = "red";
-		ctx.fillRect(this.x, this.y, this.width, this.height);
+		// ctx.fillStyle = "red";
+		// ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 
 	checkCollision(player) {
@@ -97,10 +97,6 @@ class MovingEnemy extends Enemy {
 
 		ctx.drawImage(this.currentImage, 0, 0, this.width, this.height);
 		ctx.restore();
-
-		/*ctx.strokeStyle = "blue";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(this.x, this.y, this.width, this.height);*/
 	}
 
 	update() {
@@ -164,75 +160,75 @@ class TriggerEnemy extends MovingEnemy {
 		this.right = this.x + this.width;
 		this.bottom = this.y + this.height;
 	}
-};
+}
 class SpikeEnemy extends Enemy {
 	constructor(x, y, orientation = "up", width = 30, height = 30) {
-	  super(x, y, width, height);
-	  this.color = "#8B0000";
-	  this.orientation = orientation;
-	  this.updatePoints();
+		super(x, y, width, height);
+		this.color = "#8B0000";
+		this.orientation = orientation;
+		this.updatePoints();
 	}
-  
+
 	updatePoints() {
-	  switch (this.orientation) {
-		case "up":
-		  this.points = {
-			tipX: this.x + this.width / 2,
-			tipY: this.y,
-			rightX: this.x + this.width,
-			rightY: this.y + this.height,
-			leftX: this.x,
-			leftY: this.y + this.height
-		  };
-		  break;
-		case "right":
-		  this.points = {
-			tipX: this.x + this.width,
-			tipY: this.y + this.height / 2,
-			rightX: this.x,
-			rightY: this.y + this.height,
-			leftX: this.x,
-			leftY: this.y
-		  };
-		  break;
-		case "down":
-		  this.points = {
-			tipX: this.x + this.width / 2,
-			tipY: this.y + this.height,
-			rightX: this.x,
-			rightY: this.y,
-			leftX: this.x + this.width,
-			leftY: this.y
-		  };
-		  break;
-		case "left":
-		  this.points = {
-			tipX: this.x,
-			tipY: this.y + this.height / 2,
-			rightX: this.x + this.width,
-			rightY: this.y,
-			leftX: this.x + this.width,
-			leftY: this.y + this.height
-		  };
-		  break;
-	  }
+		switch (this.orientation) {
+			case "up":
+				this.points = {
+					tipX: this.x + this.width / 2,
+					tipY: this.y,
+					rightX: this.x + this.width,
+					rightY: this.y + this.height,
+					leftX: this.x,
+					leftY: this.y + this.height,
+				};
+				break;
+			case "right":
+				this.points = {
+					tipX: this.x + this.width,
+					tipY: this.y + this.height / 2,
+					rightX: this.x,
+					rightY: this.y + this.height,
+					leftX: this.x,
+					leftY: this.y,
+				};
+				break;
+			case "down":
+				this.points = {
+					tipX: this.x + this.width / 2,
+					tipY: this.y + this.height,
+					rightX: this.x,
+					rightY: this.y,
+					leftX: this.x + this.width,
+					leftY: this.y,
+				};
+				break;
+			case "left":
+				this.points = {
+					tipX: this.x,
+					tipY: this.y + this.height / 2,
+					rightX: this.x + this.width,
+					rightY: this.y,
+					leftX: this.x + this.width,
+					leftY: this.y + this.height,
+				};
+				break;
+		}
 	}
-  
+
 	draw(ctx) {
-	  ctx.fillStyle = this.color;
-	  ctx.strokeStyle = "#600000";
-	  ctx.lineWidth = 2;
-  
-	  ctx.beginPath();
-	  ctx.moveTo(this.points.tipX, this.points.tipY);
-	  ctx.lineTo(this.points.rightX, this.points.rightY);
-	  ctx.lineTo(this.points.leftX, this.points.leftY);
-	  ctx.closePath();
-  
-	  ctx.fill();
-	  ctx.stroke();
+		ctx.fillStyle = this.color;
+		ctx.strokeStyle = "#600000";
+		ctx.lineWidth = 2;
+
+		ctx.beginPath();
+		ctx.moveTo(this.points.tipX, this.points.tipY);
+		ctx.lineTo(this.points.rightX, this.points.rightY);
+		ctx.lineTo(this.points.leftX, this.points.leftY);
+		ctx.closePath();
+
+		ctx.fill();
+		ctx.stroke();
 	}
-  }
+}
 class RoundEnemy extends Enemy {
 	constructor(
 		x,
@@ -293,19 +289,6 @@ class RoundEnemy extends Enemy {
 			this.height
 		);
 		ctx.restore();
-		ctx.strokeStyle = "blue";
-		ctx.lineWidth = 2;
-		ctx.beginPath();
-		ctx.arc(
-			this.x + this.radius,
-			this.y + this.radius,
-			this.radius,
-			0,
-			Math.PI * 2
-		);
-		ctx.strokeStyle = "blue";
-		ctx.lineWidth = 2;
-		ctx.stroke();
 	}
 
 	checkCollision(player) {
@@ -430,8 +413,8 @@ function createEnemies(canvas) {
 
 	const enemies = [];
 	const height = canvas.height;
-	enemies.push(new Enemy(0, canvas.height +500, 10000, 1));	
-	/* enemies.push(
+	enemies.push(new Enemy(0, canvas.height + 500, 10000, 1));
+	enemies.push(
 		new MovingEnemy(
 			710,
 			height - 650,
@@ -444,92 +427,6 @@ function createEnemies(canvas) {
 	);
 	enemies.push(new Enemy(-50, height, 10000, 0));
 
-	enemies.push(
-		new HalfRoundEnemy(
-			1800,
-			280,
-			60,
-			"../assets/sprite/scie.png",
-			4,
-			1700,
-			3000
-		)
-	);
-	enemies.push(
-		new HalfRoundEnemy(
-			2000,
-			280,
-			60,
-			"../assets/sprite/scie.png",
-			4,
-			1700,
-			3000
-		)
-	);
-	enemies.push(
-		new HalfRoundEnemy(
-			2200,
-			280,
-			60,
-			"../assets/sprite/scie.png",
-			4,
-			1700,
-			3000
-		)
-	);
-	enemies.push(
-		new HalfRoundEnemy(
-			2320,
-			280,
-			60,
-			"../assets/sprite/scie.png",
-			4,
-			1700,
-			3000
-		)
-	);
-	enemies.push(
-		new RoundEnemy(
-			2500,
-			475,
-			80,
-			"../assets/sprite/scie.png",
-			13.5,
-			1700,
-			3400,
-			0,
-			height,
-			"horizontal"
-		)
-	);
-	enemies.push(
-		new RoundEnemy(
-			2800,
-			100,
-			40,
-			"../assets/sprite/scie.png",
-			6,
-			2800,
-			2800,
-			90,
-			320,
-			"vertical"
-		)
-	);
-	enemies.push(
-		new RoundEnemy(
-			3000,
-			100,
-			40,
-			"../assets/sprite/scie.png",
-			6,
-			2800,
-			2800,
-			90,
-			320,
-			"vertical"
-		)
-	); */
 	// Niveau 3 Matéo
 	enemies.push(
 		new RoundEnemy(
@@ -603,38 +500,131 @@ function createEnemies(canvas) {
 	);
 
 	//Fin niveau Matéo
-	/*enemies.push(
+	// Niveau Mathis
+
+	enemies.push(
+		new HalfRoundEnemy(
+			5980,
+			280,
+			60,
+			"../assets/sprite/scie.png",
+			4,
+			5880,
+			7180
+		)
+	);
+	enemies.push(
+		new HalfRoundEnemy(
+			6180,
+			280,
+			60,
+			"../assets/sprite/scie.png",
+			4,
+			5880,
+			7180
+		)
+	);
+	enemies.push(
+		new HalfRoundEnemy(
+			6380,
+			280,
+			60,
+			"../assets/sprite/scie.png",
+			4,
+			5880,
+			7180
+		)
+	);
+	enemies.push(
+		new HalfRoundEnemy(
+			6500,
+			280,
+			60,
+			"../assets/sprite/scie.png",
+			4,
+			5880,
+			7180
+		)
+	);
+	enemies.push(
+		new RoundEnemy( // Grosse scie rdc
+			6680,
+			475,
+			80,
+			"../assets/sprite/scie.png",
+			13.5,
+			5880,
+			7580,
+			0,
+			height,
+			"horizontal"
+		)
+	);
+	enemies.push(
+		// 1ere des 4 roues -> En panique pour l'instant
 		new RoundEnemy(
-			1200,
+			6980,
 			100,
 			40,
-			"../assets/sprite/enemy.png",
+			"../assets/sprite/scie.png",
 			6,
-			2800,
-			2800,
+			6980,
+			6980,
 			90,
 			320,
 			"vertical"
 		)
 	);
 	enemies.push(
+		// 1ere des 4 roues -> En panique pour l'instant
 		new RoundEnemy(
-			1400,
+			7180,
 			100,
 			40,
-			"../assets/sprite/enemy.png",
+			"../assets/sprite/scie.png",
 			6,
-			800,
-			800,
+			7180,
+			7180,
 			90,
 			320,
 			"vertical"
 		)
-	);*/
+	);
+	enemies.push(
+		// 1ere des 4 roues -> En panique pour l'instant
+		new RoundEnemy(
+			7380,
+			100,
+			40,
+			"../assets/sprite/scie.png",
+			6,
+			7380,
+			7380,
+			90,
+			320,
+			"vertical"
+		)
+	);
+	enemies.push(
+		// 1ere des 4 roues -> En panique pour l'instant
+		new RoundEnemy(
+			7580,
+			100,
+			40,
+			"../assets/sprite/scie.png",
+			6,
+			7580,
+			7580,
+			90,
+			320,
+			"vertical"
+		)
+	);
+
 	const spikeGroups = [
 		{ startX: 320, y: height - 250, count: 2, spacing: 30 },
 		{ startX: 820, y: height - 30, count: 17, spacing: 30 },
-		// { startX: 2340, y: height - 100, count: 4, spacing: 30 },
+		{ startX: 2340 + 4180, y: height - 100, count: 4, spacing: 30 },
 
 		// Spike en dessous niveau 3
 		{ startX: 1715, y: canvas.height - 50, count: 25, spacing: 30 },
